@@ -134,6 +134,7 @@ const props = defineProps({
     type: String,
     default: 'Select...',
   },
+
   /**
    * Whether the input is read-only.
    *
@@ -297,6 +298,7 @@ const classesInput = computed(() => {
     'dark:text-nord-snow-storm-300',
     'caret-transparent',
     'cursor-pointer',
+    'grow',
     'placeholder:text-nord-300/50',
     'dark:placeholder:text-nord-snow-storm-300/50',
   ]
@@ -341,11 +343,12 @@ const classesTagWrapper = computed(() => {
     'caret-transparent',
     'cursor-pointer',
     'flex',
-    'space-x-1',
-    'overflow-x-scroll',
+    'gap-y-2',
+    'gap-x-1',
     'items-center',
     'justify-start',
     'grow',
+    'flex-wrap',
   ]
 
   if (hasIcon.value) {
@@ -452,7 +455,10 @@ function closeDropdown() {
       :size="size"
     />
 
-    <div class="flex mt-1" @click="isDropdownOpen = !isDropdownOpen">
+    <div
+      class="flex mt-1"
+      @click="isDropdownOpen = props.readOnly ? false : !isDropdownOpen"
+    >
       <VIcon
         v-if="hasIcon"
         :icon="icon"
@@ -486,7 +492,6 @@ function closeDropdown() {
           :key="text"
           :option="textToOption(text)"
           :size="size"
-          :readOnly="readOnly"
           @remove="handleSelectMultiple"
         />
       </div>
