@@ -210,6 +210,8 @@ const classesInput = computed(() => {
     'read-only:opacity-75',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
+    'placeholder:text-nord-300/50',
+    'dark:placeholder:text-nord-snow-storm-300/50',
   ]
 
   if (hasIcon.value) {

@@ -6,20 +6,91 @@ import VButton from './components/Form/V-Button.vue'
 import VDarkModeToggle from './components/Theme/V-DarkModeToggle.vue'
 import VSelect from './components/Form/V-Select.vue'
 
-const dataArray = ref([])
+const select = ref([])
 </script>
 
 <template>
   <VDarkModeToggle />
 
   <div id="app" class="flex p-10 space-x-8">
-    <div class="flex flex-col space-y-4">
+    <div class="flex flex-col space-y-4 w-[300px] max-w-[300px]">
       <VSelect
-        v-model="dataArray"
+        v-model="select"
         size="xs"
         label="Select"
         helper="Select an option."
         icon="list"
+        :multiple="false"
+        :selectOptions="[
+          { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
+          { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },
+          { text: 'Danmark', value: 'danmark', emoji: '🇩🇰' },
+        ]"
+      />
+
+      <VSelect
+        v-model="select"
+        size="sm"
+        label="Select"
+        helper="Select an option."
+        icon="list"
+        :multiple="true"
+        :selectOptions="[
+          { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
+          { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },
+          { text: 'Danmark', value: 'danmark', emoji: '🇩🇰' },
+        ]"
+      />
+
+      <VSelect
+        v-model="select"
+        size="base"
+        label="Select"
+        helper="Select an option."
+        icon="list"
+        :multiple="true"
+        :selectOptions="[
+          { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
+          { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },
+          { text: 'Danmark', value: 'danmark', emoji: '🇩🇰' },
+        ]"
+      />
+
+      <VSelect
+        v-model="select"
+        size="lg"
+        label="Select"
+        helper="Select an option."
+        icon="list"
+        :multiple="true"
+        :selectOptions="[
+          { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
+          { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },
+          { text: 'Danmark', value: 'danmark', emoji: '🇩🇰' },
+        ]"
+      />
+
+      <VSelect
+        v-model="select"
+        size="xl"
+        label="Select"
+        helper="Select an option."
+        icon="list"
+        :multiple="true"
+        :selectOptions="[
+          { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
+          { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },
+          { text: 'Danmark', value: 'danmark', emoji: '🇩🇰' },
+        ]"
+      />
+
+      <VSelect
+        v-model="select"
+        size="2xl"
+        label="Select"
+        helper="Select an option."
+        icon="list"
+        :multiple="true"
         :selectOptions="[
           { text: 'Norge', value: 'norge', emoji: '🇳🇴' },
           { text: 'Sverige', value: 'sverige', emoji: '🇸🇪' },

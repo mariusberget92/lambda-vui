@@ -21,6 +21,17 @@ const props = defineProps({
   },
 
   /**
+   * Model value of the input.
+   *
+   * @type {Array|String}
+   * @default ''
+   */
+  modelValue: {
+    type: [Array, String],
+    default: '',
+  },
+
+  /**
    * The options of the input.
    *
    * @type {Array<String>|Array<Object>}
@@ -38,7 +49,7 @@ const props = defineProps({
    *
    * @type {Function}
    */
-  selectOptionsValue: {
+  valueReducer: {
     type: Function,
     default: (option) => option.value,
   },
@@ -48,7 +59,7 @@ const props = defineProps({
    *
    * @type {Function}
    */
-  selectOptionsText: {
+  textReducer: {
     type: Function,
     default: (option) => option.text,
   },
@@ -96,6 +107,8 @@ const classesWrapper = computed(() => {
     'w-full',
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
+    'z-10',
+    'overflow-hidden',
   ]
 
   if (!props.show) {
@@ -155,9 +168,24 @@ const getOptionInfo = computed(() => {
       return option
     }
 
-    const fn =
-      type === 'text' ? props.selectOptionsText : props.selectOptionsValue
+    const fn = type === 'text' ? props.textReducer : props.valueReducer
     return fn(option)
+  }
+})
+
+/**
+ * Check if a option is selected.
+ *
+ * @type {import('vue').ComputedRef<Function>}
+ * @param {String|Object} option
+ * @returns {Boolean}
+ */
+const isSelected = computed(() => {
+  return (option) => {
+    const value = getOptionInfo.value(option, 'value')
+    return props.multiple
+      ? props.modelValue.includes(value)
+      : props.modelValue === value
   }
 })
 </script>
@@ -169,7 +197,16 @@ const getOptionInfo = computed(() => {
         v-for="option in selectOptions"
         :key="getOptionInfo(option, 'value')"
       >
-        <div :class="optionClasses" @click="emit('select', option)">
+        <div
+          :class="[
+            optionClasses,
+            {
+              '!bg-nord-frost-300 !dark:bg-nord-frost-300 !text-white':
+                isSelected(option),
+            },
+          ]"
+          @click="emit('select', option)"
+        >
           <span
             class="flex"
             :class="{ 'space-x-2': option.emoji && option.emoji.length > 0 }"
