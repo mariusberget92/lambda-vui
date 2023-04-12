@@ -124,6 +124,17 @@ const props = defineProps({
   },
 
   /**
+   * Whether the input is disabled.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
    * Input type.
    *
    * @type {String}
@@ -205,9 +216,9 @@ const classesInput = computed(() => {
     'dark:border-nord-400',
     'dark:focus:border-nord-400',
     'rounded',
+    'w-full',
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
-    'read-only:opacity-75',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
     'placeholder:text-nord-300/50',
@@ -234,7 +245,10 @@ const classesInput = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col" :class="{ hidden: isHidden }">
+  <div
+    class="flex flex-col"
+    :class="{ hidden: isHidden, 'opacity-50': readOnly || disabled }"
+  >
     <VLabel
       v-if="hasLabel"
       :id="id"
@@ -245,22 +259,19 @@ const classesInput = computed(() => {
     />
 
     <div class="flex mt-1">
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :readOnly="readOnly"
-        :class="classesError"
-      />
+      <VIcon v-if="hasIcon" :icon="icon" :size="size" :class="classesError" />
 
       <input
+        :type="type"
         :id="id"
+        :class="classesInput"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"
-        :class="classesInput"
-        :type="type"
+        :disabled="disabled"
         :value="modelValue"
+        :aria-labelledby="hasLabel ? `${id}-label` : null"
+        :aria-describedby="hasLabel ? `${id}-helper` : null"
         @input="$emit('update:modelValue', $event.target.value)"
       />
     </div>

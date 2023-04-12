@@ -1,6 +1,11 @@
 <script setup>
 import { defineProps, computed, defineEmits } from 'vue'
 
+/**
+ * Component emits.
+ *
+ * @type {Object}
+ */
 const emit = defineEmits(['select'])
 
 /**
@@ -10,24 +15,13 @@ const emit = defineEmits(['select'])
  */
 const props = defineProps({
   /**
-   * Multiple select.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  multiple: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * Model value of the input.
    *
-   * @type {Array|String}
+   * @type {String}
    * @default ''
    */
   modelValue: {
-    type: [Array, String],
+    type: String,
     default: '',
   },
 
@@ -108,7 +102,9 @@ const classesWrapper = computed(() => {
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
     'z-10',
-    'overflow-hidden',
+    'overflow-y-auto',
+    'overflow-x-hidden',
+    'max-h-64',
   ]
 
   if (!props.show) {
@@ -129,6 +125,7 @@ const optionClasses = computed(() => {
     'flex-col',
     'cursor-pointer',
     'px-4',
+    'w-full',
     'py-2',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
@@ -183,9 +180,7 @@ const getOptionInfo = computed(() => {
 const isSelected = computed(() => {
   return (option) => {
     const value = getOptionInfo.value(option, 'value')
-    return props.multiple
-      ? props.modelValue.includes(value)
-      : props.modelValue === value
+    return value === props.modelValue
   }
 })
 </script>
@@ -193,17 +188,12 @@ const isSelected = computed(() => {
 <template>
   <div class="relative">
     <div :class="classesWrapper">
-      <template
-        v-for="option in selectOptions"
-        :key="getOptionInfo(option, 'value')"
-      >
-        <div
+      <template v-for="(option, index) in selectOptions" :key="index">
+        <button
+          type="button"
           :class="[
+            isSelected(option) && 'border-l-4 border-nord-frost-300',
             optionClasses,
-            {
-              '!bg-nord-frost-300 !dark:bg-nord-frost-300 !text-white':
-                isSelected(option),
-            },
           ]"
           @click="emit('select', option)"
         >
@@ -217,7 +207,7 @@ const isSelected = computed(() => {
 
             <span>{{ getOptionInfo(option, 'text') }}</span>
           </span>
-        </div>
+        </button>
       </template>
     </div>
   </div>

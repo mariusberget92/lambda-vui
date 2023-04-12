@@ -4,6 +4,8 @@ import VLabel from './Partials/V-Label.vue'
 
 /**
  * Define the component emits.
+ *
+ * @type {Object}
  */
 defineEmits(['update:modelValue'])
 
@@ -103,6 +105,17 @@ const props = defineProps({
       return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
+
+  /**
+   * Whether the checkbox is disabled.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -142,16 +155,16 @@ const classesCheckbox = computed(() => {
   classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
 
   const colorClasses = {
-    red: 'text-nord-aurora-200 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-100/75',
+    red: 'text-nord-aurora-200 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-100/75 checked:!border-nord-aurora-100 checked:dark:!border-transparent',
     green:
-      'text-nord-aurora-1100 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-1000/75',
-    blue: 'text-nord-frost-300 checked:dark:shadow-lg checked:dark:shadow-nord-frost-400/75',
+      'text-nord-aurora-1100 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-1000/75 checked:!border-nord-aurora-1000 checked:dark:!border-transparent',
+    blue: 'text-nord-frost-300 checked:dark:shadow-lg checked:dark:shadow-nord-frost-400/75 checked:!border-nord-frost-400 checked:dark:!border-transparent',
     orange:
-      'text-nord-aurora-500 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-400/75',
+      'text-nord-aurora-500 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-400/75 checked:!border-nord-aurora-400 checked:dark:!border-transparent',
     yellow:
-      'text-nord-aurora-800 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-700/75',
+      'text-nord-aurora-800 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-700/75 checked:!border-nord-aurora-700 checked:dark:!border-transparent',
     mauve:
-      'text-nord-aurora-1400 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-1300/75',
+      'text-nord-aurora-1400 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-1300/75 checked:!border-nord-aurora-1300 checked:dark:!border-transparent',
   }
 
   classes.push(colorClasses[props.color] || colorClasses['blue'])
@@ -161,13 +174,17 @@ const classesCheckbox = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center space-x-2">
+  <div class="flex items-center space-x-2" :class="{ 'opacity-50': disabled }">
     <input
-      :id="id"
       type="checkbox"
+      :id="id"
       :class="classesCheckbox"
-      @change="$emit('update:modelValue', $event.target.checked)"
+      :disabled="disabled"
       :checked="modelValue"
+      :required="required"
+      :aria-labelledby="hasLabel ? `${id}-label` : null"
+      :aria-describedby="hasLabel ? `${id}-helper` : null"
+      @change="$emit('update:modelValue', $event.target.checked)"
     />
 
     <div class="flex-col">

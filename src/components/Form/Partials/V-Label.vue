@@ -3,7 +3,7 @@ import { computed, defineProps } from 'vue'
 
 const props = defineProps({
   /**
-   * The ID of the input.
+   * The ID of the label.
    *
    * @type {String}
    * @required
@@ -133,7 +133,7 @@ const classesRequired = computed(() => {
 const classesHelper = computed(() => {
   let classes = [
     'font-regular',
-    'opacity-50',
+    'opacity-75',
     'leading-none',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
@@ -153,11 +153,29 @@ const classesHelper = computed(() => {
 
   return classes.join(' ')
 })
+
+/**
+ * The ID of the label.
+ *
+ * @type {import('vue').ComputedRef<string>}
+ */
+const labelId = computed(() => {
+  return `${props.id}-label`
+})
+
+/**
+ * The ID of the helper text.
+ *
+ * @type {import('vue').ComputedRef<string>}
+ */
+const helperId = computed(() => {
+  return `${props.id}-helper`
+})
 </script>
 
 <template>
   <div class="flex space-x-1">
-    <label :for="id" :class="classesLabel">
+    <label :for="id" :class="classesLabel" :id="labelId">
       {{ label }}
     </label>
 
@@ -165,6 +183,8 @@ const classesHelper = computed(() => {
   </div>
 
   <div class="flex">
-    <span v-if="hasHelper" :class="classesHelper">{{ helper }}</span>
+    <span v-if="hasHelper" :class="classesHelper" :id="helperId">{{
+      helper
+    }}</span>
   </div>
 </template>

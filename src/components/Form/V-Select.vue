@@ -4,13 +4,19 @@ import { vOnClickOutside } from '@vueuse/components'
 import VLabel from './Partials/V-Label.vue'
 import VIcon from './Partials/V-Icon.vue'
 import VDropdown from './Partials/Select/V-Dropdown.vue'
-import VTag from './Partials/Select/V-Tag.vue'
 
 /**
  * Define the component emits.
+ *
+ * @type {Object}
  */
 const emit = defineEmits(['update:modelValue'])
 
+/**
+ * Click outside handler.
+ *
+ * @type {Array}
+ */
 const onClickOutsideHandler = [
   () => {
     closeDropdown()
@@ -42,24 +48,13 @@ const props = defineProps({
   },
 
   /**
-   * Multiple select.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  multiple: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * Model value of the input.
    *
-   * @type {Array|String}
+   * @type {String}
    * @default ''
    */
   modelValue: {
-    type: [Array, String],
+    type: String,
     default: '',
   },
 
@@ -142,6 +137,17 @@ const props = defineProps({
    * @default false
    */
   readOnly: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * Whether the input is disabled.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  disabled: {
     type: Boolean,
     default: false,
   },
@@ -247,21 +253,6 @@ const getOptionInfo = computed(() => {
 })
 
 /**
- * Get the option from an text.
- *
- * @type {import('vue').ComputedRef<Function>}
- * @param {String|Object} option
- * @returns {String}
- */
-const textToOption = computed(() => {
-  return (text) => {
-    return props.selectOptions.find((option) => {
-      return getOptionInfo.value(option, 'text') === text
-    })
-  }
-})
-
-/**
  * CSS error classes.
  *
  * @type {import ('vue').ComputedRef<Object>}
@@ -293,12 +284,11 @@ const classesInput = computed(() => {
     'rounded-r-none',
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
-    'read-only:opacity-75',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
     'caret-transparent',
+    'w-full',
     'cursor-pointer',
-    'grow',
     'placeholder:text-nord-300/50',
     'dark:placeholder:text-nord-snow-storm-300/50',
   ]
@@ -321,51 +311,25 @@ const classesInput = computed(() => {
   return classes.join(' ')
 })
 
-/**
- * CSS wrapper classes for the fake input if the input is multiple.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classesTagWrapper = computed(() => {
+const classesRemoveButton = computed(() => {
   let classes = [
-    'border',
-    'border-r-0',
-    'border-nord-snow-storm-100',
-    'focus:border-nord-snow-storm-100',
-    'dark:border-nord-400',
-    'dark:focus:border-nord-400',
-    'rounded-r-none',
-    'bg-nord-snow-storm-300',
-    'dark:bg-nord-100',
+    'absolute',
+    'rounded-full',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
-    'caret-transparent',
     'cursor-pointer',
-    'flex',
-    'gap-y-2',
-    'gap-x-1',
-    'items-center',
-    'justify-start',
-    'grow',
-    'flex-wrap',
+    'right-1',
+    'hover:bg-nord-snow-storm-100',
+    'hover:dark:bg-nord-300',
   ]
 
-  if (hasIcon.value) {
-    classes.push('rounded-l-none', 'border-l-0')
-  }
-
-  if (props.readOnly) {
-    classes.push('opacity-75')
-  }
-
   const sizeClasses = {
-    xs: ['text-xs', 'px-2', 'py-1'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
+    xs: ['text-xs', 'px-0.5'],
+    sm: ['text-sm'],
+    base: ['text-base'],
+    lg: ['text-lg'],
+    xl: ['text-xl'],
+    '2xl': ['text-2xl'],
   }
 
   classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
@@ -374,64 +338,41 @@ const classesTagWrapper = computed(() => {
 })
 
 /**
- * All selected options, either single or multi.
- * We use an array for both bases. The tags display is displayed differently based on the prop: multiple.
- *
- * @type {import('vue').Ref<Array>}
- */
-const selectedOptions = ref([])
-
-/**
  * Computes the value to be displayed in the input field based on the current selected options.
  *
- * @type {import('vue').ComputedRef<string | Array>}
- * @returns {string | Array}
+ * @type {import('vue').ComputedRef<string>}
+ * @returns {string}
  */
 const inputValue = computed(() => {
   if (typeof props.selectOptions[0] === 'string') {
-    return selectedOptions.value
+    return props.modelValue
   }
 
-  return selectedOptions.value.map((value) => {
-    const option = props.selectOptions.find(
-      (option) => getOptionInfo.value(option, 'value') === value
-    )
-
-    return getOptionInfo.value(option, 'text')
+  const selectedOptions = props.selectOptions.filter((option) => {
+    return props.modelValue.includes(getOptionInfo.value(option, 'value'))
   })
+
+  return selectedOptions.map((option) => getOptionInfo.value(option, 'text'))
 })
 
 /**
- * Handle the selection of an option when multiple is false.
+ * Handle the selection of an option.
  *
  * @param {String|Object} option
  */
-const handleSelectSingle = (option) => {
-  const value = getOptionInfo.value(option, 'value')
-  selectedOptions.value = [value]
-  emit('update:modelValue', value)
+const handleSelect = (option) => {
+  emit('update:modelValue', getOptionInfo.value(option, 'value'))
   closeDropdown()
 }
 
 /**
- * Handle the selection of an option when multiple is true.
+ * Reset the input value when the "X" is clicked.
  *
- * @param {String|Object} option
- * @returns {void}
+ * @param {Event} event
  */
-const handleSelectMultiple = (option) => {
-  const value = getOptionInfo.value(option, 'value')
-  const selectedValues = selectedOptions.value.slice()
-
-  if (selectedValues.includes(value)) {
-    const index = selectedValues.indexOf(value)
-    selectedValues.splice(index, 1)
-  } else {
-    selectedValues.push(value)
-  }
-
-  selectedOptions.value = selectedValues
-  emit('update:modelValue', selectedValues)
+const reset = (event) => {
+  emit('update:modelValue', '')
+  event.stopPropagation()
 }
 
 /**
@@ -439,13 +380,26 @@ const handleSelectMultiple = (option) => {
  *
  * @returns {void}
  */
-function closeDropdown() {
+const closeDropdown = () => {
   isDropdownOpen.value = false
+}
+
+/**
+ * Toggle the dropdown.
+ *
+ * @returns {void}
+ */
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value
 }
 </script>
 
 <template>
-  <div class="flex flex-col" v-on-click-outside="onClickOutsideHandler">
+  <div
+    class="flex flex-col"
+    :class="{ 'opacity-50': readOnly || disabled }"
+    v-on-click-outside="onClickOutsideHandler"
+  >
     <VLabel
       v-if="hasLabel"
       :id="id"
@@ -456,52 +410,40 @@ function closeDropdown() {
     />
 
     <div
-      class="flex mt-1"
-      @click="isDropdownOpen = props.readOnly ? false : !isDropdownOpen"
+      class="flex mt-1 cursor-pointer"
+      @click=";(readOnly || disabled) == false && toggleDropdown()"
     >
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :readOnly="readOnly"
-        :class="classesError"
-        class="cursor-pointer"
-      />
+      <VIcon v-if="hasIcon" :icon="icon" :size="size" :class="classesError" />
 
       <input
-        v-if="!multiple"
+        type="text"
         :id="id"
+        :class="classesInput"
         :placeholder="placeholder"
+        :value="inputValue"
         :required="required"
         :readonly="readOnly"
-        :class="classesInput"
-        type="text"
-        :value="inputValue"
+        :disabled="disabled"
+        :aria-labelledby="hasLabel ? `${id}-label` : null"
+        :aria-describedby="hasLabel ? `${id}-helper` : null"
         @keydown.prevent
       />
 
-      <div v-if="multiple" :class="classesTagWrapper">
+      <div class="relative flex items-center">
         <span
-          v-if="selectedOptions.length == 0"
-          class="text-nord-300/50 dark:text-nord-snow-storm-300/50"
-          >{{ props.placeholder }}</span
+          v-if="modelValue.length > 0"
+          class="material-symbols-rounded"
+          :class="classesRemoveButton"
+          @click="reset"
         >
-
-        <VTag
-          v-for="text in inputValue"
-          :key="text"
-          :option="textToOption(text)"
-          :size="size"
-          @remove="handleSelectMultiple"
-        />
+          clear
+        </span>
       </div>
 
       <VIcon
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
         :size="size"
-        :readOnly="readOnly"
         side="right"
-        class="cursor-pointer"
       />
     </div>
 
@@ -512,11 +454,8 @@ function closeDropdown() {
       :valueReducer="valueReducer"
       :size="size"
       :modelValue="modelValue"
-      :multiple="multiple"
-      @select="
-        multiple ? handleSelectMultiple($event) : handleSelectSingle($event)
-      "
       :show="isDropdownOpen"
+      @select="handleSelect($event)"
     />
   </div>
 </template>

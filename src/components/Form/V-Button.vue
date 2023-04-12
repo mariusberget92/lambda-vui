@@ -132,10 +132,6 @@ const classesButton = computed(() => {
     'h-full',
   ]
 
-  if (props.processing || props.disabled) {
-    classes.push('opacity-75')
-  }
-
   const roundedClasses = {
     none: 'rounded-none',
     sm: 'rounded-sm',
@@ -304,7 +300,7 @@ const classesText = computed(() => {
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex" :class="{ 'opacity-50': processing || disabled }">
     <button
       :type="type"
       :class="classesButton"

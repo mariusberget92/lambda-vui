@@ -14,18 +14,6 @@ const props = defineProps({
   },
 
   /**
-   * The icon also needs to know if the input is read only.
-   * This changes the opacity of the icon.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  readOnly: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * The size of the icon.
    *
    * @type {String}
@@ -78,10 +66,6 @@ const classesWrapper = computed(() => {
     classes[1] = 'border-l-0'
     classes[4] = 'rounded-r'
     classes[6] = 'pl-0'
-  }
-
-  if (props.readOnly) {
-    classes.push('opacity-75')
   }
 
   return classes.join(' ')
