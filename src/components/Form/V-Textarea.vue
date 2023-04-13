@@ -1,7 +1,6 @@
 <script setup>
 import { computed, defineProps, defineEmits } from 'vue'
 import VLabel from './Partials/V-Label.vue'
-import VIcon from './Partials/V-Icon.vue'
 
 /**
  * Define the component emits.
@@ -15,22 +14,22 @@ defineEmits(['update:modelValue'])
  */
 const props = defineProps({
   /**
-   * The ID of the input.
+   * The ID of the textarea.
    * If none is provided, a random one will be generated.
    *
    * @type {String}
    * @required
-   * @default lambda-input-<random>
+   * @default lambda-textarea-<random>
    */
   id: {
     type: String,
     default: () => {
-      return 'lambda-input-' + Math.random().toString(36).substring(2, 9)
+      return 'lambda-textarea-' + Math.random().toString(36).substring(2, 9)
     },
   },
 
   /**
-   * Model value of the input.
+   * Model value of the textarea.
    *
    * @type {String}
    * @default ''
@@ -41,7 +40,7 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Textarea size.
    *
    * @type {String}
    * @default base
@@ -56,7 +55,7 @@ const props = defineProps({
   },
 
   /**
-   * The label of the input.
+   * The label of the textarea.
    *
    * @type {String|Boolean}
    * @required
@@ -68,7 +67,7 @@ const props = defineProps({
   },
 
   /**
-   * The helper text of the input.
+   * The helper text of the textarea.
    * Will be displayed under the label.
    *
    * @type {String|Boolean}
@@ -80,7 +79,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is required.
+   * Whether the textarea is required.
    *
    * @type {Boolean}
    * @default false
@@ -91,18 +90,7 @@ const props = defineProps({
   },
 
   /**
-   * The icon of the input.
-   *
-   * @type {String|Boolean}
-   * @default false
-   */
-  icon: {
-    type: [String, Boolean],
-    default: false,
-  },
-
-  /**
-   * The placeholder of the input.
+   * The placeholder of the textarea.
    *
    * @type {String}
    * @default ''
@@ -113,7 +101,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is read-only.
+   * Whether the textarea is read-only.
    *
    * @type {Boolean}
    * @default false
@@ -124,7 +112,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is disabled.
+   * Whether the textarea is disabled.
    *
    * @type {Boolean}
    * @default false
@@ -135,22 +123,7 @@ const props = defineProps({
   },
 
   /**
-   * Input type.
-   *
-   * @type {String}
-   * @default text
-   * @options text, password, email, number
-   */
-  type: {
-    type: String,
-    default: 'text',
-    validator: (val) => {
-      return ['text', 'password', 'email', 'hidden'].includes(val)
-    },
-  },
-
-  /**
-   * Wheter the input has an error.
+   * Wheter the textarea has an error.
    *
    * @type {String|Boolean}
    * @default false
@@ -159,14 +132,22 @@ const props = defineProps({
     type: [String, Boolean],
     default: false,
   },
-})
 
-/**
- * Whether the input is hidden.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const isHidden = computed(() => props.type === 'hidden')
+  /**
+   * Wheter the textarea can be resized.
+   *
+   * @type {String}
+   * @default vertical
+   * @options none, vertical, horizontal, both
+   */
+  resize: {
+    type: String,
+    default: 'vertical',
+    validator: (val) => {
+      return ['none', 'vertical', 'horizontal', 'both'].includes(val)
+    },
+  },
+})
 
 /**
  * Whether the input has a label.
@@ -183,16 +164,9 @@ const hasLabel = computed(() => props.label !== false)
 const hasError = computed(() => props.error !== false)
 
 /**
- * Whether the input has an icon.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasIcon = computed(() => props.icon !== false)
-
-/**
  * CSS error classes.
  *
- * @type {import ('vue').ComputedRef<string>}
+ * @type {import ('vue').ComputedRef<Object>}
  */
 const classesError = computed(() => {
   let classes = [
@@ -206,11 +180,11 @@ const classesError = computed(() => {
 })
 
 /**
- * CSS input classes.
+ * CSS textarea classes.
  *
- * @type {import ('vue').ComputedRef<string>}
+ * @type {import ('vue').ComputedRef<Object>}
  */
-const classesInput = computed(() => {
+const classesTextarea = computed(() => {
   let classes = [
     'border',
     'border-nord-snow-storm-100',
@@ -218,29 +192,25 @@ const classesInput = computed(() => {
     'dark:border-nord-400',
     'dark:focus:border-nord-400',
     'rounded',
-    'w-full',
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
     'text-nord-300',
     'dark:text-nord-snow-storm-300',
     'placeholder:text-nord-300/50',
     'dark:placeholder:text-nord-snow-storm-300/50',
+    'w-full',
   ]
 
-  if (hasIcon.value) {
-    classes.push('rounded-l-none', 'border-l-0')
+  const resizeClasses = {
+    none: ['resize-none'],
+    vertical: ['resize-y'],
+    horizontal: ['resize-x'],
+    both: ['resize'],
   }
 
-  const sizeClassesWithIcon = {
-    xs: ['text-xs', 'px-2', 'py-1'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
-  }
+  classes.push(...(resizeClasses[props.resize] || resizeClasses['vertical']))
 
-  const sizeClassesWithoutIcon = {
+  const sizeClasses = {
     xs: ['text-xs', 'px-2', 'py-2'],
     sm: ['text-sm', 'px-2', 'py-2'],
     base: ['text-base', 'px-3', 'py-2'],
@@ -249,15 +219,7 @@ const classesInput = computed(() => {
     '2xl': ['text-2xl', 'px-4', 'py-4'],
   }
 
-  if (hasIcon.value) {
-    classes.push(
-      ...(sizeClassesWithIcon[props.size] || sizeClassesWithIcon['base'])
-    )
-  } else {
-    classes.push(
-      ...(sizeClassesWithoutIcon[props.size] || sizeClassesWithoutIcon['base'])
-    )
-  }
+  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
 
   return classes.join(' ')
 })
@@ -270,17 +232,6 @@ const classesInput = computed(() => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classesError.value : ''
-}
-
-/**
- * Icon error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getIconErrorClasses = () => {
   return hasError.value ? classesError.value : ''
 }
 </script>
@@ -300,17 +251,9 @@ const getIconErrorClasses = () => {
     />
 
     <div class="flex mt-1">
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :class="getIconErrorClasses()"
-      />
-
-      <input
-        :type="type"
+      <textarea
         :id="id"
-        :class="[classesInput, getInputErrorClasses()]"
+        :class="[classesTextarea, getInputErrorClasses()]"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"
@@ -319,7 +262,7 @@ const getIconErrorClasses = () => {
         :aria-labelledby="hasLabel ? `${id}-label` : null"
         :aria-describedby="hasLabel ? `${id}-helper` : null"
         @input="$emit('update:modelValue', $event.target.value)"
-      />
+      ></textarea>
     </div>
   </div>
 </template>

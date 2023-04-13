@@ -282,6 +282,7 @@ const classesInput = computed(() => {
     'dark:border-nord-400',
     'dark:focus:border-nord-400',
     'rounded-r-none',
+    'rounded',
     'bg-nord-snow-storm-300',
     'dark:bg-nord-100',
     'text-nord-300',
@@ -319,17 +320,20 @@ const classesRemoveButton = computed(() => {
     'dark:text-nord-snow-storm-300',
     'cursor-pointer',
     'right-1',
+    'flex',
+    'items-center',
+    'justify-center',
     'hover:bg-nord-snow-storm-100',
     'hover:dark:bg-nord-300',
   ]
 
   const sizeClasses = {
-    xs: ['text-xs', 'px-0.5'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
+    xs: ['text-xs', 'aspect-square', 'w-4'],
+    sm: ['text-sm', 'aspect-square', 'w-5'],
+    base: ['text-base', 'aspect-square', 'w-6'],
+    lg: ['text-lg', 'aspect-square', 'w-7'],
+    xl: ['text-xl', 'aspect-square', 'w-8'],
+    '2xl': ['text-2xl', 'aspect-square', 'w-9'],
   }
 
   classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
@@ -392,6 +396,28 @@ const closeDropdown = () => {
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
+
+/**
+ * Input error classes.
+ * We have to do this because using computed properties directly in the :class attribute,
+ * is not supported by Vue 3.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ */
+const getInputErrorClasses = () => {
+  return hasError.value && !hasIcon.value ? classesError.value : ''
+}
+
+/**
+ * Icon error classes.
+ * We have to do this because using computed properties directly in the :class attribute,
+ * is not supported by Vue 3.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ */
+const getIconErrorClasses = () => {
+  return hasError.value ? classesError.value : ''
+}
 </script>
 
 <template>
@@ -413,12 +439,17 @@ const toggleDropdown = () => {
       class="flex mt-1 cursor-pointer"
       @click=";(readOnly || disabled) == false && toggleDropdown()"
     >
-      <VIcon v-if="hasIcon" :icon="icon" :size="size" :class="classesError" />
+      <VIcon
+        v-if="hasIcon"
+        :icon="icon"
+        :size="size"
+        :class="getIconErrorClasses()"
+      />
 
       <input
         type="text"
         :id="id"
-        :class="classesInput"
+        :class="[classesInput, getInputErrorClasses()]"
         :placeholder="placeholder"
         :value="inputValue"
         :required="required"
