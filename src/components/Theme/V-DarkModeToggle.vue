@@ -28,28 +28,12 @@ const props = defineProps({
 const isDarkMode = ref(false)
 
 /**
- * Classes for the icon.
- *
- * @type {import('vue').ComputedRef<String>}
- */
-const classesIcon = computed(() => {
-  let classes = [
-    'material-symbols-rounded',
-    'text-nord-200',
-    'dark:text-nord-snow-storm-300',
-    'cursor-pointer',
-  ]
-
-  return classes.join(' ')
-})
-
-/**
  * Classes for the wrapper.
  *
  * @type {import('vue').ComputedRef<String>}
  */
 const classesWrapper = computed(() => {
-  let classes = ['fixed', 'z-2']
+  let classes = []
 
   const positionClasses = {
     'top-right': ['top-5', 'right-5'],
@@ -94,8 +78,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="classesWrapper">
-    <div :class="classesIcon">
+  <div :class="classesWrapper" class="fixed z-2">
+    <div
+      class="material-symbols-rounded text-nord-200 dark:text-nord-snow-storm-300 cursor-pointer"
+    >
       <span v-if="isDarkMode" @click="toggleDarkMode">light_mode</span>
       <span v-else @click="toggleDarkMode">dark_mode</span>
     </div>

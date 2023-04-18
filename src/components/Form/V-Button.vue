@@ -1,6 +1,11 @@
 <script setup>
 import { defineProps, computed } from 'vue'
 
+/**
+ * Component props.
+ *
+ * @type {Object}
+ */
 const props = defineProps({
   /**
    * The type of the button.
@@ -122,15 +127,7 @@ const hasText = computed(() => {
  * @type {import('vue').ComputedRef<String>}
  */
 const classesButton = computed(() => {
-  let classes = [
-    'border',
-    'dark:border-transparent',
-    'transition-colors',
-    'flex',
-    'items-center',
-    'justify-center',
-    'h-full',
-  ]
+  let classes = []
 
   const roundedClasses = {
     none: 'rounded-none',
@@ -228,74 +225,19 @@ const classesButton = computed(() => {
 })
 
 /**
- * The classes of the icon.
+ * Button size class.
  *
- * @type {import('vue').ComputedRef<String>}
+ * @type {import('vue').ComputedRef<string>}
  */
-const classesIcon = computed(() => {
-  let classes = ['material-symbols-rounded', 'text-white']
-
-  const sizeClasses = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    base: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl',
-    '2xl': 'text-2xl',
-  }
-
-  classes.push(sizeClasses[props.size] || sizeClasses['base'])
-
-  return classes.join(' ')
-})
-
-/**
- * The classes of the processing icon.
- *
- * @type {import('vue').ComputedRef<String>}
- */
-const classesProcessing = computed(() => {
-  let classes = [
-    'material-symbols-rounded',
-    'text-white',
-    'text-shadow-[0_2px_0_rgba(0,0,0,.15)]',
-    'animate-spin',
-  ]
-
-  const sizeClasses = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    base: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl',
-    '2xl': 'text-2xl',
-  }
-
-  classes.push(sizeClasses[props.size] || sizeClasses['base'])
-
-  return classes.join(' ')
-})
-
-/**
- * The classes of the text.
- *
- * @type {import('vue').ComputedRef<String>}
- */
-const classesText = computed(() => {
-  let classes = ['font-medium', 'text-white']
-
-  const sizeClasses = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    base: 'text-base',
-    lg: 'text-lg',
-    xl: 'text-xl',
-    '2xl': 'text-2xl',
-  }
-
-  classes.push(sizeClasses[props.size] || sizeClasses['base'])
-
-  return classes.join(' ')
+const buttonSize = computed(() => {
+  return {
+    xs: ['text-xs'],
+    sm: ['text-sm'],
+    base: ['text-base'],
+    lg: ['text-lg'],
+    xl: ['text-xl'],
+    '2xl': ['text-2xl'],
+  }[props.size].join(' ')
 })
 </script>
 
@@ -303,12 +245,25 @@ const classesText = computed(() => {
   <div class="flex" :class="{ 'opacity-50': processing || disabled }">
     <button
       :type="type"
+      class="border dark:border-transparent transition-colors flex items-center justify-center h-full"
       :class="classesButton"
       :disabled="processing || disabled"
     >
-      <span v-if="hasIcon && !processing" :class="classesIcon">{{ icon }}</span>
-      <span v-if="processing" :class="classesProcessing">refresh</span>
-      <span v-if="hasText" :class="classesText">{{ text }}</span>
+      <span
+        v-if="hasIcon && !processing"
+        :class="buttonSize"
+        class="material-symbols-rounded text-white"
+        >{{ icon }}</span
+      >
+      <span
+        v-if="processing"
+        :class="buttonSize"
+        class="material-symbols-rounded text-white animate-spin"
+        >refresh</span
+      >
+      <span v-if="hasText" :class="buttonSize" class="font-medium text-white">{{
+        text
+      }}</span>
     </button>
   </div>
 </template>

@@ -1,6 +1,11 @@
 <script setup>
 import { computed, defineProps } from 'vue'
 
+/**
+ * Component props.
+ *
+ * @type {Object}
+ */
 const props = defineProps({
   /**
    * The ID of the label.
@@ -72,86 +77,35 @@ const hasHelper = computed(() => {
 })
 
 /**
- * The classes of the label.
+ * Label size class.
  *
  * @type {import('vue').ComputedRef<string>}
  */
-const classesLabel = computed(() => {
-  let classes = [
-    'font-semibold',
-    'leading-none',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-  ]
-
-  const sizeClasses = {
+const classLabelSize = computed(() => {
+  return {
     xs: ['text-xs'],
     sm: ['text-sm'],
     base: ['text-base'],
     lg: ['text-lg'],
     xl: ['text-xl'],
     '2xl': ['text-2xl'],
-  }
-
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
-
-  return classes.join(' ')
+  }[props.size].join(' ')
 })
 
 /**
- * The classes of the required asterisk.
+ * Helper size class.
  *
  * @type {import('vue').ComputedRef<string>}
  */
-const classesRequired = computed(() => {
-  let classes = [
-    'text-nord-aurora-200',
-    'dark:text-shadow',
-    'dark:shadow-nord-aurora-100',
-    'leading-none',
-  ]
-
-  const sizeClasses = {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }
-
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
-
-  return classes.join(' ')
-})
-
-/**
- * The classes of the helper text.
- *
- * @type {import('vue').ComputedRef<string>}
- */
-const classesHelper = computed(() => {
-  let classes = [
-    'font-regular',
-    'opacity-75',
-    'leading-none',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-    'mt-0.5',
-  ]
-
-  const sizeClasses = {
+const classHelperSize = computed(() => {
+  return {
     xs: ['text-xs'],
     sm: ['text-xs'],
     base: ['text-sm'],
     lg: ['text-base'],
     xl: ['text-base'],
     '2xl': ['text-lg'],
-  }
-
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
-
-  return classes.join(' ')
+  }[props.size].join(' ')
 })
 
 /**
@@ -159,7 +113,7 @@ const classesHelper = computed(() => {
  *
  * @type {import('vue').ComputedRef<string>}
  */
-const labelId = computed(() => {
+const idLabel = computed(() => {
   return `${props.id}-label`
 })
 
@@ -168,23 +122,36 @@ const labelId = computed(() => {
  *
  * @type {import('vue').ComputedRef<string>}
  */
-const helperId = computed(() => {
+const idHelper = computed(() => {
   return `${props.id}-helper`
 })
 </script>
 
 <template>
   <div class="flex space-x-1">
-    <label :for="id" :class="classesLabel" :id="labelId">
+    <label
+      :for="id"
+      class="font-semibold leading-none text-nord-300 dark:text-nord-snow-storm-300"
+      :class="classLabelSize"
+      :id="idLabel"
+    >
       {{ label }}
     </label>
 
-    <span v-if="required" :class="classesRequired">*</span>
+    <span
+      v-if="required"
+      class="'leading-none text-nord-aurora-200 dark:shadow-nord-aurora-100 dark:text-shadow"
+      :class="labelSize"
+      >*</span
+    >
   </div>
 
-  <div class="flex">
-    <span v-if="hasHelper" :class="classesHelper" :id="helperId">{{
-      helper
-    }}</span>
+  <div class="flex" v-if="hasHelper">
+    <span
+      :id="idHelper"
+      class="font-regular mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
+      :class="classHelperSize"
+      >{{ helper }}</span
+    >
   </div>
 </template>

@@ -35,10 +35,12 @@ const props = defineProps({
    *
    * @type {Boolean}
    * @default false
+   * @required
    */
   modelValue: {
     type: Boolean,
     default: false,
+    required: true,
   },
 
   /**
@@ -133,15 +135,7 @@ const hasLabel = computed(() => {
  * @type {import('vue').ComputedRef<String>}
  */
 const classesCheckbox = computed(() => {
-  let classes = [
-    'rounded',
-    'bg-nord-snow-storm-300',
-    'dark:bg-nord-100',
-    'border',
-    'cursor-pointer',
-    'border-nord-snow-storm-100',
-    'dark:border-nord-400',
-  ]
+  let classes = []
 
   const sizeClasses = {
     xs: ['w-4 h-4'],
@@ -152,7 +146,7 @@ const classesCheckbox = computed(() => {
     '2xl': ['w-9 h-9'],
   }
 
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
+  classes.push(...sizeClasses[props.size])
 
   const colorClasses = {
     red: 'text-nord-aurora-200 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-100/75 checked:!border-nord-aurora-100 checked:dark:!border-transparent',
@@ -167,7 +161,7 @@ const classesCheckbox = computed(() => {
       'text-nord-aurora-1400 checked:dark:shadow-lg checked:dark:shadow-nord-aurora-1300/75 checked:!border-nord-aurora-1300 checked:dark:!border-transparent',
   }
 
-  classes.push(colorClasses[props.color] || colorClasses['blue'])
+  classes.push(colorClasses[props.color])
 
   return classes.join(' ')
 })
@@ -178,6 +172,7 @@ const classesCheckbox = computed(() => {
     <input
       type="checkbox"
       :id="id"
+      class="rounded bg-nord-snow-storm-300 dark:bg-nord-100 border cursor-pointer border-nord-snow-storm-100 dark:border-nord-400"
       :class="classesCheckbox"
       :disabled="disabled"
       :checked="modelValue"

@@ -6,7 +6,7 @@ import { defineProps, computed, defineEmits } from 'vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['select'])
+const emit = defineEmits(['add'])
 
 /**
  * Component props.
@@ -17,12 +17,12 @@ const props = defineProps({
   /**
    * Model value of the input.
    *
-   * @type {String}
-   * @default ''
+   * @type {Array}
+   * @default []
    */
   modelValue: {
-    type: String,
-    default: '',
+    type: Array,
+    default: () => [],
   },
 
   /**
@@ -111,26 +111,12 @@ const classSize = computed(() => {
  */
 const getOptionInfo = computed(() => {
   return (option, type) => {
-    if (typeof option === 'string') {
+    if (typeof option === 'string' || typeof option === 'number') {
       return option
     }
 
     const fn = type === 'text' ? props.textReducer : props.valueReducer
     return fn(option)
-  }
-})
-
-/**
- * Check if a option is selected.
- *
- * @type {import('vue').ComputedRef<Function>}
- * @param {String|Object} option
- * @returns {Boolean}
- */
-const isSelected = computed(() => {
-  return (option) => {
-    const value = getOptionInfo.value(option, 'value')
-    return value === props.modelValue
   }
 })
 </script>
@@ -145,11 +131,8 @@ const isSelected = computed(() => {
         <button
           type="button"
           class="flex flex-col cursor-pointer p-2 w-full text-nord-300 dark:text-nord-snow-storm-300 first:rounded-t last:rounded-b bg-nord-snow-storm-300 hover:bg-nord-snow-storm-100 dark:bg-nord-100 dark:hover:bg-nord-200"
-          :class="[
-            isSelected(option) && 'border-l-4 border-nord-frost-300',
-            classSize,
-          ]"
-          @click="emit('select', option)"
+          :class="[classSize]"
+          @mousedown.prevent="emit('add', option)"
         >
           <span
             class="flex"

@@ -33,10 +33,12 @@ const props = defineProps({
    *
    * @type {String}
    * @default ''
+   * @required
    */
   modelValue: {
     type: String,
     default: '',
+    required: true,
   },
 
   /**
@@ -168,15 +170,13 @@ const hasError = computed(() => props.error !== false)
  *
  * @type {import ('vue').ComputedRef<Object>}
  */
-const classesError = computed(() => {
-  let classes = [
+const classError = computed(() => {
+  return [
     'border-l-4',
     '!border-l-nord-aurora-200',
     'dark:shadow-[-10px_0_10px]',
     'dark:shadow-nord-aurora-100/25',
-  ]
-
-  return classes.join(' ')
+  ].join(' ')
 })
 
 /**
@@ -184,22 +184,8 @@ const classesError = computed(() => {
  *
  * @type {import ('vue').ComputedRef<Object>}
  */
-const classesTextarea = computed(() => {
-  let classes = [
-    'border',
-    'border-nord-snow-storm-100',
-    'focus:border-nord-snow-storm-100',
-    'dark:border-nord-400',
-    'dark:focus:border-nord-400',
-    'rounded',
-    'bg-nord-snow-storm-300',
-    'dark:bg-nord-100',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-    'placeholder:text-nord-300/50',
-    'dark:placeholder:text-nord-snow-storm-300/50',
-    'w-full',
-  ]
+const classTextarea = computed(() => {
+  let classes = []
 
   const resizeClasses = {
     none: ['resize-none'],
@@ -208,18 +194,27 @@ const classesTextarea = computed(() => {
     both: ['resize'],
   }
 
-  classes.push(...(resizeClasses[props.resize] || resizeClasses['vertical']))
-
   const sizeClasses = {
-    xs: ['text-xs', 'px-2', 'py-2'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
+    xs: ['text-xs'],
+    sm: ['text-sm'],
+    base: ['text-base'],
+    lg: ['text-lg'],
+    xl: ['text-xl'],
+    '2xl': ['text-2xl'],
   }
 
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
+  const paddingClasses = {
+    xs: ['px-2', 'py-2'],
+    sm: ['px-2', 'py-2'],
+    base: ['px-3', 'py-2'],
+    lg: ['px-3', 'py-3'],
+    xl: ['px-4', 'py-3'],
+    '2xl': ['px-4', 'py-4'],
+  }
+
+  classes.push(...resizeClasses[props.resize])
+  classes.push(...sizeClasses[props.size])
+  classes.push(...paddingClasses[props.size])
 
   return classes.join(' ')
 })
@@ -232,14 +227,14 @@ const classesTextarea = computed(() => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getInputErrorClasses = () => {
-  return hasError.value ? classesError.value : ''
+  return hasError.value ? classError.value : ''
 }
 </script>
 
 <template>
   <div
-    class="flex flex-col"
-    :class="{ hidden: isHidden, 'opacity-50': readOnly || disabled }"
+    class="flex flex-col w-full"
+    :class="{ 'opacity-50': readOnly || disabled }"
   >
     <VLabel
       v-if="hasLabel"
@@ -250,10 +245,11 @@ const getInputErrorClasses = () => {
       :size="size"
     />
 
-    <div class="flex mt-1">
+    <div class="mt-1 flex">
       <textarea
         :id="id"
-        :class="[classesTextarea, getInputErrorClasses()]"
+        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50 w-full"
+        :class="[classTextarea, getInputErrorClasses()]"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"

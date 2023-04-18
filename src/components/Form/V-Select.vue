@@ -52,8 +52,10 @@ const props = defineProps({
    *
    * @type {String}
    * @default ''
+   * @required
    */
   modelValue: {
+    required: true,
     type: String,
     default: '',
   },
@@ -165,19 +167,17 @@ const props = defineProps({
 
   /**
    * An array of options to be displayed in the select component.
-   * @prop {Array} selectOptions - The options to be displayed.
-   * @prop {Object} selectOptions[] - An object representing an option in the select component.
-   * @prop {string} selectOptions[].text - The text to be displayed for the option.
-   * @prop {string} selectOptions[].value - The value of the option.
-   * @prop {string} [selectOptions[].emoji] - The emoji associated with the option.
+   * @prop {Array} options - The options to be displayed.
+   * @prop {Object} options[] - An object representing an option in the select component.
+   * @prop {string} options[].text - The text to be displayed for the option.
+   * @prop {string} options[].value - The value of the option.
+   * @prop {string} [options[].emoji] - The emoji associated with the option.
    *
    * @type {Array<String>|Array<Object>}
    * @required
-   * @default []
    */
-  selectOptions: {
-    type: [Array],
-    default: () => [],
+  options: {
+    type: Array,
     required: true,
   },
 
@@ -253,106 +253,21 @@ const getOptionInfo = computed(() => {
 })
 
 /**
- * CSS error classes.
- *
- * @type {import ('vue').ComputedRef<Object>}
- * @returns {Object}
- */
-const classesError = computed(() => {
-  return {
-    'border-l-4': hasError.value,
-    '!border-l-nord-aurora-200': hasError.value,
-    'dark:shadow-[-10px_0_10px]': hasError.value,
-    'dark:shadow-nord-aurora-100/25': hasError.value,
-  }
-})
-
-/**
- * CSS input classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classesInput = computed(() => {
-  let classes = [
-    'border',
-    'border-r-0',
-    'border-nord-snow-storm-100',
-    'focus:border-nord-snow-storm-100',
-    'dark:border-nord-400',
-    'dark:focus:border-nord-400',
-    'rounded-r-none',
-    'rounded',
-    'bg-nord-snow-storm-300',
-    'dark:bg-nord-100',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-    'caret-transparent',
-    'w-full',
-    'cursor-pointer',
-    'placeholder:text-nord-300/50',
-    'dark:placeholder:text-nord-snow-storm-300/50',
-  ]
-
-  if (hasIcon.value) {
-    classes.push('rounded-l-none', 'border-l-0')
-  }
-
-  const sizeClasses = {
-    xs: ['text-xs', 'px-2', 'py-1'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
-  }
-
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
-
-  return classes.join(' ')
-})
-
-const classesRemoveButton = computed(() => {
-  let classes = [
-    'absolute',
-    'rounded-full',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-    'cursor-pointer',
-    'right-1',
-    'flex',
-    'items-center',
-    'justify-center',
-    'hover:bg-nord-snow-storm-100',
-    'hover:dark:bg-nord-300',
-  ]
-
-  const sizeClasses = {
-    xs: ['text-xs', 'aspect-square', 'w-4'],
-    sm: ['text-sm', 'aspect-square', 'w-5'],
-    base: ['text-base', 'aspect-square', 'w-6'],
-    lg: ['text-lg', 'aspect-square', 'w-7'],
-    xl: ['text-xl', 'aspect-square', 'w-8'],
-    '2xl': ['text-2xl', 'aspect-square', 'w-9'],
-  }
-
-  classes.push(...(sizeClasses[props.size] || sizeClasses['base']))
-
-  return classes.join(' ')
-})
-
-/**
  * Computes the value to be displayed in the input field based on the current selected options.
  *
  * @type {import('vue').ComputedRef<string>}
  * @returns {string}
  */
 const inputValue = computed(() => {
-  if (typeof props.selectOptions[0] === 'string') {
+  if (props.modelValue === '') {
+    return ''
+  }
+
+  if (typeof props.options[0] === 'string') {
     return props.modelValue
   }
 
-  const selectedOptions = props.selectOptions.filter((option) => {
+  const selectedOptions = props.options.filter((option) => {
     return props.modelValue.includes(getOptionInfo.value(option, 'value'))
   })
 
@@ -405,7 +320,7 @@ const toggleDropdown = () => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classesError.value : ''
+  return hasError.value && !hasIcon.value ? classError.value : ''
 }
 
 /**
@@ -416,13 +331,79 @@ const getInputErrorClasses = () => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getIconErrorClasses = () => {
-  return hasError.value ? classesError.value : ''
+  return hasError.value ? classError.value : ''
 }
+
+/**
+ * CSS error classes.
+ *
+ * @type {import ('vue').ComputedRef<Object>}
+ * @returns {Object}
+ */
+const classError = computed(() => {
+  return [
+    'border-l-4',
+    '!border-l-nord-aurora-200',
+    'dark:shadow-[-10px_0_10px]',
+    'dark:shadow-nord-aurora-100/25',
+  ].join(' ')
+})
+
+/**
+ * CSS size classes.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ * @returns {string}
+ */
+const classSize = computed(() => {
+  return {
+    xs: ['text-xs'],
+    sm: ['text-sm'],
+    base: ['text-base'],
+    lg: ['text-lg'],
+    xl: ['text-xl'],
+    '2xl': ['text-2xl'],
+  }[props.size].join(' ')
+})
+
+/**
+ * CSS input classes.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ * @returns {string}
+ */
+const classInput = computed(() => {
+  return {
+    xs: ['px-2', 'py-2'],
+    sm: ['px-2', 'py-2'],
+    base: ['px-3', 'py-2'],
+    lg: ['px-3', 'py-3'],
+    xl: ['px-4', 'py-3'],
+    '2xl': ['px-4', 'py-4'],
+  }[props.size].join(' ')
+})
+
+/**
+ * CSS remove button classes.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ * @returns {string}
+ */
+const classRemoveButton = computed(() => {
+  return {
+    xs: ['w-4'],
+    sm: ['w-5'],
+    base: ['w-6'],
+    lg: ['w-7'],
+    xl: ['w-8'],
+    '2xl': ['w-9'],
+  }[props.size].join(' ')
+})
 </script>
 
 <template>
   <div
-    class="flex flex-col"
+    class="flex flex-col w-full"
     :class="{ 'opacity-50': readOnly || disabled }"
     v-on-click-outside="onClickOutsideHandler"
   >
@@ -436,7 +417,7 @@ const getIconErrorClasses = () => {
     />
 
     <div
-      class="flex mt-1 cursor-pointer"
+      class="mt-1 flex cursor-pointer"
       @click=";(readOnly || disabled) == false && toggleDropdown()"
     >
       <VIcon
@@ -449,7 +430,13 @@ const getIconErrorClasses = () => {
       <input
         type="text"
         :id="id"
-        :class="[classesInput, getInputErrorClasses()]"
+        class="border border-r-0 border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded-r-none rounded bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 caret-transparent w-full cursor-pointer placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
+        :class="[
+          classInput,
+          classSize,
+          getInputErrorClasses(),
+          { 'rounded-l-none border-l-0': hasIcon },
+        ]"
         :placeholder="placeholder"
         :value="inputValue"
         :required="required"
@@ -463,8 +450,8 @@ const getIconErrorClasses = () => {
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded"
-          :class="classesRemoveButton"
+          class="material-symbols-rounded absolute aspect-square rounded-full text-nord-300 dark:text-nord-snow-storm-300 cursor-pointer right-1 flex items-center justify-center hover:bg-nord-snow-storm-100 hover:dark:bg-nord-300"
+          :class="[classRemoveButton, classSize]"
           @click="reset"
         >
           clear
@@ -480,7 +467,7 @@ const getIconErrorClasses = () => {
 
     <VDropdown
       ref="dropdown"
-      :selectOptions="selectOptions"
+      :options="options"
       :textReducer="textReducer"
       :valueReducer="valueReducer"
       :size="size"

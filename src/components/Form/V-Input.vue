@@ -34,10 +34,12 @@ const props = defineProps({
    *
    * @type {String}
    * @default ''
+   * @required
    */
   modelValue: {
     type: String,
     default: '',
+    required: true,
   },
 
   /**
@@ -195,14 +197,12 @@ const hasIcon = computed(() => props.icon !== false)
  * @type {import ('vue').ComputedRef<string>}
  */
 const classesError = computed(() => {
-  let classes = [
+  return [
     'border-l-4',
     '!border-l-nord-aurora-200',
     'dark:shadow-[-10px_0_10px]',
     'dark:shadow-nord-aurora-100/25',
-  ]
-
-  return classes.join(' ')
+  ].join(' ')
 })
 
 /**
@@ -211,55 +211,23 @@ const classesError = computed(() => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const classesInput = computed(() => {
-  let classes = [
-    'border',
-    'border-nord-snow-storm-100',
-    'focus:border-nord-snow-storm-100',
-    'dark:border-nord-400',
-    'dark:focus:border-nord-400',
-    'rounded',
-    'w-full',
-    'bg-nord-snow-storm-300',
-    'dark:bg-nord-100',
-    'text-nord-300',
-    'dark:text-nord-snow-storm-300',
-    'placeholder:text-nord-300/50',
-    'dark:placeholder:text-nord-snow-storm-300/50',
-  ]
-
-  if (hasIcon.value) {
-    classes.push('rounded-l-none', 'border-l-0')
-  }
-
-  const sizeClassesWithIcon = {
-    xs: ['text-xs', 'px-2', 'py-1'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
-  }
-
-  const sizeClassesWithoutIcon = {
-    xs: ['text-xs', 'px-2', 'py-2'],
-    sm: ['text-sm', 'px-2', 'py-2'],
-    base: ['text-base', 'px-3', 'py-2'],
-    lg: ['text-lg', 'px-3', 'py-3'],
-    xl: ['text-xl', 'px-4', 'py-3'],
-    '2xl': ['text-2xl', 'px-4', 'py-4'],
-  }
-
-  if (hasIcon.value) {
-    classes.push(
-      ...(sizeClassesWithIcon[props.size] || sizeClassesWithIcon['base'])
-    )
-  } else {
-    classes.push(
-      ...(sizeClassesWithoutIcon[props.size] || sizeClassesWithoutIcon['base'])
-    )
-  }
-
-  return classes.join(' ')
+  return hasIcon.value
+    ? {
+        xs: ['text-xs', 'px-2', 'py-1'],
+        sm: ['text-sm', 'px-2', 'py-2'],
+        base: ['text-base', 'px-3', 'py-2'],
+        lg: ['text-lg', 'px-3', 'py-3'],
+        xl: ['text-xl', 'px-4', 'py-3'],
+        '2xl': ['text-2xl', 'px-4', 'py-4'],
+      }[props.size].join(' ')
+    : {
+        xs: ['text-xs', 'px-2', 'py-2'],
+        sm: ['text-sm', 'px-2', 'py-2'],
+        base: ['text-base', 'px-3', 'py-2'],
+        lg: ['text-lg', 'px-3', 'py-3'],
+        xl: ['text-xl', 'px-4', 'py-3'],
+        '2xl': ['text-2xl', 'px-4', 'py-4'],
+      }[props.size].join(' ')
 })
 
 /**
@@ -287,7 +255,7 @@ const getIconErrorClasses = () => {
 
 <template>
   <div
-    class="flex flex-col"
+    class="flex flex-col w-full"
     :class="{ hidden: isHidden, 'opacity-50': readOnly || disabled }"
   >
     <VLabel
@@ -299,7 +267,7 @@ const getIconErrorClasses = () => {
       :size="size"
     />
 
-    <div class="flex mt-1">
+    <div class="mt-1 flex">
       <VIcon
         v-if="hasIcon"
         :icon="icon"
@@ -310,7 +278,12 @@ const getIconErrorClasses = () => {
       <input
         :type="type"
         :id="id"
-        :class="[classesInput, getInputErrorClasses()]"
+        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded w-full bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
+        :class="[
+          classesInput,
+          getInputErrorClasses(),
+          { 'rounded-l-none border-l-0': hasIcon },
+        ]"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"
