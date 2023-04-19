@@ -134,7 +134,7 @@ const hasLabel = computed(() => {
  *
  * @type {import('vue').ComputedRef<String>}
  */
-const classesCheckbox = computed(() => {
+const classCheckbox = computed(() => {
   let classes = []
 
   const sizeClasses = {
@@ -173,7 +173,7 @@ const classesCheckbox = computed(() => {
       type="checkbox"
       :id="id"
       class="rounded bg-nord-snow-storm-300 dark:bg-nord-100 border cursor-pointer border-nord-snow-storm-100 dark:border-nord-400"
-      :class="classesCheckbox"
+      :class="classCheckbox"
       :disabled="disabled"
       :checked="modelValue"
       :required="required"

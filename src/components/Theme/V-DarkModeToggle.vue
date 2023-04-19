@@ -32,7 +32,7 @@ const isDarkMode = ref(false)
  *
  * @type {import('vue').ComputedRef<String>}
  */
-const classesWrapper = computed(() => {
+const classWrapper = computed(() => {
   let classes = []
 
   const positionClasses = {
@@ -78,7 +78,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="classesWrapper" class="fixed z-2">
+  <div :class="classWrapper" class="fixed z-2">
     <div
       class="material-symbols-rounded text-nord-200 dark:text-nord-snow-storm-300 cursor-pointer"
     >

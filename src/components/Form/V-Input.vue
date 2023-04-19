@@ -196,7 +196,7 @@ const hasIcon = computed(() => props.icon !== false)
  *
  * @type {import ('vue').ComputedRef<string>}
  */
-const classesError = computed(() => {
+const classError = computed(() => {
   return [
     'border-l-4',
     '!border-l-nord-aurora-200',
@@ -210,7 +210,7 @@ const classesError = computed(() => {
  *
  * @type {import ('vue').ComputedRef<string>}
  */
-const classesInput = computed(() => {
+const classInput = computed(() => {
   return hasIcon.value
     ? {
         xs: ['text-xs', 'px-2', 'py-1'],
@@ -238,7 +238,7 @@ const classesInput = computed(() => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classesError.value : ''
+  return hasError.value && !hasIcon.value ? classError.value : ''
 }
 
 /**
@@ -249,7 +249,7 @@ const getInputErrorClasses = () => {
  * @type {import ('vue').ComputedRef<string>}
  */
 const getIconErrorClasses = () => {
-  return hasError.value ? classesError.value : ''
+  return hasError.value ? classError.value : ''
 }
 </script>
 
@@ -280,7 +280,7 @@ const getIconErrorClasses = () => {
         :id="id"
         class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded w-full bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
         :class="[
-          classesInput,
+          classInput,
           getInputErrorClasses(),
           { 'rounded-l-none border-l-0': hasIcon },
         ]"

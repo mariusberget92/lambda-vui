@@ -94,6 +94,12 @@ const props = defineProps({
     default: false,
   },
 
+  /**
+   * Whether the button is rounded.
+   *
+   * @type {String}
+   * @default 'base'
+   */
   rounded: {
     type: String,
     default: 'base',
@@ -126,7 +132,7 @@ const hasText = computed(() => {
  *
  * @type {import('vue').ComputedRef<String>}
  */
-const classesButton = computed(() => {
+const classButton = computed(() => {
   let classes = []
 
   const roundedClasses = {
@@ -229,7 +235,7 @@ const classesButton = computed(() => {
  *
  * @type {import('vue').ComputedRef<string>}
  */
-const buttonSize = computed(() => {
+const classSize = computed(() => {
   return {
     xs: ['text-xs'],
     sm: ['text-sm'],
@@ -246,22 +252,22 @@ const buttonSize = computed(() => {
     <button
       :type="type"
       class="border dark:border-transparent transition-colors flex items-center justify-center h-full"
-      :class="classesButton"
+      :class="classButton"
       :disabled="processing || disabled"
     >
       <span
         v-if="hasIcon && !processing"
-        :class="buttonSize"
+        :class="classSize"
         class="material-symbols-rounded text-white"
         >{{ icon }}</span
       >
       <span
         v-if="processing"
-        :class="buttonSize"
+        :class="classSize"
         class="material-symbols-rounded text-white animate-spin"
         >refresh</span
       >
-      <span v-if="hasText" :class="buttonSize" class="font-medium text-white">{{
+      <span v-if="hasText" :class="classSize" class="font-medium text-white">{{
         text
       }}</span>
     </button>
