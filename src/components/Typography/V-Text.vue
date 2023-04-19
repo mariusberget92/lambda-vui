@@ -118,6 +118,6 @@ const classColor = computed(() => {
 
 <template>
   <p :class="[classSize, classColor]" class="leading-3">
-    <slot></slot>
+    <slot />
   </p>
 </template>
