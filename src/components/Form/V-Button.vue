@@ -95,16 +95,17 @@ const props = defineProps({
   },
 
   /**
-   * Whether the button is rounded.
+   * The shape of the button.
    *
    * @type {String}
-   * @default 'base'
+   * @default rounded
+   * @options square, rounded, pill
    */
-  rounded: {
+  shape: {
     type: String,
-    default: 'base',
+    default: 'rounded',
     validator: (val) => {
-      return ['none', 'sm', 'base', 'lg', 'full'].includes(val)
+      return ['square', 'rounded', 'pill'].includes(val)
     },
   },
 })
@@ -134,14 +135,6 @@ const hasText = computed(() => {
  */
 const classButton = computed(() => {
   let classes = []
-
-  const roundedClasses = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    base: 'rounded',
-    lg: 'rounded-lg',
-    full: 'rounded-full',
-  }
 
   const sizeClasses = {
     xs: {
@@ -225,7 +218,6 @@ const classButton = computed(() => {
   }
 
   classes.push(...(colorClasses[props.color] || colorClasses['blue']))
-  classes.push(roundedClasses[props.rounded] || roundedClasses['base'])
 
   return classes.join(' ')
 })
@@ -252,7 +244,14 @@ const classSize = computed(() => {
     <button
       :type="type"
       class="border dark:border-transparent transition-colors flex items-center justify-center h-full"
-      :class="classButton"
+      :class="[
+        classButton,
+        {
+          rounded: shape == 'rounded',
+          'rounded-none': shape == 'square',
+          'rounded-full': shape == 'pill',
+        },
+      ]"
       :disabled="processing || disabled"
     >
       <span

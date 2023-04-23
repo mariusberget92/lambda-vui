@@ -200,6 +200,21 @@ const props = defineProps({
     type: Function,
     default: (option) => option.text,
   },
+
+  /**
+   * The shape of the input.
+   *
+   * @type {String}
+   * @default rounded
+   * @options square, rounded, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['square', 'rounded', 'pill'].includes(val)
+    },
+  },
 })
 
 /**
@@ -424,6 +439,7 @@ const classRemoveButton = computed(() => {
         v-if="hasIcon"
         :icon="icon"
         :size="size"
+        :shape="shape"
         :class="getIconErrorClasses()"
       />
 
@@ -435,7 +451,14 @@ const classRemoveButton = computed(() => {
           classInput,
           classSize,
           getInputErrorClasses(),
-          { 'rounded-l-none border-l-0': hasIcon },
+          {             
+            'border-l-0': hasIcon,
+            rounded: shape == 'rounded',
+            'rounded-full': shape == 'pill',
+            'rounded-none': shape == 'square',
+            'rounded-l-none':
+              hasIcon && (shape == 'pill' || shape == 'rounded'),
+            },
         ]"
         :placeholder="placeholder"
         :value="inputValue"
@@ -462,6 +485,7 @@ const classRemoveButton = computed(() => {
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
         :size="size"
         side="right"
+        :shape="shape"
       />
     </div>
 

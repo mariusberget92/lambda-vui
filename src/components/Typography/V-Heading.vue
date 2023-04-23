@@ -132,7 +132,11 @@ const classColor = computed(() => {
 </script>
 
 <template>
-  <component :is="heading" :class="[classSize, classColor]">
+  <component
+    class="font-bold leading-none"
+    :is="heading"
+    :class="[classSize, classColor]"
+  >
     <slot />
   </component>
 </template>

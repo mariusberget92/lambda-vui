@@ -140,8 +140,8 @@ const idHelper = computed(() => {
 
     <span
       v-if="required"
-      class="'leading-none text-nord-aurora-200 dark:shadow-nord-aurora-100 dark:text-shadow"
-      :class="labelSize"
+      class="leading-none text-nord-aurora-200 dark:shadow-nord-aurora-100 dark:text-shadow"
+      :class="classLabelSize"
       >*</span
     >
   </div>

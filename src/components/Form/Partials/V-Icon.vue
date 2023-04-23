@@ -47,6 +47,21 @@ const props = defineProps({
       return ['left', 'right'].includes(val)
     },
   },
+
+  /**
+   * The shape of the icon.
+   *
+   * @type {String}
+   * @default rounded
+   * @options square, rounded, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['square', 'rounded', 'pill'].includes(val)
+    },
+  },
 })
 
 /**
@@ -95,8 +110,14 @@ const classIconPadding = computed(() => {
   <div
     class="flex items-center justify-center bg-nord-snow-storm-300 dark:bg-nord-100 border-nord-snow-storm-100 dark:border-nord-400 border p-2"
     :class="{
-      'border-l-0 rounded-r pl-0': props.side === 'right',
-      'border-r-0 rounded-l pr-0': props.side !== 'right',
+      'border-l-0 pl-0': props.side === 'right',
+      'border-r-0 pr-0': props.side !== 'right',
+      'rounded-r': props.shape === 'rounded' && props.side === 'right',
+      'rounded-l': props.shape === 'rounded' && props.side !== 'right',
+      'rounded-r-full': props.shape === 'pill' && props.side === 'right',
+      'rounded-l-full': props.shape === 'pill' && props.side !== 'right',
+      'rounded-r-none': props.shape === 'square' && props.side === 'right',
+      'rounded-l-none': props.shape === 'square' && props.side !== 'right',
     }"
   >
     <span

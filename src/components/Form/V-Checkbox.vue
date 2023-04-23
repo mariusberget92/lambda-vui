@@ -118,6 +118,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * The shape of the checkbox.
+   *
+   * @type {String}
+   * @default rounded
+   * @options rounded, square, circle
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['rounded', 'square', 'circle'].includes(val)
+    },
+  },
 })
 
 /**
@@ -173,7 +188,11 @@ const classCheckbox = computed(() => {
       type="checkbox"
       :id="id"
       class="rounded bg-nord-snow-storm-300 dark:bg-nord-100 border cursor-pointer border-nord-snow-storm-100 dark:border-nord-400"
-      :class="classCheckbox"
+      :class="[classCheckbox, {
+        'rounded-none': shape === 'square',
+        'rounded-full': shape === 'circle',
+        'rounded': shape === 'rounded',
+      }]"
       :disabled="disabled"
       :checked="modelValue"
       :required="required"

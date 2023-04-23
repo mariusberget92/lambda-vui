@@ -200,6 +200,21 @@ const props = defineProps({
     type: Function,
     default: (option) => option.text,
   },
+
+  /**
+   * The shape of the tagger.
+   * 
+   * @type {String}
+   * @default rounded
+   * @options rounded, square, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['rounded', 'square', 'pill'].includes(val)
+    },
+  },
 })
 
 /**
@@ -537,11 +552,19 @@ const getPaddingClasses = () => {
         v-if="hasIcon"
         :icon="icon"
         :size="size"
+        :shape="shape"
         :class="getIconErrorClasses()"
       />
 
       <div
-        :class="[{ 'border-l rounded-l': !hasIcon }, getPaddingClasses()]"
+        :class="[{ 
+          'border-l': !hasIcon,
+          'border-l-0': hasIcon,
+          'rounded-l': !hasIcon && shape == 'rounded',
+          'rounded-l-full': !hasIcon && shape == 'pill',
+          'rounded-l-none': (!hasIcon && shape == 'square') || hasIcon,
+        
+        }, getPaddingClasses()]"
         class="flex w-full flex-wrap gap-1 items-baseline border-t w-full border-b border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300"
       >
         <span
@@ -557,7 +580,7 @@ const getPaddingClasses = () => {
         <div class="relative flex items-center">
           <input
             type="text"
-            class="py-0 px-1 border-none w-32 max-w-32 bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
+            class="py-0 px-1 border-none shrink bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
             :class="[classSize, getInputErrorClasses()]"
             :placeholder="placeholder"
             :required="required"
@@ -583,6 +606,7 @@ const getPaddingClasses = () => {
       <VIcon
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
         :size="size"
+        :shape="shape"
         side="right"
       />
     </div>

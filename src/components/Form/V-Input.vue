@@ -161,6 +161,21 @@ const props = defineProps({
     type: [String, Boolean],
     default: false,
   },
+
+  /**
+   * Input shape.
+   *
+   * @type {String}
+   * @default rounded
+   * @options square, rounded, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['square', 'rounded', 'pill'].includes(val)
+    },
+  },
 })
 
 /**
@@ -272,17 +287,25 @@ const getIconErrorClasses = () => {
         v-if="hasIcon"
         :icon="icon"
         :size="size"
+        :shape="shape"
         :class="getIconErrorClasses()"
       />
 
       <input
         :type="type"
         :id="id"
-        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded w-full bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
+        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 w-full bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
         :class="[
           classInput,
           getInputErrorClasses(),
-          { 'rounded-l-none border-l-0': hasIcon },
+          {
+            'border-l-0': hasIcon,
+            rounded: shape == 'rounded',
+            'rounded-full': shape == 'pill',
+            'rounded-none': shape == 'square',
+            'rounded-l-none':
+              hasIcon && (shape == 'pill' || shape == 'rounded'),
+          },
         ]"
         :placeholder="placeholder"
         :required="required"
