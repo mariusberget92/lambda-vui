@@ -77,22 +77,6 @@ const hasHelper = computed(() => {
 })
 
 /**
- * Label size class.
- *
- * @type {import('vue').ComputedRef<string>}
- */
-const classLabelSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * Helper size class.
  *
  * @type {import('vue').ComputedRef<string>}
@@ -132,7 +116,7 @@ const idHelper = computed(() => {
     <label
       :for="id"
       class="font-semibold leading-none text-nord-300 dark:text-nord-snow-storm-300"
-      :class="classLabelSize"
+      :class="$sizeToClass(props.size)"
       :id="idLabel"
     >
       {{ label }}
@@ -140,8 +124,8 @@ const idHelper = computed(() => {
 
     <span
       v-if="required"
-      class="leading-none text-nord-aurora-200 dark:shadow-nord-aurora-100 dark:text-shadow"
-      :class="classLabelSize"
+      class="leading-none text-nord-aurora-200"
+      :class="$sizeToClass(props.size)"
       >*</span
     >
   </div>
@@ -149,7 +133,7 @@ const idHelper = computed(() => {
   <div class="flex" v-if="hasHelper">
     <span
       :id="idHelper"
-      class="font-regular mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
+      class="mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
       :class="classHelperSize"
       >{{ helper }}</span
     >

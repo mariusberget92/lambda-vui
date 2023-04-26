@@ -62,10 +62,10 @@ const props = defineProps({
   <div class="relative">
     <div
       :class="{ hidden: !show }"
-      class="absolute rounded border border-nord-snow-storm-100 dark:border-nord-400 mt-1 w-full bg-nord-snow-storm-300 dark:bg-nord-100 z-10 overflow-y-auto overflow-x-hidden max-h-64"
+      class="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto overflow-x-hidden rounded border border-nord-snow-storm-100 bg-nord-snow-storm-300 dark:border-nord-400 dark:bg-nord-100"
     >
       <div id="lambda-datepicker-calendar">
-        <div class="flex justify-between items-center px-2 py-1">
+        <div class="flex items-center justify-between px-2 py-1">
           <span class="material-symbols-rounded text-2xl">chevron_left</span>
           <span class="material-symbols-rounded text-2xl">chevron_right</span>
         </div>

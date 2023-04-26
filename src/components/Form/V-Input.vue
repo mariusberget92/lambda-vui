@@ -207,70 +207,25 @@ const hasError = computed(() => props.error !== false)
 const hasIcon = computed(() => props.icon !== false)
 
 /**
- * CSS error classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const classError = computed(() => {
-  return [
-    'border-l-4',
-    '!border-l-nord-aurora-200',
-    'dark:shadow-[-10px_0_10px]',
-    'dark:shadow-nord-aurora-100/25',
-  ].join(' ')
-})
-
-/**
  * CSS input classes.
  *
  * @type {import ('vue').ComputedRef<string>}
  */
 const classInput = computed(() => {
-  return hasIcon.value
-    ? {
-        xs: ['text-xs', 'px-2', 'py-1'],
-        sm: ['text-sm', 'px-2', 'py-2'],
-        base: ['text-base', 'px-3', 'py-2'],
-        lg: ['text-lg', 'px-3', 'py-3'],
-        xl: ['text-xl', 'px-4', 'py-3'],
-        '2xl': ['text-2xl', 'px-4', 'py-4'],
-      }[props.size].join(' ')
-    : {
-        xs: ['text-xs', 'px-2', 'py-2'],
-        sm: ['text-sm', 'px-2', 'py-2'],
-        base: ['text-base', 'px-3', 'py-2'],
-        lg: ['text-lg', 'px-3', 'py-3'],
-        xl: ['text-xl', 'px-4', 'py-3'],
-        '2xl': ['text-2xl', 'px-4', 'py-4'],
-      }[props.size].join(' ')
+  return {
+    xs: ['p-2'],
+    sm: ['p-2'],
+    base: ['px-3', 'py-2'],
+    lg: ['p-3'],
+    xl: ['px-4', 'py-3'],
+    '2xl': ['p-4'],
+  }[props.size].join(' ')
 })
-
-/**
- * Input error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classError.value : ''
-}
-
-/**
- * Icon error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getIconErrorClasses = () => {
-  return hasError.value ? classError.value : ''
-}
 </script>
 
 <template>
   <div
-    class="flex flex-col w-full"
+    class="flex w-full flex-col"
     :class="{ hidden: isHidden, 'opacity-50': readOnly || disabled }"
   >
     <VLabel
@@ -282,31 +237,22 @@ const getIconErrorClasses = () => {
       :size="size"
     />
 
-    <div class="mt-1 flex">
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :shape="shape"
-        :class="getIconErrorClasses()"
-      />
+    <div
+      class="mt-1 flex border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
+      :class="{
+        'border-l-4 !border-l-nord-aurora-200': hasError,
+        'rounded-full': shape === 'pill',
+        'rounded-none': shape === 'square',
+        rounded: shape === 'rounded',
+      }"
+    >
+      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
 
       <input
         :type="type"
         :id="id"
-        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 w-full bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
-        :class="[
-          classInput,
-          getInputErrorClasses(),
-          {
-            'border-l-0': hasIcon,
-            rounded: shape == 'rounded',
-            'rounded-full': shape == 'pill',
-            'rounded-none': shape == 'square',
-            'rounded-l-none':
-              hasIcon && (shape == 'pill' || shape == 'rounded'),
-          },
-        ]"
+        class="w-full bg-transparent text-nord-300 dark:text-nord-snow-storm-300"
+        :class="[classInput, $placeholderColors, $sizeToClass(props.size)]"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"

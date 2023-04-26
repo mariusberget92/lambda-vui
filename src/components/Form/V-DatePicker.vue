@@ -309,7 +309,7 @@ const reset = () => {
 
 <template>
   <div
-    class="flex flex-col w-full"
+    class="flex w-full flex-col"
     :class="{ 'opacity-50': readOnly || disabled }"
     v-on-click-outside="onClickOutsideHandler"
   >
@@ -336,7 +336,7 @@ const reset = () => {
       <input
         type="text"
         :id="id"
-        class="border border-r-0 border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded-r-none rounded bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 caret-transparent w-full cursor-pointer placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
+        class="w-full cursor-pointer rounded rounded-r-none border border-r-0 border-nord-snow-storm-100 bg-nord-snow-storm-300 text-nord-300 caret-transparent placeholder:text-nord-300/50 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300 dark:placeholder:text-nord-snow-storm-300/50 dark:focus:border-nord-400"
         :class="[
           classInput,
           classSize,
@@ -356,7 +356,7 @@ const reset = () => {
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded absolute aspect-square rounded-full text-nord-300 dark:text-nord-snow-storm-300 cursor-pointer right-1 flex items-center justify-center hover:bg-nord-snow-storm-100 hover:dark:bg-nord-300"
+          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100 dark:text-nord-snow-storm-300 hover:dark:bg-nord-300"
           :class="[classRemoveButton, classSize]"
           @click="reset"
         >

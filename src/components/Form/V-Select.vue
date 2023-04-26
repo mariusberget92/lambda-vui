@@ -50,13 +50,13 @@ const props = defineProps({
   /**
    * Model value of the input.
    *
-   * @type {String}
+   * @type {String|Array<String>}
    * @default ''
    * @required
    */
   modelValue: {
     required: true,
-    type: String,
+    type: [String, Array],
     default: '',
   },
 
@@ -130,6 +130,17 @@ const props = defineProps({
   placeholder: {
     type: String,
     default: 'Select...',
+  },
+
+  /**
+   * Whether the input is multiple.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  multiple: {
+    type: Boolean,
+    default: false,
   },
 
   /**
@@ -215,6 +226,17 @@ const props = defineProps({
       return ['square', 'rounded', 'pill'].includes(val)
     },
   },
+
+  /**
+   * Whether the input is searchable.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  search: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -249,6 +271,13 @@ const hasIcon = computed(() => props.icon !== false)
 const isDropdownOpen = ref(false)
 
 /**
+ * Filtered options after a search query.
+ *
+ * @type {import('vue').Ref<Array>}
+ */
+const filteredOptions = ref(props.options)
+
+/**
  * Get the option text or value from an option.
  *
  * @type {import('vue').ComputedRef<Function>}
@@ -274,14 +303,26 @@ const getOptionInfo = computed(() => {
  * @returns {string}
  */
 const inputValue = computed(() => {
-  if (props.modelValue === '') {
+  // If no options are selected return an empty string.
+  if (props.modelValue.length <= 0) {
     return ''
   }
 
+  // If the input is multiple and only one option is selected return the text of that option.
+  // If the input is multiple and more than one option is selected return the number of selected options.
+  // If the input is multiple and options are just string return
+  if (props.multiple) {
+    if (props.modelValue.length > 0) {
+      return `${props.modelValue.length} item(s) selected`
+    }
+  }
+
+  // If the input is not multiple and the options are strings just return the string
   if (typeof props.options[0] === 'string') {
     return props.modelValue
   }
 
+  //
   const selectedOptions = props.options.filter((option) => {
     return props.modelValue.includes(getOptionInfo.value(option, 'value'))
   })
@@ -295,8 +336,49 @@ const inputValue = computed(() => {
  * @param {String|Object} option
  */
 const handleSelect = (option) => {
-  emit('update:modelValue', getOptionInfo.value(option, 'value'))
+  const value = getOptionInfo.value(option, 'value')
+
+  // If the select is multiple, add or remove the value from the modelValue
+  // before emittind the whole array.
+  if (props.multiple) {
+    const modelValue = props.modelValue.includes(value)
+      ? props.modelValue.filter((val) => val !== value)
+      : [...props.modelValue, value]
+
+    emit('update:modelValue', modelValue)
+    return
+  }
+
+  // If the select is not multiple, just emit the value.
+  emit('update:modelValue', value)
   closeDropdown()
+}
+
+/**
+ * Handle the search query.
+ *
+ * @returns {void}
+ */
+const handleSearchQuery = (event) => {
+  filteredOptions.value = props.options.filter((option) => {
+    const text = getOptionInfo.value(option, 'text')
+    return text.toLowerCase().includes(event.toLowerCase())
+  })
+}
+
+/**
+ * Handle the toggle all event.
+ *
+ * @returns {void}
+ */
+const handleToggleAll = () => {
+  if (props.modelValue.length === props.options.length) {
+    emit('update:modelValue', [])
+    return
+  }
+
+  const values = props.options.map((option) => getOptionInfo.value(option, 'value'))
+  emit('update:modelValue', values)
 }
 
 /**
@@ -305,7 +387,8 @@ const handleSelect = (option) => {
  * @param {Event} event
  */
 const reset = (event) => {
-  emit('update:modelValue', '')
+  if (props.multiple) emit('update:modelValue', [])
+  else emit('update:modelValue', '')
   event.stopPropagation()
 }
 
@@ -328,60 +411,6 @@ const toggleDropdown = () => {
 }
 
 /**
- * Input error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classError.value : ''
-}
-
-/**
- * Icon error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getIconErrorClasses = () => {
-  return hasError.value ? classError.value : ''
-}
-
-/**
- * CSS error classes.
- *
- * @type {import ('vue').ComputedRef<Object>}
- * @returns {Object}
- */
-const classError = computed(() => {
-  return [
-    'border-l-4',
-    '!border-l-nord-aurora-200',
-    'dark:shadow-[-10px_0_10px]',
-    'dark:shadow-nord-aurora-100/25',
-  ].join(' ')
-})
-
-/**
- * CSS size classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS input classes.
  *
  * @type {import ('vue').ComputedRef<string>}
@@ -389,12 +418,12 @@ const classSize = computed(() => {
  */
 const classInput = computed(() => {
   return {
-    xs: ['px-2', 'py-2'],
-    sm: ['px-2', 'py-2'],
+    xs: ['p-2'],
+    sm: ['p-2'],
     base: ['px-3', 'py-2'],
-    lg: ['px-3', 'py-3'],
+    lg: ['p-3'],
     xl: ['px-4', 'py-3'],
-    '2xl': ['px-4', 'py-4'],
+    '2xl': ['p-4'],
   }[props.size].join(' ')
 })
 
@@ -418,7 +447,7 @@ const classRemoveButton = computed(() => {
 
 <template>
   <div
-    class="flex flex-col w-full"
+    class="flex w-full flex-col"
     :class="{ 'opacity-50': readOnly || disabled }"
     v-on-click-outside="onClickOutsideHandler"
   >
@@ -432,34 +461,22 @@ const classRemoveButton = computed(() => {
     />
 
     <div
-      class="mt-1 flex cursor-pointer"
+      class="mt-1 flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
+      :class="{
+        'border-l-4 !border-l-nord-aurora-200': hasError,
+        'rounded-full': shape === 'pill',
+        'rounded-none': shape === 'square',
+        rounded: shape === 'rounded',
+      }"
       @click=";(readOnly || disabled) == false && toggleDropdown()"
     >
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :shape="shape"
-        :class="getIconErrorClasses()"
-      />
+      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
 
       <input
         type="text"
         :id="id"
-        class="border border-r-0 border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded-r-none rounded bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 caret-transparent w-full cursor-pointer placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50"
-        :class="[
-          classInput,
-          classSize,
-          getInputErrorClasses(),
-          {             
-            'border-l-0': hasIcon,
-            rounded: shape == 'rounded',
-            'rounded-full': shape == 'pill',
-            'rounded-none': shape == 'square',
-            'rounded-l-none':
-              hasIcon && (shape == 'pill' || shape == 'rounded'),
-            },
-        ]"
+        class="pointer-events-none w-full bg-transparent text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
+        :class="[classInput, $sizeToClass(size), $placeholderColors]"
         :placeholder="placeholder"
         :value="inputValue"
         :required="required"
@@ -473,8 +490,8 @@ const classRemoveButton = computed(() => {
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded absolute aspect-square rounded-full text-nord-300 dark:text-nord-snow-storm-300 cursor-pointer right-1 flex items-center justify-center hover:bg-nord-snow-storm-100 hover:dark:bg-nord-300"
-          :class="[classRemoveButton, classSize]"
+          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100 dark:text-nord-snow-storm-300 hover:dark:bg-nord-300"
+          :class="[classRemoveButton, $sizeToClass(size)]"
           @click="reset"
         >
           clear
@@ -492,12 +509,18 @@ const classRemoveButton = computed(() => {
     <VDropdown
       ref="dropdown"
       :options="options"
+      :filteredOptions="filteredOptions"
       :textReducer="textReducer"
       :valueReducer="valueReducer"
       :size="size"
-      :modelValue="modelValue"
+      :selectedOptions="modelValue"
+      :shape="shape"
+      :search="search"
       :show="isDropdownOpen"
+      :multiple="multiple"
       @select="handleSelect($event)"
+      @toggleAll="handleToggleAll"
+      @onSearch="handleSearchQuery"
     />
   </div>
 </template>

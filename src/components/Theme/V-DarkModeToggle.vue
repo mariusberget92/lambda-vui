@@ -78,9 +78,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :class="classWrapper" class="fixed z-2">
+  <div :class="classWrapper" class="z-2 fixed">
     <div
-      class="material-symbols-rounded text-nord-200 dark:text-nord-snow-storm-300 cursor-pointer"
+      class="material-symbols-rounded cursor-pointer text-nord-300 dark:text-nord-snow-storm-300"
     >
       <span v-if="isDarkMode" @click="toggleDarkMode">light_mode</span>
       <span v-else @click="toggleDarkMode">dark_mode</span>

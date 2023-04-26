@@ -135,22 +135,6 @@ const hasText = computed(() => {
 })
 
 /**
- * CSS size classes.
- *
- * @type {import ('vue').ComputedRef<String>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS button classes.
  *
  * @type {import ('vue').ComputedRef<String>}
@@ -360,12 +344,12 @@ const getButtonClasses = () => {
       :class="[
         getButtonClasses(),
         getLinkClasses(),
-        classSize,
+        $sizeToClass(size),
         {
           'aspect-square h-full justify-center': button && hasIcon && !hasText,
-          'font-medium rounded disabled:opacity-50 flex items-center transition-colors cursor-pointer text-white':
+          'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
             button,
-          'transition-colors cursor-pointer': !button,
+          'cursor-pointer transition-colors': !button,
         },
       ]"
     >
@@ -375,8 +359,8 @@ const getButtonClasses = () => {
       >
         <span
           v-if="hasIcon"
-          class="material-symbols-rounded flex items-center justify-center transition-colors cursor-pointer"
-          :class="classSize"
+          class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
+          :class="$sizeToClass(size)"
           >{{ icon }}</span
         >
         <span v-if="hasText" class="items-center">{{ text }}</span>

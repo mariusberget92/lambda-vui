@@ -62,22 +62,6 @@ const props = defineProps({
 })
 
 /**
- * CSS size classes.
- *
- * @type {import ('vue').ComputedRef<String>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS color classes.
  *
  * @type {import ('vue').ComputedRef<String>}
@@ -135,7 +119,7 @@ const classColor = computed(() => {
   <component
     class="font-bold leading-none"
     :is="heading"
-    :class="[classSize, classColor]"
+    :class="[$sizeToClass(size), classColor]"
   >
     <slot />
   </component>

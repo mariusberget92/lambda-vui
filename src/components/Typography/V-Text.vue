@@ -47,22 +47,6 @@ const props = defineProps({
 })
 
 /**
- * CSS size classes.
- *
- * @type {import ('vue').ComputedRef<String>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS color classes.
  *
  * @type {import ('vue').ComputedRef<String>}
@@ -117,7 +101,7 @@ const classColor = computed(() => {
 </script>
 
 <template>
-  <p :class="[classSize, classColor]" class="leading-3">
+  <p :class="[$sizeToClass(size), classColor]" class="leading-3">
     <slot />
   </p>
 </template>

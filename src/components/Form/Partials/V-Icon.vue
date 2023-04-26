@@ -47,37 +47,6 @@ const props = defineProps({
       return ['left', 'right'].includes(val)
     },
   },
-
-  /**
-   * The shape of the icon.
-   *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
-   */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
-  },
-})
-
-/**
- * CSS icon classes.
- *
- * @type {import ('vue').ComputedRef<String>}
- */
-const classIconSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
 })
 
 /**
@@ -108,25 +77,15 @@ const classIconPadding = computed(() => {
 
 <template>
   <div
-    class="flex items-center justify-center bg-nord-snow-storm-300 dark:bg-nord-100 border-nord-snow-storm-100 dark:border-nord-400 border p-2"
+    class="flex items-center justify-center bg-transparent p-2"
     :class="{
-      'border-l-0 pl-0': props.side === 'right',
-      'border-r-0 pr-0': props.side !== 'right',
-      'rounded-r': props.shape === 'rounded' && props.side === 'right',
-      'rounded-l': props.shape === 'rounded' && props.side !== 'right',
-      'rounded-r-full': props.shape === 'pill' && props.side === 'right',
-      'rounded-l-full': props.shape === 'pill' && props.side !== 'right',
-      'rounded-r-none': props.shape === 'square' && props.side === 'right',
-      'rounded-l-none': props.shape === 'square' && props.side !== 'right',
+      'pl-0': props.side === 'right',
+      'pr-0': props.side !== 'right',
     }"
   >
     <span
       class="material-symbols-rounded text-nord-300 dark:text-nord-snow-storm-300"
-      :class="[
-        classIconSize,
-        classIconPadding,
-        { 'pl-0': props.side === 'right', 'pr-0': props.side !== 'right' },
-      ]"
+      :class="[$sizeToClass(props.size), classIconPadding]"
     >
       {{ icon }}
     </span>

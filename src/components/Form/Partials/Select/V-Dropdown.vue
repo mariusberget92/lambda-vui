@@ -1,12 +1,14 @@
 <script setup>
 import { defineProps, computed, defineEmits } from 'vue'
+import VCheckbox from '../../V-Checkbox.vue'
+import VSearch from './V-Search.vue'
 
 /**
  * Component emits.
  *
  * @type {Object}
  */
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'onSearch', 'toggleAll'])
 
 /**
  * Component props.
@@ -15,13 +17,13 @@ const emit = defineEmits(['select'])
  */
 const props = defineProps({
   /**
-   * Model value of the input.
+   * Selected options.
    *
-   * @type {String}
+   * @type {String|Array<String>}
    * @default ''
    */
-  modelValue: {
-    type: String,
+  selectedOptions: {
+    type: [String, Array],
     default: '',
   },
 
@@ -33,6 +35,19 @@ const props = defineProps({
    * @default []
    */
   options: {
+    type: Array,
+    default: () => [],
+    required: true,
+  },
+
+  /**
+   * The filteredOptions of the input.
+   *
+   * @type {Array<String>|Array<Object>}
+   * @required
+   * @default []
+   */
+   filteredOptions: {
     type: Array,
     default: () => [],
     required: true,
@@ -83,22 +98,43 @@ const props = defineProps({
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
     },
   },
-})
 
-/**
- * CSS size class.
- *
- * @type {import('vue').ComputedRef<String>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
+  /**
+   * Shape of the dropdown.
+   *
+   * @type {String}
+   * @default rounded
+   * @options rounded, square, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['rounded', 'square', 'pill'].includes(val)
+    },
+  },
+
+  /**
+   * Whether the input is multiple.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * Whether the input is searchable.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  search: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -130,38 +166,79 @@ const getOptionInfo = computed(() => {
 const isSelected = computed(() => {
   return (option) => {
     const value = getOptionInfo.value(option, 'value')
-    return value === props.modelValue
+    return (props.multiple) ? props.selectedOptions.includes(value) : props.selectedOptions === value
   }
 })
+
+/**
+ * Check if all options are selected.
+ * 
+ * @type {import('vue').ComputedRef<Boolean>}
+ * @returns {Boolean}
+ */
+const allOptionsSelected = computed(() => {
+  return props.options.every((option) => isSelected.value(option))
+});
 </script>
 
 <template>
   <div class="relative">
     <div
-      :class="{ hidden: !show }"
-      class="absolute rounded border border-nord-snow-storm-100 dark:border-nord-400 mt-1 w-full bg-nord-snow-storm-300 dark:bg-nord-100 z-10 overflow-y-auto overflow-x-hidden max-h-64"
+      :class="{
+        hidden: !show,
+        'rounded-none': shape == 'square',
+        rounded: shape == 'rounded' || shape == 'pill',
+      }"
+      class="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-200"
     >
-      <template v-for="(option, index) in options" :key="index">
-        <button
-          type="button"
-          class="flex flex-col cursor-pointer p-2 w-full text-nord-300 dark:text-nord-snow-storm-300 first:rounded-t last:rounded-b bg-nord-snow-storm-300 hover:bg-nord-snow-storm-100 dark:bg-nord-100 dark:hover:bg-nord-200"
-          :class="[
-            isSelected(option) && 'border-l-4 border-nord-frost-300',
-            classSize,
-          ]"
-          @click="emit('select', option)"
-        >
-          <span
-            class="flex"
-            :class="{ 'space-x-2': option.emoji && option.emoji.length > 0 }"
-          >
-            <span v-if="option.emoji && option.emoji.length > 0">
-              {{ option.emoji }}
-            </span>
+      <div class="flex items-center">
+        <VCheckbox
+          v-if="multiple"
+          :checked="allOptionsSelected"
+          class="p-2"
+          :class="{'mt-1': !search }"
+          :size="size"
+          color="green"
+          @change="emit('toggleAll')"
+          />
 
-            <span>{{ getOptionInfo(option, 'text') }}</span>
-          </span>
-        </button>
+        <VSearch v-if="multiple && search" @onSearch="emit('onSearch', $event)" :size="size" />
+      </div>
+
+      <template v-for="(option, index) in filteredOptions" :key="index">
+        <div
+          class="flex hover:bg-nord-snow-storm-100/50 dark:hover:bg-nord-100/50"
+          :class="{
+            'first:rounded-t last:rounded-b':
+              shape == 'rounded' || shape == 'pill',
+          }"
+        >
+          <VCheckbox
+            v-if="multiple"
+            :checked="isSelected(option)"
+            class="pl-2"
+            :size="size"
+            @input="emit('select', option)"
+          />
+
+          <button
+            type="button"
+            class="flex w-full cursor-pointer flex-col p-2 text-nord-300 dark:text-nord-snow-storm-300"
+            :class="$sizeToClass(size)"
+            @click="emit('select', option)"
+          >
+            <span
+              class="flex items-center"
+              :class="{ 'space-x-2': option.emoji && option.emoji.length > 0 }"
+            >
+              <span v-if="option.emoji && option.emoji.length > 0">
+                {{ option.emoji }}
+              </span>
+
+              <span>{{ getOptionInfo(option, 'text') }}</span>
+            </span>
+          </button>
+        </div>
       </template>
     </div>
   </div>

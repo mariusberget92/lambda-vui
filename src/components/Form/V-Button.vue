@@ -138,14 +138,14 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['px-2', 'py-1'],
-      icon: ['p-1', 'aspect-square'],
-      both: ['px-2', 'py-1', 'space-x-2'],
+      text: ['px-2', 'py-2'],
+      icon: ['p-2', 'aspect-square'],
+      both: ['px-2', 'py-2', 'space-x-2'],
     },
     sm: {
-      text: ['px-3', 'py-1'],
-      icon: ['p-1', 'aspect-square'],
-      both: ['px-3', 'py-1', 'space-x-2'],
+      text: ['px-3', 'py-2'],
+      icon: ['p-2', 'aspect-square'],
+      both: ['px-3', 'py-2', 'space-x-2'],
     },
     base: {
       text: ['px-4', 'py-2'],
@@ -158,84 +158,61 @@ const classButton = computed(() => {
       both: ['px-6', 'py-3', 'space-x-2.5'],
     },
     xl: {
-      text: ['px-8', 'py-4'],
-      icon: ['p-4', 'aspect-square'],
-      both: ['px-8', 'py-4', 'space-x-3'],
+      text: ['px-8', 'py-3'],
+      icon: ['p-3', 'aspect-square'],
+      both: ['px-8', 'py-3', 'space-x-3'],
     },
     '2xl': {
-      text: ['px-10', 'py-5'],
-      icon: ['p-5', 'aspect-square'],
-      both: ['px-10', 'py-5', 'space-x-3'],
+      text: ['px-10', 'py-4'],
+      icon: ['p-4', 'aspect-square'],
+      both: ['px-10', 'py-4', 'space-x-3'],
     },
   }
 
-  const sizeClass = sizeClasses[props.size] || sizeClasses['base']
   if (hasText.value && hasIcon.value) {
-    classes.push(...sizeClass.both)
+    classes.push(...sizeClasses[props.size].both)
   } else if (hasText.value) {
-    classes.push(...sizeClass.text)
+    classes.push(...sizeClasses[props.size].text)
   } else {
-    classes.push(...sizeClass.icon)
+    classes.push(...sizeClasses[props.size].icon)
   }
 
   const colorClasses = {
     red: [
       'bg-nord-aurora-200',
       'border-nord-aurora-100',
-      'dark:shadow-xl dark:shadow-nord-aurora-100/50',
       'hover:bg-nord-aurora-100',
     ],
     green: [
       'bg-nord-aurora-1100',
       'border-nord-aurora-1000',
-      'dark:shadow-xl dark:shadow-nord-aurora-1000/50',
       'hover:bg-nord-aurora-1000',
     ],
     blue: [
       'bg-nord-frost-300',
       'border-nord-frost-400',
-      'dark:shadow-xl dark:shadow-nord-frost-400/50',
       'hover:bg-nord-frost-400',
     ],
     orange: [
       'bg-nord-aurora-500',
       'border-nord-aurora-400',
-      'dark:shadow-xl dark:shadow-nord-aurora-400/50',
       'hover:bg-nord-aurora-400',
     ],
     yellow: [
       'bg-nord-aurora-800',
       'border-nord-aurora-700',
-      'dark:shadow-xl dark:shadow-nord-aurora-700/50',
       'hover:bg-nord-aurora-700',
     ],
     mauve: [
       'bg-nord-aurora-1400',
       'border-nord-aurora-1300',
-      'dark:shadow-xl dark:shadow-nord-aurora-1300/50',
       'hover:bg-nord-aurora-1300',
     ],
   }
 
-  classes.push(...(colorClasses[props.color] || colorClasses['blue']))
+  classes.push(...colorClasses[props.color])
 
   return classes.join(' ')
-})
-
-/**
- * Button size class.
- *
- * @type {import('vue').ComputedRef<string>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
 })
 </script>
 
@@ -243,7 +220,7 @@ const classSize = computed(() => {
   <div class="flex" :class="{ 'opacity-50': processing || disabled }">
     <button
       :type="type"
-      class="border dark:border-transparent transition-colors flex items-center justify-center h-full"
+      class="flex h-full items-center justify-center border transition-colors dark:border-transparent"
       :class="[
         classButton,
         {
@@ -256,19 +233,22 @@ const classSize = computed(() => {
     >
       <span
         v-if="hasIcon && !processing"
-        :class="classSize"
+        :class="$sizeToClass(size)"
         class="material-symbols-rounded text-white"
         >{{ icon }}</span
       >
       <span
         v-if="processing"
-        :class="classSize"
-        class="material-symbols-rounded text-white animate-spin"
+        :class="$sizeToClass(size)"
+        class="material-symbols-rounded animate-spin text-white"
         >refresh</span
       >
-      <span v-if="hasText" :class="classSize" class="font-medium text-white">{{
-        text
-      }}</span>
+      <span
+        v-if="hasText"
+        :class="$sizeToClass(size)"
+        class="font-medium text-white"
+        >{{ text }}</span
+      >
     </button>
   </div>
 </template>

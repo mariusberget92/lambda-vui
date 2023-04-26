@@ -149,6 +149,21 @@ const props = defineProps({
       return ['none', 'vertical', 'horizontal', 'both'].includes(val)
     },
   },
+
+  /**
+   * The shape of the textarea.
+   *
+   * @type {String}
+   * @default rounded
+   * @options square, rounded
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['square', 'rounded'].includes(val)
+    },
+  },
 })
 
 /**
@@ -166,74 +181,25 @@ const hasLabel = computed(() => props.label !== false)
 const hasError = computed(() => props.error !== false)
 
 /**
- * CSS error classes.
- *
- * @type {import ('vue').ComputedRef<Object>}
- */
-const classError = computed(() => {
-  return [
-    'border-l-4',
-    '!border-l-nord-aurora-200',
-    'dark:shadow-[-10px_0_10px]',
-    'dark:shadow-nord-aurora-100/25',
-  ].join(' ')
-})
-
-/**
  * CSS textarea classes.
  *
  * @type {import ('vue').ComputedRef<Object>}
  */
-const classTextarea = computed(() => {
-  let classes = []
-
-  const resizeClasses = {
-    none: ['resize-none'],
-    vertical: ['resize-y'],
-    horizontal: ['resize-x'],
-    both: ['resize'],
-  }
-
-  const sizeClasses = {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }
-
-  const paddingClasses = {
-    xs: ['px-2', 'py-2'],
-    sm: ['px-2', 'py-2'],
+const classPadding = computed(() => {
+  return {
+    xs: ['p-2'],
+    sm: ['p-2'],
     base: ['px-3', 'py-2'],
-    lg: ['px-3', 'py-3'],
+    lg: ['p-3'],
     xl: ['px-4', 'py-3'],
-    '2xl': ['px-4', 'py-4'],
-  }
-
-  classes.push(...resizeClasses[props.resize])
-  classes.push(...sizeClasses[props.size])
-  classes.push(...paddingClasses[props.size])
-
-  return classes.join(' ')
+    '2xl': ['p-4'],
+  }[props.size].join(' ')
 })
-
-/**
- * Input error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getInputErrorClasses = () => {
-  return hasError.value ? classError.value : ''
-}
 </script>
 
 <template>
   <div
-    class="flex flex-col w-full"
+    class="flex w-full flex-col"
     :class="{ 'opacity-50': readOnly || disabled }"
   >
     <VLabel
@@ -245,11 +211,28 @@ const getInputErrorClasses = () => {
       :size="size"
     />
 
-    <div class="mt-1 flex">
+    <div
+      class="mt-1 flex border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
+      :class="{
+        'border-l-4 !border-l-nord-aurora-200': hasError,
+        'rounded-none': shape === 'square',
+        rounded: shape === 'rounded',
+      }"
+    >
       <textarea
         :id="id"
-        class="border border-nord-snow-storm-100 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:focus:border-nord-400 rounded bg-nord-snow-storm-300 dark:bg-nord-100 text-nord-300 dark:text-nord-snow-storm-300 placeholder:text-nord-300/50 dark:placeholder:text-nord-snow-storm-300/50 w-full"
-        :class="[classTextarea, getInputErrorClasses()]"
+        class="w-full bg-transparent text-nord-300 dark:text-nord-snow-storm-300"
+        :class="[
+          classPadding,
+          $sizeToClass(size),
+          $placeholderColors,
+          {
+            'resize-none': resize === 'none',
+            'resize-y': resize === 'vertical',
+            'resize-x': resize === 'horizontal',
+            resize: resize === 'both',
+          },
+        ]"
         :placeholder="placeholder"
         :required="required"
         :readonly="readOnly"
