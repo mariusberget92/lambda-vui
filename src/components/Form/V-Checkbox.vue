@@ -216,9 +216,9 @@ const classCheckbox = computed(() => {
 <template>
   <div class="flex items-center space-x-2" :class="{ 'opacity-50': disabled }">
     <input
-      type="checkbox"
       :id="id"
-      class="cursor-pointer border-nord-snow-storm-100 rounded bg-nord-snow-storm-300 dark:border-nord-400 dark:bg-nord-100"
+      type="checkbox"
+      class="cursor-pointer rounded border-nord-snow-storm-100 bg-nord-snow-storm-300 dark:border-nord-400 dark:bg-nord-100"
       :class="[
         classCheckbox,
         {

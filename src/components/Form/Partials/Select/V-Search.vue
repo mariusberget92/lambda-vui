@@ -22,7 +22,7 @@ defineProps({
    * @default base
    * @options xs, sm, base, lg, xl, 2xl
    */
-   size: {
+  size: {
     type: String,
     default: 'sm',
     validator: (val) => {
@@ -40,10 +40,10 @@ const searchQuery = ref('')
 </script>
 
 <template>
-  <div class="w-full flex p-2">
+  <div class="flex w-full p-2">
     <VInput
-      class="-mt-1"
       v-model="searchQuery"
+      class="-mt-1"
       placeholder="Search for items"
       :size="size"
       icon="search"

@@ -114,10 +114,10 @@ const idHelper = computed(() => {
 <template>
   <div class="flex space-x-1">
     <label
+      :id="idLabel"
       :for="id"
       class="font-semibold leading-none text-nord-300 dark:text-nord-snow-storm-300"
       :class="$sizeToClass(props.size)"
-      :id="idLabel"
     >
       {{ label }}
     </label>
@@ -130,7 +130,7 @@ const idHelper = computed(() => {
     >
   </div>
 
-  <div class="flex" v-if="hasHelper">
+  <div v-if="hasHelper" class="flex">
     <span
       :id="idHelper"
       class="mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"

@@ -217,7 +217,13 @@ const classButton = computed(() => {
 </script>
 
 <template>
-  <div class="flex" :class="{ 'opacity-50': processing || disabled, 'w-full': hasIcon && !hasText }">
+  <div
+    class="flex"
+    :class="{
+      'opacity-50': processing || disabled,
+      'w-full': hasIcon && !hasText,
+    }"
+  >
     <button
       :type="type"
       class="flex h-full items-center justify-center border transition-colors dark:border-transparent"

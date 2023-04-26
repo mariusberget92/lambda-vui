@@ -293,9 +293,9 @@ const reset = () => {
 
 <template>
   <div
+    v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
     :class="{ 'opacity-50': readOnly || disabled }"
-    v-on-click-outside="onClickOutsideHandler"
   >
     <VLabel
       v-if="hasLabel"
@@ -318,8 +318,8 @@ const reset = () => {
       />
 
       <input
-        type="text"
         :id="id"
+        type="text"
         class="w-full cursor-pointer rounded rounded-r-none border border-r-0 border-nord-snow-storm-100 bg-nord-snow-storm-300 text-nord-300 caret-transparent placeholder:text-nord-300/50 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300 dark:placeholder:text-nord-snow-storm-300/50 dark:focus:border-nord-400"
         :class="[
           classInput,
@@ -358,8 +358,8 @@ const reset = () => {
     <VDropdown
       ref="dropdown"
       :size="size"
-      :selectedDate="selectedDate"
-      :selectedTime="selectedTime"
+      :selected-date="selectedDate"
+      :selected-time="selectedTime"
       :show="isDropdownOpen"
       @select="handleSelect($event)"
     />

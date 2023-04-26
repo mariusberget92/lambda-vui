@@ -377,7 +377,9 @@ const handleToggleAll = () => {
     return
   }
 
-  const values = props.options.map((option) => getOptionInfo.value(option, 'value'))
+  const values = props.options.map((option) =>
+    getOptionInfo.value(option, 'value')
+  )
   emit('update:modelValue', values)
 }
 
@@ -447,9 +449,9 @@ const classRemoveButton = computed(() => {
 
 <template>
   <div
+    v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
     :class="{ 'opacity-50': readOnly || disabled }"
-    v-on-click-outside="onClickOutsideHandler"
   >
     <VLabel
       v-if="hasLabel"
@@ -473,8 +475,8 @@ const classRemoveButton = computed(() => {
       <VIcon v-if="hasIcon" :icon="icon" :size="size" />
 
       <input
-        type="text"
         :id="id"
+        type="text"
         class="pointer-events-none w-full bg-transparent text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
         :class="[classInput, $sizeToClass(size), $placeholderColors]"
         :placeholder="placeholder"
@@ -509,18 +511,18 @@ const classRemoveButton = computed(() => {
     <VDropdown
       ref="dropdown"
       :options="options"
-      :filteredOptions="filteredOptions"
-      :textReducer="textReducer"
-      :valueReducer="valueReducer"
+      :filtered-options="filteredOptions"
+      :text-reducer="textReducer"
+      :value-reducer="valueReducer"
       :size="size"
-      :selectedOptions="modelValue"
+      :selected-options="modelValue"
       :shape="shape"
       :search="search"
       :show="isDropdownOpen"
       :multiple="multiple"
       @select="handleSelect($event)"
-      @toggleAll="handleToggleAll"
-      @onSearch="handleSearchQuery"
+      @toggle-all="handleToggleAll"
+      @on-search="handleSearchQuery"
     />
   </div>
 </template>

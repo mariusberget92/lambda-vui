@@ -47,7 +47,7 @@ const props = defineProps({
    * @required
    * @default []
    */
-   filteredOptions: {
+  filteredOptions: {
     type: Array,
     default: () => [],
     required: true,
@@ -166,19 +166,21 @@ const getOptionInfo = computed(() => {
 const isSelected = computed(() => {
   return (option) => {
     const value = getOptionInfo.value(option, 'value')
-    return (props.multiple) ? props.selectedOptions.includes(value) : props.selectedOptions === value
+    return props.multiple
+      ? props.selectedOptions.includes(value)
+      : props.selectedOptions === value
   }
 })
 
 /**
  * Check if all options are selected.
- * 
+ *
  * @type {import('vue').ComputedRef<Boolean>}
  * @returns {Boolean}
  */
 const allOptionsSelected = computed(() => {
   return props.options.every((option) => isSelected.value(option))
-});
+})
 </script>
 
 <template>
@@ -191,20 +193,28 @@ const allOptionsSelected = computed(() => {
       }"
       class="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-200"
     >
-      <div class="flex items-center" v-if="multiple || search">
+      <div v-if="multiple || search" class="flex items-center">
         <VCheckbox
           v-if="multiple"
           :checked="allOptionsSelected"
           class="p-2"
-          :class="{'mt-1': !search }"
+          :class="{ 'mt-1': !search }"
           :size="size"
           color="green"
           @change="emit('toggleAll')"
-          />
-        
-        <span v-if="!search" class="italic text-nord-300 dark:text-nord-snow-storm-300 mt-1 opacity-75">Select all</span>
+        />
 
-        <VSearch v-if="search" @onSearch="emit('onSearch', $event)" :size="size" />
+        <span
+          v-if="!search"
+          class="mt-1 italic text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
+          >Select all</span
+        >
+
+        <VSearch
+          v-if="search"
+          :size="size"
+          @on-search="emit('onSearch', $event)"
+        />
       </div>
 
       <template v-for="(option, index) in filteredOptions" :key="index">

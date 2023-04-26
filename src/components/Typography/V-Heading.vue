@@ -117,8 +117,8 @@ const classColor = computed(() => {
 
 <template>
   <component
-    class="font-bold leading-none"
     :is="heading"
+    class="font-bold leading-none"
     :class="[$sizeToClass(size), classColor]"
   >
     <slot />

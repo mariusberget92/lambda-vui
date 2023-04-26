@@ -24,8 +24,8 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
           <VHeading heading="h1" size="2xl" text="Input">Input</VHeading>
 
           <VInput
-            required
             v-model="input"
+            required
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
@@ -34,8 +34,8 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
           />
 
           <VTextarea
-            required
             v-model="input"
+            required
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
@@ -43,8 +43,8 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
           />
 
           <VCheckbox
-            required
             v-model="boolean"
+            required
             label="A label"
             helper="A helper text."
             size="base"
@@ -57,24 +57,20 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
           </div>
 
           <VSelect
-            required
             v-model="select"
+            required
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
             size="base"
             icon="list"
             search
-            :options="[
-              'option-1',
-              'option-2',
-              'option-3',
-            ]"
+            :options="['option-1', 'option-2', 'option-3']"
           />
 
           <VSelect
-            required
             v-model="selectMultiple"
+            required
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
@@ -97,7 +93,8 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
               { value: 'delete.user', text: 'Delete a user' },
               { value: 'delete.role', text: 'Delete a role' },
               { value: 'delete.permission', text: 'Delete a permission' },
-              { value: 'delete.setting', text: 'Delete a setting' },]"
+              { value: 'delete.setting', text: 'Delete a setting' },
+            ]"
           />
         </div>
       </div>

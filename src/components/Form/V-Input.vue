@@ -249,8 +249,8 @@ const classInput = computed(() => {
       <VIcon v-if="hasIcon" :icon="icon" :size="size" />
 
       <input
-        :type="type"
         :id="id"
+        :type="type"
         class="w-full bg-transparent text-nord-300 dark:text-nord-snow-storm-300"
         :class="[classInput, $placeholderColors, $sizeToClass(props.size)]"
         :placeholder="placeholder"
