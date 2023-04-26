@@ -138,33 +138,33 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['px-2', 'py-2'],
-      icon: ['p-2', 'aspect-square'],
+      text: ['px-2', 'py-2', 'space-x-2'],
+      icon: ['p-2', 'aspect-square', 'space-x-2'],
       both: ['px-2', 'py-2', 'space-x-2'],
     },
     sm: {
-      text: ['px-3', 'py-2'],
-      icon: ['p-2', 'aspect-square'],
+      text: ['px-3', 'py-2', 'space-x-2'],
+      icon: ['p-2', 'aspect-square', 'space-x-2'],
       both: ['px-3', 'py-2', 'space-x-2'],
     },
     base: {
-      text: ['px-4', 'py-2'],
-      icon: ['p-2', 'aspect-square'],
+      text: ['px-4', 'py-2', 'space-x-2.5'],
+      icon: ['p-2', 'aspect-square', 'space-x-2.5'],
       both: ['px-4', 'py-2', 'space-x-2.5'],
     },
     lg: {
-      text: ['px-6', 'py-3'],
-      icon: ['p-3', 'aspect-square'],
+      text: ['px-6', 'py-3', 'space-x-2.5'],
+      icon: ['p-3', 'aspect-square', 'space-x-2.5'],
       both: ['px-6', 'py-3', 'space-x-2.5'],
     },
     xl: {
-      text: ['px-8', 'py-3'],
-      icon: ['p-3', 'aspect-square'],
+      text: ['px-8', 'py-3', 'space-x-3'],
+      icon: ['p-3', 'aspect-square', 'space-x-3'],
       both: ['px-8', 'py-3', 'space-x-3'],
     },
     '2xl': {
-      text: ['px-10', 'py-4'],
-      icon: ['p-4', 'aspect-square'],
+      text: ['px-10', 'py-4', 'space-x-3'],
+      icon: ['p-4', 'aspect-square', 'space-x-3'],
       both: ['px-10', 'py-4', 'space-x-3'],
     },
   }
@@ -217,7 +217,7 @@ const classButton = computed(() => {
 </script>
 
 <template>
-  <div class="flex" :class="{ 'opacity-50': processing || disabled }">
+  <div class="flex" :class="{ 'opacity-50': processing || disabled, 'w-full': hasIcon && !hasText }">
     <button
       :type="type"
       class="flex h-full items-center justify-center border transition-colors dark:border-transparent"

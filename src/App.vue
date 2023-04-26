@@ -49,8 +49,12 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             helper="A helper text."
             size="base"
           />
-
-          <VButton size="base" text="Submit" icon="group" />
+          <div class="flex space-x-4">
+            <VButton size="base" text="Submit" icon="group" />
+            <VButton size="base" icon="group" />
+            <VButton size="base" text="Submit" />
+            <VButton size="base" text="Submit" :processing="true" />
+          </div>
 
           <VSelect
             required
