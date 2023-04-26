@@ -167,22 +167,6 @@ const props = defineProps({
 })
 
 /**
- * Datepicker size class.
- *
- * @type {import('vue').ComputedRef<string>}
- */
-const classSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-sm'],
-    base: ['text-base'],
-    lg: ['text-lg'],
-    xl: ['text-xl'],
-    '2xl': ['text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS error classes.
  *
  * @type {import ('vue').ComputedRef<string>}
@@ -339,7 +323,7 @@ const reset = () => {
         class="w-full cursor-pointer rounded rounded-r-none border border-r-0 border-nord-snow-storm-100 bg-nord-snow-storm-300 text-nord-300 caret-transparent placeholder:text-nord-300/50 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300 dark:placeholder:text-nord-snow-storm-300/50 dark:focus:border-nord-400"
         :class="[
           classInput,
-          classSize,
+          $sizeToClass(size),
           getInputErrorClasses(),
           { 'rounded-l-none border-l-0': hasIcon },
         ]"

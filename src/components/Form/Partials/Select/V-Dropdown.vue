@@ -191,7 +191,7 @@ const allOptionsSelected = computed(() => {
       }"
       class="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-200"
     >
-      <div class="flex items-center">
+      <div class="flex items-center" v-if="multiple || search">
         <VCheckbox
           v-if="multiple"
           :checked="allOptionsSelected"
@@ -201,8 +201,10 @@ const allOptionsSelected = computed(() => {
           color="green"
           @change="emit('toggleAll')"
           />
+        
+        <span v-if="!search" class="italic text-nord-300 dark:text-nord-snow-storm-300 mt-1 opacity-75">Select all</span>
 
-        <VSearch v-if="multiple && search" @onSearch="emit('onSearch', $event)" :size="size" />
+        <VSearch v-if="search" @onSearch="emit('onSearch', $event)" :size="size" />
       </div>
 
       <template v-for="(option, index) in filteredOptions" :key="index">

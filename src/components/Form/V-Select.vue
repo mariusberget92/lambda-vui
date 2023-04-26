@@ -490,7 +490,7 @@ const classRemoveButton = computed(() => {
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100 dark:text-nord-snow-storm-300 hover:dark:bg-nord-300"
+          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100/50 dark:text-nord-snow-storm-300 dark:hover:bg-nord-300/50"
           :class="[classRemoveButton, $sizeToClass(size)]"
           @click="reset"
         >

@@ -29,7 +29,7 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
-            size="xs"
+            size="base"
             icon="group"
           />
 
@@ -39,7 +39,7 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
-            size="xs"
+            size="base"
           />
 
           <VCheckbox
@@ -47,10 +47,10 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             v-model="boolean"
             label="A label"
             helper="A helper text."
-            size="sm"
+            size="base"
           />
 
-          <VButton size="xs" text="Submit" icon="group" />
+          <VButton size="base" text="Submit" icon="group" />
 
           <VSelect
             required
@@ -58,8 +58,9 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
-            size="sm"
+            size="base"
             icon="list"
+            search
             :options="[
               'option-1',
               'option-2',
@@ -73,7 +74,8 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
             label="A label"
             helper="A helper text."
             placeholder="Placeholder"
-            size="xs"
+            size="base"
+            search
             multiple
             :options="[
               { value: 'viewAny.user', text: 'View all users' },
