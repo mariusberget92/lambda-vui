@@ -50,13 +50,13 @@ const props = defineProps({
   /**
    * Model value of the input.
    *
-   * @type {String|Array<String>}
+   * @type {String|Array<String>|Number|Array<Number>}
    * @default ''
    * @required
    */
   modelValue: {
     required: true,
-    type: [String, Array],
+    type: [String, Array, Number],
     default: '',
   },
 
@@ -281,13 +281,13 @@ const filteredOptions = ref(props.options)
  * Get the option text or value from an option.
  *
  * @type {import('vue').ComputedRef<Function>}
- * @param {String|Object} option
+ * @param {String|Object|Number} option
  * @param {String} type
  * @returns {String}
  */
 const getOptionInfo = computed(() => {
   return (option, type) => {
-    if (typeof option === 'string') {
+    if (typeof option === 'string' || typeof option === 'number') {
       return option
     }
 
@@ -317,15 +317,28 @@ const inputValue = computed(() => {
     }
   }
 
-  // If the input is not multiple and the options are strings just return the string
-  if (typeof props.options[0] === 'string') {
+  // If the input is not multiple and the options are strings or numbers return the modelValue.
+  if (
+    typeof props.options[0] === 'string' ||
+    typeof props.options[0] === 'number'
+  ) {
     return props.modelValue
   }
 
-  //
-  const selectedOptions = props.options.filter((option) => {
-    return props.modelValue.includes(getOptionInfo.value(option, 'value'))
-  })
+  // If the input is not multiple and the options are objects return the text of the selected option.
+  let selectedOptions = []
+  if (typeof props.modelValue === 'number') {
+    const option = props.options.find((option) => {
+      return getOptionInfo.value(option, 'value') === props.modelValue
+    })
+    if (option) {
+      selectedOptions.push(option)
+    }
+  } else if (Array.isArray(props.modelValue)) {
+    selectedOptions = props.options.filter((option) => {
+      return props.modelValue.includes(getOptionInfo.value(option, 'value'))
+    })
+  }
 
   return selectedOptions.map((option) => getOptionInfo.value(option, 'text'))
 })
@@ -413,23 +426,6 @@ const toggleDropdown = () => {
 }
 
 /**
- * CSS input classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classInput = computed(() => {
-  return {
-    xs: ['p-2'],
-    sm: ['p-2'],
-    base: ['px-3', 'py-2'],
-    lg: ['p-3'],
-    xl: ['px-4', 'py-3'],
-    '2xl': ['p-4'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS remove button classes.
  *
  * @type {import ('vue').ComputedRef<string>}
@@ -463,7 +459,7 @@ const classRemoveButton = computed(() => {
     />
 
     <div
-      class="mt-1 flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
+      class="flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
       :class="{
         'border-l-4 !border-l-nord-aurora-200': hasError,
         'rounded-full': shape === 'pill',
@@ -477,8 +473,8 @@ const classRemoveButton = computed(() => {
       <input
         :id="id"
         type="text"
-        class="pointer-events-none w-full bg-transparent text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
-        :class="[classInput, $sizeToClass(size), $placeholderColors]"
+        class="pointer-events-none w-full bg-transparent p-2 text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
+        :class="[$sizeToClass(size), $placeholderColors]"
         :placeholder="placeholder"
         :value="inputValue"
         :required="required"

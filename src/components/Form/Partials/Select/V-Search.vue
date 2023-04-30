@@ -40,15 +40,13 @@ const searchQuery = ref('')
 </script>
 
 <template>
-  <div class="flex w-full p-2">
-    <VInput
-      v-model="searchQuery"
-      class="-mt-1"
-      placeholder="Search for items"
-      :size="size"
-      icon="search"
-      :search="true"
-      @input="emit('onSearch', searchQuery)"
-    />
-  </div>
+  <VInput
+    v-model="searchQuery"
+    class="-mt-1"
+    placeholder="Search for items"
+    :size="size"
+    icon="search"
+    :search="true"
+    @input="emit('onSearch', searchQuery)"
+  />
 </template>

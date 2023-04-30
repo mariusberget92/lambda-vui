@@ -7,11 +7,13 @@ import VTextarea from './components/Form/V-Textarea.vue'
 import VCheckbox from './components/Form/V-Checkbox.vue'
 import VButton from './components/Form/V-Button.vue'
 import VSelect from './components/Form/V-Select.vue'
+import VDatePicker from './components/Form/V-DatePicker.vue'
 
-const input = ref('Test')
+const input = ref('')
 const boolean = ref(true)
 const select = ref('option-1')
 const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
+const date = ref('')
 </script>
 
 <template>
@@ -25,44 +27,57 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
 
           <VInput
             v-model="input"
-            required
-            label="A label"
+            label="Text input without an icon and not required"
             helper="A helper text."
             placeholder="Placeholder"
-            size="base"
+            size="sm"
+          />
+
+          <VInput
+            v-model="input"
+            required
+            label="Text input"
+            helper="A helper text."
+            placeholder="Placeholder"
+            size="sm"
             icon="group"
+          />
+
+          <VInput
+            v-model="input"
+            required
+            label="Text input with an error"
+            helper="A helper text."
+            placeholder="Placeholder"
+            size="sm"
+            icon="group"
+            error="Some error"
           />
 
           <VTextarea
             v-model="input"
             required
-            label="A label"
+            label="Textarea"
             helper="A helper text."
-            placeholder="Placeholder"
-            size="base"
+            placeholder="Textarea cannot have icons."
+            size="sm"
           />
 
           <VCheckbox
             v-model="boolean"
             required
-            label="A label"
-            helper="A helper text."
-            size="base"
+            label="Checkbox input"
+            helper="They can only have a boolean model ( true or false )."
+            size="sm"
           />
-          <div class="flex space-x-4">
-            <VButton size="base" text="Submit" icon="group" />
-            <VButton size="base" icon="group" />
-            <VButton size="base" text="Submit" />
-            <VButton size="base" text="Submit" :processing="true" />
-          </div>
 
           <VSelect
             v-model="select"
             required
-            label="A label"
-            helper="A helper text."
+            label="Single select input"
+            helper="With search for filtering."
             placeholder="Placeholder"
-            size="base"
+            size="sm"
             icon="list"
             search
             :options="['option-1', 'option-2', 'option-3']"
@@ -71,10 +86,10 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
           <VSelect
             v-model="selectMultiple"
             required
-            label="A label"
-            helper="A helper text."
+            label="Multiselect input"
+            helper="With search for filtering and toggle all checkbox."
             placeholder="Placeholder"
-            size="base"
+            size="sm"
             search
             multiple
             :options="[
@@ -96,6 +111,30 @@ const selectMultiple = ref(['viewAny.user', 'viewAny.role'])
               { value: 'delete.setting', text: 'Delete a setting' },
             ]"
           />
+
+          <VDatePicker
+            v-model="date"
+            label="Datepicker input"
+            helper="Datepicker input with keyboard navigation as long as the focus is on the input."
+            placeholder="Placeholder"
+            size="sm"
+            icon="calendar_month"
+          />
+  
+          <div class="flex flex-wrap gap-2">
+            <VButton size="sm" text="Outline button" icon="group" outline />
+            <VButton size="sm" icon="group" color="green" />
+            <VButton size="sm" text="Submit" color="yellow" />
+            <VButton size="sm" icon="save" :processing="true" color="orange" outline />
+            <VButton size="sm" text="Submit" color="mauve" />
+            <VButton size="sm" text="Submit" color="blue" />
+            <VButton
+              size="sm"
+              text="Submit"
+              color="orange"
+              :processing="true"
+            />
+          </div>
         </div>
       </div>
     </div>

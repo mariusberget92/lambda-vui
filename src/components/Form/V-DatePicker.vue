@@ -1,9 +1,16 @@
 <script setup>
-import { defineProps, computed, ref, defineEmits } from 'vue'
+import { defineProps, computed, ref, defineEmits, provide } from 'vue'
 import { vOnClickOutside } from '@vueuse/components'
 import VLabel from './Partials/V-Label.vue'
 import VIcon from './Partials/V-Icon.vue'
 import VDropdown from './Partials/Datepicker/V-Dropdown.vue'
+
+/**
+ * Define the component emits.
+ *
+ * @type {Object}
+ */
+const emit = defineEmits(['update:modelValue'])
 
 /**
  * Click outside handler.
@@ -18,13 +25,6 @@ const onClickOutsideHandler = [
     ignore: [],
   },
 ]
-
-/**
- * Define the component emits.
- *
- * @type {Object}
- */
-const emit = defineEmits(['update:modelValue', 'dateChange', 'timeChange'])
 
 /**
  * Component props.
@@ -164,20 +164,21 @@ const props = defineProps({
     type: [String, Boolean],
     default: false,
   },
-})
 
-/**
- * CSS error classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const classError = computed(() => {
-  return [
-    'border-l-4',
-    '!border-l-nord-aurora-200',
-    'dark:shadow-[-10px_0_10px]',
-    'dark:shadow-nord-aurora-100/25',
-  ].join(' ')
+  /**
+   * The shape of the datepicker.
+   *
+   * @type {String}
+   * @default rounded
+   * @options square, rounded, pill
+   */
+  shape: {
+    type: String,
+    default: 'rounded',
+    validator: (val) => {
+      return ['square', 'rounded', 'pill'].includes(val)
+    },
+  },
 })
 
 /**
@@ -219,42 +220,6 @@ const hasError = computed(() => props.error !== false)
 const hasIcon = computed(() => props.icon !== false)
 
 /**
- * Datepicker error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getInputErrorClasses = () => {
-  return hasError.value && !hasIcon.value ? classError.value : ''
-}
-
-/**
- * Datepicker error classes.
- * We have to do this because using computed properties directly in the :class attribute,
- * is not supported by Vue 3.
- *
- * @type {import ('vue').ComputedRef<string>}
- */
-const getIconErrorClasses = () => {
-  return hasError.value ? classError.value : ''
-}
-
-/**
- * Selected date in the format YYYY-MM-DD.
- *
- * @type {import('vue').Ref<string>}
- */
-const selectedDate = ref('')
-
-/**
- * Selected time in the format HH:MM.
- *
- * @type {import('vue').Ref<string>}
- */
-const selectedTime = ref('')
-
-/**
  * Whether the dropdown is open or not.
  *
  * @type {import('vue').Ref<boolean>}
@@ -280,14 +245,54 @@ const toggleDropdown = () => {
 }
 
 /**
- * Reset the datepicker.
+ * Handle the select event.
  *
+ * @param {Object} event
+ */
+const handleSelect = (event) => {
+  const day = event.day.toString().padStart(2, '0')
+  const month = event.month.toString().padStart(2, '0')
+  const year = event.year
+
+  const formattedDate = `${year}-${month}-${day}`
+  emit('update:modelValue', formattedDate)
+}
+
+/**
+ * Using provide/inject for some stuff that is not possible with props.
+ *
+ * @type {import('vue').Ref<boolean>}
+ * @type {import('vue').Ref<string>}
+ */
+const doReset = ref(false)
+const sendKey = ref('')
+provide('reset', doReset)
+provide('sendKey', sendKey)
+
+/**
+ * Handle the reset event.
+ *
+ * @param {Event} event
  * @returns {void}
  */
-const reset = () => {
-  selectedDate.value = ''
-  selectedTime.value = ''
+const reset = (event) => {
   emit('update:modelValue', '')
+  doReset.value = true
+  event.stopPropagation()
+}
+
+/**
+ * Handle the key event.
+ *
+ * @param {KeyboardEvent} event
+ * @returns {void}
+ */
+const keyHandler = (event) => {
+  sendKey.value = event.key
+  setTimeout(() => {
+    sendKey.value = ''
+  }, 100)
+  event.stopPropagation()
 }
 </script>
 
@@ -307,26 +312,24 @@ const reset = () => {
     />
 
     <div
-      class="mt-1 flex cursor-pointer"
+      class="flex cursor-pointer border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100"
+      :class="{
+        'border-l-4 !border-l-nord-aurora-200': hasError,
+        'rounded-full': shape === 'pill',
+        'rounded-none': shape === 'square',
+        rounded: shape === 'rounded',
+      }"
+      tabindex="0"
+      @keydown="keyHandler"
       @click=";(readOnly || disabled) == false && toggleDropdown()"
     >
-      <VIcon
-        v-if="hasIcon"
-        :icon="icon"
-        :size="size"
-        :class="getIconErrorClasses()"
-      />
+      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
 
       <input
         :id="id"
         type="text"
-        class="w-full cursor-pointer rounded rounded-r-none border border-r-0 border-nord-snow-storm-100 bg-nord-snow-storm-300 text-nord-300 caret-transparent placeholder:text-nord-300/50 focus:border-nord-snow-storm-100 dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300 dark:placeholder:text-nord-snow-storm-300/50 dark:focus:border-nord-400"
-        :class="[
-          classInput,
-          $sizeToClass(size),
-          getInputErrorClasses(),
-          { 'rounded-l-none border-l-0': hasIcon },
-        ]"
+        class="pointer-events-none w-full bg-transparent p-2 text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
+        :class="[$sizeToClass(size), $placeholderColors]"
         :placeholder="placeholder"
         :value="modelValue"
         :required="required"
@@ -334,32 +337,27 @@ const reset = () => {
         :disabled="disabled"
         :aria-labelledby="hasLabel ? `${id}-label` : null"
         :aria-describedby="hasLabel ? `${id}-helper` : null"
-        @keydown.prevent
       />
 
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100 dark:text-nord-snow-storm-300 hover:dark:bg-nord-300"
-          :class="[classRemoveButton, classSize]"
+          :class="[classRemoveButton, $sizeToClass(size)]"
           @click="reset"
         >
           clear
         </span>
       </div>
 
-      <VIcon
-        :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
-        :size="size"
-        side="right"
-      />
+      <VIcon icon="calendar_month" :size="size" side="right" />
     </div>
 
     <VDropdown
       ref="dropdown"
       :size="size"
-      :selected-date="selectedDate"
-      :selected-time="selectedTime"
+      :shape="shape"
+      :selected-date="modelValue"
       :show="isDropdownOpen"
       @select="handleSelect($event)"
     />

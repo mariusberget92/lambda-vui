@@ -3,6 +3,7 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   content: [
     'src/**/*.vue',
+    'src/plugins/**/*.js'
   ],
   theme: {
     extend: {

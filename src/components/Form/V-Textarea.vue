@@ -179,22 +179,6 @@ const hasLabel = computed(() => props.label !== false)
  * @type {import('vue').ComputedRef<boolean>}
  */
 const hasError = computed(() => props.error !== false)
-
-/**
- * CSS textarea classes.
- *
- * @type {import ('vue').ComputedRef<Object>}
- */
-const classPadding = computed(() => {
-  return {
-    xs: ['p-2'],
-    sm: ['p-2'],
-    base: ['px-3', 'py-2'],
-    lg: ['p-3'],
-    xl: ['px-4', 'py-3'],
-    '2xl': ['p-4'],
-  }[props.size].join(' ')
-})
 </script>
 
 <template>
@@ -212,7 +196,7 @@ const classPadding = computed(() => {
     />
 
     <div
-      class="mt-1 flex border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
+      class="border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
       :class="{
         'border-l-4 !border-l-nord-aurora-200': hasError,
         'rounded-none': shape === 'square',
@@ -221,9 +205,8 @@ const classPadding = computed(() => {
     >
       <textarea
         :id="id"
-        class="w-full bg-transparent text-nord-300 dark:text-nord-snow-storm-300"
+        class="w-full bg-transparent p-2 text-nord-300 dark:text-nord-snow-storm-300"
         :class="[
-          classPadding,
           $sizeToClass(size),
           $placeholderColors,
           {

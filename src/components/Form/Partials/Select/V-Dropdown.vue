@@ -19,18 +19,18 @@ const props = defineProps({
   /**
    * Selected options.
    *
-   * @type {String|Array<String>}
+   * @type {String|Array<String>|Number|Array<Number>}
    * @default ''
    */
   selectedOptions: {
-    type: [String, Array],
+    type: [String, Array, Number],
     default: '',
   },
 
   /**
    * The options of the input.
    *
-   * @type {Array<String>|Array<Object>}
+   * @type {Array<String>|Array<Object>|Array<Number>}
    * @required
    * @default []
    */
@@ -43,7 +43,7 @@ const props = defineProps({
   /**
    * The filteredOptions of the input.
    *
-   * @type {Array<String>|Array<Object>}
+   * @type {Array<String>|Array<Object>|Array<Number>}
    * @required
    * @default []
    */
@@ -147,7 +147,7 @@ const props = defineProps({
  */
 const getOptionInfo = computed(() => {
   return (option, type) => {
-    if (typeof option === 'string') {
+    if (typeof option === 'string' || typeof option === 'number') {
       return option
     }
 
@@ -191,67 +191,69 @@ const allOptionsSelected = computed(() => {
         'rounded-none': shape == 'square',
         rounded: shape == 'rounded' || shape == 'pill',
       }"
-      class="absolute z-10 mt-1 max-h-64 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-200"
+      class="absolute z-30 mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
     >
-      <div v-if="multiple || search" class="flex items-center">
-        <VCheckbox
-          v-if="multiple"
-          :checked="allOptionsSelected"
-          class="p-2"
-          :class="{ 'mt-1': !search }"
-          :size="size"
-          color="green"
-          @change="emit('toggleAll')"
-        />
-
-        <span
-          v-if="!search"
-          class="mt-1 italic text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
-          >Select all</span
-        >
-
-        <VSearch
-          v-if="search"
-          :size="size"
-          @on-search="emit('onSearch', $event)"
-        />
-      </div>
-
-      <template v-for="(option, index) in filteredOptions" :key="index">
-        <div
-          class="flex hover:bg-nord-snow-storm-100/50 dark:hover:bg-nord-100/50"
-          :class="{
-            'first:rounded-t last:rounded-b':
-              shape == 'rounded' || shape == 'pill',
-          }"
-        >
-          <VCheckbox
-            v-if="multiple"
-            :checked="isSelected(option)"
-            class="pl-2"
+      <perfect-scrollbar>
+        <div v-if="multiple || search" class="flex flex-col space-y-3 p-2 pt-3">
+          <VSearch
+            v-if="search"
             :size="size"
-            @input="emit('select', option)"
+            @on-search="emit('onSearch', $event)"
           />
 
-          <button
-            type="button"
-            class="flex w-full cursor-pointer flex-col p-2 text-nord-300 dark:text-nord-snow-storm-300"
-            :class="$sizeToClass(size)"
-            @click="emit('select', option)"
-          >
-            <span
-              class="flex items-center"
-              :class="{ 'space-x-2': option.emoji && option.emoji.length > 0 }"
-            >
-              <span v-if="option.emoji && option.emoji.length > 0">
-                {{ option.emoji }}
-              </span>
-
-              <span>{{ getOptionInfo(option, 'text') }}</span>
-            </span>
-          </button>
+          <VCheckbox
+            v-if="multiple"
+            :checked="allOptionsSelected"
+            :size="size"
+            color="green"
+            @change="emit('toggleAll')"
+          />
         </div>
-      </template>
+
+        <template v-for="(option, index) in filteredOptions" :key="index">
+          <div
+            class="flex hover:bg-nord-snow-storm-100/50 dark:hover:bg-nord-100/50"
+            :class="{
+              'first:rounded-t last:rounded-b':
+                shape == 'rounded' || shape == 'pill',
+            }"
+          >
+            <VCheckbox
+              v-if="multiple"
+              :checked="isSelected(option)"
+              class="pl-2"
+              :size="size"
+              @input="emit('select', option)"
+            />
+
+            <button
+              type="button"
+              class="flex w-full cursor-pointer flex-col p-2 text-nord-300 dark:text-nord-snow-storm-300"
+              :class="$sizeToClass(size)"
+              @click="emit('select', option)"
+            >
+              <span
+                class="flex items-center"
+                :class="{
+                  'space-x-2': option.emoji && option.emoji.length > 0,
+                }"
+              >
+                <span v-if="option.emoji && option.emoji.length > 0">
+                  {{ option.emoji }}
+                </span>
+
+                <span>{{ getOptionInfo(option, 'text') }}</span>
+              </span>
+            </button>
+          </div>
+        </template>
+      </perfect-scrollbar>
     </div>
   </div>
 </template>
+
+<style scoped>
+.ps {
+  max-height:300px;
+}
+</style>

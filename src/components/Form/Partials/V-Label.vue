@@ -112,7 +112,7 @@ const idHelper = computed(() => {
 </script>
 
 <template>
-  <div class="flex space-x-1">
+  <div class="mb-1 flex flex-col">
     <label
       :id="idLabel"
       :for="id"
@@ -120,18 +120,17 @@ const idHelper = computed(() => {
       :class="$sizeToClass(props.size)"
     >
       {{ label }}
+
+      <span
+        v-if="required"
+        class="leading-none text-nord-aurora-200"
+        :class="$sizeToClass(props.size)"
+        >*</span
+      >
     </label>
 
     <span
-      v-if="required"
-      class="leading-none text-nord-aurora-200"
-      :class="$sizeToClass(props.size)"
-      >*</span
-    >
-  </div>
-
-  <div v-if="hasHelper" class="flex">
-    <span
+      v-if="hasHelper"
       :id="idHelper"
       class="mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
       :class="classHelperSize"
