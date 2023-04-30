@@ -461,7 +461,7 @@ const classRemoveButton = computed(() => {
     <div
       class="flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
       :class="{
-        'border-l-4 !border-l-nord-aurora-200': hasError,
+        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50': hasError,
         'rounded-full': shape === 'pill',
         'rounded-none': shape === 'square',
         rounded: shape === 'rounded',

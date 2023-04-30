@@ -206,36 +206,48 @@ const classButton = computed(() => {
       'bg-nord-aurora-200',
       'border-nord-aurora-100',
       'hover:bg-nord-aurora-100',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-100/75',
       'text-white',
     ],
     green: [
       'bg-nord-aurora-1100',
       'border-nord-aurora-1000',
       'hover:bg-nord-aurora-1000',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-1000/75',
       'text-white',
     ],
     blue: [
       'bg-nord-frost-300',
       'border-nord-frost-400',
       'hover:bg-nord-frost-400',
+      'dark:shadow-lg',
+      'dark:shadow-nord-frost-400/75',
       'text-white',
     ],
     orange: [
       'bg-nord-aurora-500',
       'border-nord-aurora-400',
       'hover:bg-nord-aurora-400',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-400/75',
       'text-white',
     ],
     yellow: [
       'bg-nord-aurora-800',
       'border-nord-aurora-700',
       'hover:bg-nord-aurora-700',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-700/75',
       'text-white',
     ],
     mauve: [
       'bg-nord-aurora-1400',
       'border-nord-aurora-1300',
       'hover:bg-nord-aurora-1300',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-1300/75',
       'text-white',
     ],
   }
@@ -249,6 +261,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-100',
       'text-nord-aurora-200',
       'hover:text-nord-aurora-100',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-100/75',
     ],
     green: [
       'bg-transparent',
@@ -258,6 +272,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-1000',
       'text-nord-aurora-1100',
       'hover:text-nord-aurora-1000',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-1000/75',
     ],
     blue: [
       'bg-transparent',
@@ -267,6 +283,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-frost-400',
       'text-nord-frost-300',
       'hover:text-nord-frost-400',
+      'dark:shadow-lg',
+      'dark:shadow-nord-frost-400/75',
     ],
     orange: [
       'bg-transparent',
@@ -276,6 +294,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-400',
       'text-nord-aurora-500',
       'hover:text-nord-aurora-400',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-400/75',
     ],
     yellow: [
       'bg-transparent',
@@ -285,6 +305,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-700',
       'text-nord-aurora-800',
       'hover:text-nord-aurora-700',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-700/75',
     ],
     mauve: [
       'bg-transparent',
@@ -294,6 +316,8 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-1300',
       'text-nord-aurora-1400',
       'hover:text-nord-aurora-1300',
+      'dark:shadow-lg',
+      'dark:shadow-nord-aurora-1300/75',
     ],
   }
 

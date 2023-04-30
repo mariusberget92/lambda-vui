@@ -369,7 +369,7 @@ const keyHandler = (key) => {
           rounded: shape == 'rounded' || shape == 'pill',
         },
       ]"
-      class="absolute z-10 mt-1 overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white p-2 shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
+      class="absolute z-10 mt-1 overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white p-2 pb-4 shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
     >
       <div class="flex flex-col space-y-4">
         <div class="flex items-center justify-between space-x-2">
