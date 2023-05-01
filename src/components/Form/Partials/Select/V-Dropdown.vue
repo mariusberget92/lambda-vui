@@ -191,7 +191,7 @@ const allOptionsSelected = computed(() => {
         'rounded-none': shape == 'square',
         rounded: shape == 'rounded' || shape == 'pill',
       }"
-      class="absolute z-30 mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
+      class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
     >
       <perfect-scrollbar>
         <div v-if="multiple || search" class="flex flex-col space-y-3 p-2 pt-3">

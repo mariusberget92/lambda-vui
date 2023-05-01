@@ -179,42 +179,42 @@ const classCheckbox = computed(() => {
       'checked:!border-nord-aurora-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-100/75'
+      'checked:dark:shadow-nord-aurora-100/75',
     ],
     green: [
       'text-nord-aurora-1100',
       'checked:!border-nord-aurora-1000',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-1000/75'
+      'checked:dark:shadow-nord-aurora-1000/75',
     ],
     blue: [
       'text-nord-frost-300',
       'checked:!border-nord-frost-400',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-frost-400/75'
+      'checked:dark:shadow-nord-frost-400/75',
     ],
     orange: [
       'text-nord-aurora-500',
       'checked:!border-nord-aurora-400',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-400/75'
+      'checked:dark:shadow-nord-aurora-400/75',
     ],
     yellow: [
       'text-nord-aurora-800',
       'checked:!border-nord-aurora-700',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-700/75'
+      'checked:dark:shadow-nord-aurora-700/75',
     ],
     mauve: [
       'text-nord-aurora-1400',
       'checked:!border-nord-aurora-1300',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-1300/75'
+      'checked:dark:shadow-nord-aurora-1300/75',
     ],
   }
 

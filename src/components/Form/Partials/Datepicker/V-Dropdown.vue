@@ -6,16 +6,17 @@ import {
   computed,
   defineEmits,
   inject,
-  watchEffect,
+  watch,
 } from 'vue'
 import VSelect from '../../V-Select.vue'
+import VButton from '../../V-Button.vue'
 
 /**
  * Emits events.
  *
  * @type {Object}
  */
-const emit = defineEmits(['select'])
+const emit = defineEmits(['select', 'closeDropdown'])
 
 /**
  * Component props.
@@ -74,6 +75,43 @@ const props = defineProps({
       return ['rounded', 'square', 'pill'].includes(val)
     },
   },
+
+  /**
+   * Whether or not to show the datepicker.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  datePicker: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
+   * Whether or not to show the timepicker.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  timePicker: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * The color of the datepicker buttons.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+    },
+  },
 })
 
 /**
@@ -83,6 +121,11 @@ const props = defineProps({
  */
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
+/**
+ * Months of the year.
+ *
+ * @type {Array}
+ */
 const months = [
   { value: 1, text: 'January' },
   { value: 2, text: 'February' },
@@ -98,13 +141,46 @@ const months = [
   { value: 12, text: 'December' },
 ]
 
-// Array of years from +/- 10 years from selectedYear.value
+/**
+ * Years.
+ *
+ * @type {import('vue').ComputedRef<Array>}
+ * @returns {Array}
+ */
 const years = computed(() => {
   const years = []
   for (let i = new Date().getFullYear() + 10; i >= 1900; i--) {
     years.push(i)
   }
   return years
+})
+
+/**
+ * Hours.
+ *
+ * @type {import('vue').ComputedRef<Array>}
+ * @returns {Array}
+ */
+const hours = computed(() => {
+  const hours = []
+  for (let i = 0; i <= 23; i++) {
+    hours.push(i.toString().padStart(2, '0'))
+  }
+  return hours
+})
+
+/**
+ * Minutes.
+ *
+ * @type {import('vue').ComputedRef<Array>}
+ * @returns {Array}
+ */
+const minutes = computed(() => {
+  const minutes = []
+  for (let i = 0; i <= 59; i++) {
+    minutes.push(i.toString().padStart(2, '0'))
+  }
+  return minutes
 })
 
 /**
@@ -118,26 +194,46 @@ onMounted(() => {
   selectedDay.value = date.getDate()
   selectedMonth.value = date.getMonth() + 1
   selectedYear.value = date.getFullYear()
+
+  // Set selected hour and minute if timepicker is enabled.
+  if (props.timePicker) {
+    selectedHour.value = date.getHours().toString().padStart(2, '0')
+    selectedMinute.value = date.getMinutes().toString().padStart(2, '0')
+  }
 })
 
 /**
- * Selected day, month, and year.
+ * Selected day, month, year, hour and minute.
  *
  * @type {import('vue').Ref<number>}
  */
 const selectedDay = ref(0)
 const selectedMonth = ref(0)
 const selectedYear = ref(0)
+const selectedHour = ref(0)
+const selectedMinute = ref(0)
 
 /**
- * Returns the number of days in the given month and year.
- * @param {Number} month - The month (1-12).
- * @param {Number} year - The year.
- * @returns {Number} - The number of days in the month.
+ * Watch for date changes and emit the event.
+ *
+ * @returns {void}
  */
-const daysInMonth = (month, year) => {
-  return new Date(year, month, 0).getDate()
-}
+watch(
+  [selectedDay, selectedMonth, selectedYear, selectedHour, selectedMinute],
+  ([day, month, year, hour, minute]) => {
+    emit('select', { day, month, year, hour, minute })
+  }
+)
+
+/**
+ * Days in the month based on selected year and month.
+ *
+ * @type {import('vue').ComputedRef<Number>}
+ * @returns {Number}
+ */
+const daysInMonth = computed(() => {
+  return new Date(selectedYear.value, selectedMonth.value, 0).getDate()
+})
 
 /**
  * Check if a day is today.
@@ -218,19 +314,207 @@ const classMonthsPaging = computed(() => {
  */
 const classDropdownWidth = computed(() => {
   return {
-    xs: ['w-[310px]'],
-    sm: ['w-[340px]'],
-    base: ['w-[370px]'],
-    lg: ['w-[425px]'],
-    xl: ['w-[435px]'],
-    '2xl': ['w-[500px]'],
+    xs: ['w-[340px]'],
+    sm: ['w-[370px]'],
+    base: ['w-[400px]'],
+    lg: ['w-[435px]'],
+    xl: ['w-[470px]'],
+    '2xl': ['w-[540px]'],
   }[props.size].join(' ')
 })
 
+const classSelectedColor = computed(() => {
+  const colorClasses = {
+    red: [
+      'bg-nord-aurora-200',
+      'border-nord-aurora-100',
+      'hover:bg-nord-aurora-100',
+      'text-white',
+    ],
+    green: [
+      'bg-nord-aurora-1100',
+      'border-nord-aurora-1000',
+      'hover:bg-nord-aurora-1000',
+      'text-white',
+    ],
+    blue: [
+      'bg-nord-frost-300',
+      'border-nord-frost-400',
+      'hover:bg-nord-frost-400',
+      'text-white',
+    ],
+    orange: [
+      'bg-nord-aurora-500',
+      'border-nord-aurora-400',
+      'hover:bg-nord-aurora-400',
+      'text-white',
+    ],
+    yellow: [
+      'bg-nord-aurora-800',
+      'border-nord-aurora-700',
+      'hover:bg-nord-aurora-700',
+      'text-white',
+    ],
+    mauve: [
+      'bg-nord-aurora-1400',
+      'border-nord-aurora-1300',
+      'hover:bg-nord-aurora-1300',
+      'text-white',
+    ],
+  }
+  return colorClasses[props.color].join(' ')
+})
+
 /**
- * Decrements the selected month by one. If the selected month is January, sets the selected month to December and decrements the selected year.
+ * Selects the passed day. Month and year change themselves when the user does so.
+ * @param {Number} day - The day to select.
  * @returns {void}
  */
+const selectDate = (day) => {
+  selectedDay.value = day
+}
+
+/**
+ * Set the selected date to today.
+ *
+ * @returns {void}
+ */
+const setToday = () => {
+  const today = new Date()
+  selectedDay.value = today.getDate()
+  selectedMonth.value = today.getMonth() + 1
+  selectedYear.value = today.getFullYear()
+}
+
+/**
+ * Set the selected hour/minute to now
+ *
+ * @returns {void}
+ */
+const setNow = () => {
+  const timeNow = new Date()
+  selectedHour.value = timeNow.getHours().toString().padStart(2, '0')
+  selectedMinute.value = timeNow.getMinutes().toString().padStart(2, '0')
+}
+
+/**
+ * Injections.
+ *
+ * @type {import('vue').Inject}
+ */
+const reset = inject('reset')
+const sendKey = inject('sendKey')
+
+/**
+ * Watchers.
+ *
+ * @returns {void}
+ */
+watch([reset, sendKey], ([resetValue, sendKeyValue]) => {
+  if (resetValue) {
+    const today = new Date()
+    selectedDay.value = today.getDate()
+    selectedMonth.value = today.getMonth() + 1
+    selectedYear.value = today.getFullYear()
+  }
+
+  if (sendKeyValue !== '') {
+    keyHandler(sendKeyValue)
+  }
+})
+
+/**
+ * Handles keyboard key strings.
+ *
+ * @param {String} key - The key string.
+ * @returns {void}
+ */
+const KEY_LEFT_ARROW = 'ArrowLeft'
+const KEY_RIGHT_ARROW = 'ArrowRight'
+const KEY_UP_ARROW = 'ArrowUp'
+const KEY_DOWN_ARROW = 'ArrowDown'
+const KEY_PAGE_UP = 'PageUp'
+const KEY_PAGE_DOWN = 'PageDown'
+const KEY_HOME = 'Home'
+const KEY_END = 'End'
+const KEY_DELETE = 'Delete'
+const KEY_INSERT = 'Insert'
+const KEY_ESC = 'Escape'
+
+const keyHandler = (key) => {
+  switch (key) {
+    case KEY_LEFT_ARROW:
+      previousDay()
+      break
+    case KEY_RIGHT_ARROW:
+      nextDay()
+      break
+    case KEY_UP_ARROW:
+      previousWeek()
+      break
+    case KEY_DOWN_ARROW:
+      nextWeek()
+      break
+    case KEY_PAGE_UP:
+      previousMonth()
+      break
+    case KEY_PAGE_DOWN:
+      nextMonth()
+      break
+    case KEY_HOME:
+      firstDayOfTheMonth()
+      break
+    case KEY_END:
+      lastDayOfTheMonth()
+      break
+    case KEY_DELETE:
+      nextYear()
+      break
+    case KEY_INSERT:
+      previousYear()
+      break
+    case KEY_ESC:
+      closeDropdown()
+      break
+  }
+}
+
+const previousDay = () => {
+  if (selectedDay.value == 1) {
+    previousMonth()
+    lastDayOfTheMonth()
+  } else {
+    selectedDay.value--
+  }
+}
+
+const nextDay = () => {
+  if (selectedDay.value == daysInMonth.value) {
+    nextMonth()
+    firstDayOfTheMonth()
+  } else {
+    selectedDay.value++
+  }
+}
+
+const previousWeek = () => {
+  if (selectedDay.value <= 7) {
+    previousMonth()
+    selectedDay.value = daysInMonth.value - 6
+  } else {
+    selectedDay.value -= 7
+  }
+}
+
+const nextWeek = () => {
+  if (selectedDay.value + 7 > daysInMonth.value) {
+    nextMonth()
+    selectedDay.value = 7 - (daysInMonth.value - selectedDay.value)
+  } else {
+    selectedDay.value += 7
+  }
+}
+
 const previousMonth = () => {
   if (selectedMonth.value == 1) {
     selectedMonth.value = 12
@@ -240,10 +524,6 @@ const previousMonth = () => {
   }
 }
 
-/**
- * Increments the selected month by one. If the selected month is December, sets the selected month to January and increments the selected year.
- * @returns {void}
- */
 const nextMonth = () => {
   if (selectedMonth.value == 12) {
     selectedMonth.value = 1
@@ -253,108 +533,24 @@ const nextMonth = () => {
   }
 }
 
-/**
- * Selects the passed day. Month and year change themselves when the user does so.
- * @param {Number} day - The day to select.
- * @returns {void}
- */
-const selectDate = (day) => {
-  selectedDay.value = day
-  emit('select', { day, month: selectedMonth.value, year: selectedYear.value })
+const firstDayOfTheMonth = () => {
+  selectedDay.value = 1
 }
 
-/**
- * Resets the date to today.
- *
- * @returns {void}
- */
-const reset = inject('reset')
-const sendKey = inject('sendKey')
+const lastDayOfTheMonth = () => {
+  selectedDay.value = daysInMonth.value
+}
 
-watchEffect(() => {
-  if (reset.value == true) {
-    const today = new Date()
-    selectedDay.value = today.getDate()
-    selectedMonth.value = today.getMonth() + 1
-    selectedYear.value = today.getFullYear()
-  }
+const previousYear = () => {
+  selectedYear.value--
+}
 
-  if (sendKey.value != '') {
-    console.log(sendKey.value)
-    keyHandler(sendKey.value)
-  }
-})
+const nextYear = () => {
+  selectedYear.value++
+}
 
-/**
- * Handles keyboard events.
- *
- * @param {KeyboardEvent} event - The keyboard event.
- * @returns {void}
- */
-const keyHandler = (key) => {
-  if (key === 'ArrowLeft') {
-    // Previous day
-    if (selectedDay.value > 1) {
-      selectedDay.value--
-    } else {
-      previousMonth()
-      selectedDay.value = daysInMonth(selectedMonth.value, selectedYear.value)
-    }
-    selectDate(selectedDay.value)
-  } else if (key === 'ArrowRight') {
-    // Next day
-    if (
-      selectedDay.value < daysInMonth(selectedMonth.value, selectedYear.value)
-    ) {
-      selectedDay.value++
-    } else {
-      nextMonth()
-      selectedDay.value = 1
-    }
-    selectDate(selectedDay.value)
-  } else if (key === 'ArrowUp') {
-    // Previous week
-    if (selectedDay.value > 7) {
-      selectedDay.value -= 7
-    } else {
-      previousMonth()
-      selectedDay.value =
-        daysInMonth(selectedMonth.value, selectedYear.value) -
-        (7 - selectedDay.value)
-    }
-    selectDate(selectedDay.value)
-  } else if (key === 'ArrowDown') {
-    // Next week
-    if (
-      selectedDay.value + 7 <=
-      daysInMonth(selectedMonth.value, selectedYear.value)
-    ) {
-      selectedDay.value += 7
-    } else {
-      nextMonth()
-      selectedDay.value =
-        selectedDay.value +
-        7 -
-        daysInMonth(selectedMonth.value, selectedYear.value)
-    }
-    selectDate(selectedDay.value)
-  } else if (key === 'PageUp') {
-    // Previous month
-    previousMonth()
-    selectDate(selectedDay.value)
-  } else if (key === 'PageDown') {
-    // Next month
-    nextMonth()
-    selectDate(selectedDay.value)
-  } else if (key === 'Home') {
-    // First day of month
-    selectedDay.value = 1
-    selectDate(selectedDay.value)
-  } else if (key === 'End') {
-    // Last day of month
-    selectedDay.value = daysInMonth(selectedMonth.value, selectedYear.value)
-    selectDate(selectedDay.value)
-  }
+const closeDropdown = () => {
+  emit('closeDropdown', true)
 }
 </script>
 
@@ -369,33 +565,60 @@ const keyHandler = (key) => {
           rounded: shape == 'rounded' || shape == 'pill',
         },
       ]"
-      class="absolute z-10 mt-1 overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white p-2 pb-4 shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
+      class="absolute mt-1 border border-nord-snow-storm-100 bg-white p-2 shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
     >
-      <div class="flex flex-col space-y-4">
-        <div class="flex items-center justify-between space-x-2">
-          <button
-            class="material-symbols-rounded aspect-square rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
-            :class="classMonthsPaging"
-            @click="previousMonth"
+      <div v-if="datePicker" class="flex flex-col space-y-4 pb-4">
+        <div class="flex flex-col">
+          <span
+            class="font-bold text-nord-300 dark:text-nord-snow-storm-300"
+            :class="$sizeToClass(size)"
+            >Date</span
           >
-            chevron_left
-          </button>
+          <div class="flex items-center justify-between space-x-2">
+            <button
+              class="material-symbols-rounded aspect-square flex-none rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
+              :class="classMonthsPaging"
+              @click="previousMonth"
+            >
+              chevron_left
+            </button>
 
-          <VSelect v-model="selectedMonth" :options="months" :size="size" />
-          <VSelect v-model="selectedYear" :options="years" :size="size" />
+            <VSelect
+              v-model="selectedMonth"
+              class="grow"
+              :options="months"
+              :size="size"
+              :clear-button="false"
+            />
+            <VButton
+              v-if="datePicker"
+              class="flex-none"
+              :size="size"
+              text="Today"
+              outline
+              :color="color"
+              @click.prevent="setToday"
+            />
+            <VSelect
+              v-model="selectedYear"
+              class="shrink"
+              :options="years"
+              :size="size"
+              :clear-button="false"
+            />
 
-          <button
-            class="material-symbols-rounded aspect-square rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
-            :class="classMonthsPaging"
-            @click="nextMonth"
-          >
-            chevron_right
-          </button>
+            <button
+              class="material-symbols-rounded aspect-square flex-none rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
+              :class="classMonthsPaging"
+              @click="nextMonth"
+            >
+              chevron_right
+            </button>
+          </div>
         </div>
-
         <div class="flex justify-center">
           <div
-            class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-2 font-bold text-nord-300 dark:text-nord-snow-storm-300"
+            class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-y-2 gap-x-4 font-bold text-nord-300 dark:text-nord-snow-storm-300"
             :class="[$sizeToClass(size)]"
           >
             <template v-for="(day, index) in days" :key="index">
@@ -404,20 +627,17 @@ const keyHandler = (key) => {
               </div>
             </template>
 
-            <template
-              v-for="(day, index) in daysInMonth(selectedMonth, selectedYear)"
-              :key="index"
-            >
+            <template v-for="(day, index) in daysInMonth" :key="index">
               <button
-                class="aspect-square h-full rounded p-2 font-semibold transition-colors hover:bg-nord-snow-storm-100 dark:hover:bg-nord-100"
+                class="aspect-square h-full rounded p-2 transition-colors hover:bg-nord-snow-storm-100 dark:hover:bg-nord-100"
                 :class="[
+                  isSelected(day) ? classSelectedColor : '',
+                  {
+                    'font-black': isToday(day) || isSelected(day),
+                    'font-semibold': !isToday(day),
+                  },
                   $sizeToClass(size),
                   index == 0 ? classRowStart : '',
-                  {
-                    'font-black': isToday(day),
-                    'bg-nord-frost-300 font-bold text-white hover:bg-nord-frost-300 dark:hover:bg-nord-frost-300':
-                      isSelected(day),
-                  },
                 ]"
                 @click="selectDate(day)"
               >
@@ -425,6 +645,39 @@ const keyHandler = (key) => {
               </button>
             </template>
           </div>
+        </div>
+      </div>
+
+      <div v-if="timePicker" class="w-full flex-col">
+        <span
+          class="font-bold text-nord-300 dark:text-nord-snow-storm-300"
+          :class="$sizeToClass(size)"
+          >Time</span
+        >
+        <div class="flex space-x-2">
+          <div class="flex flex-col">
+            <VSelect
+              v-model="selectedHour"
+              :options="hours"
+              :size="size"
+              :clear-button="false"
+            />
+          </div>
+          <div class="flex flex-col">
+            <VSelect
+              v-model="selectedMinute"
+              :options="minutes"
+              :size="size"
+              :clear-button="false"
+            />
+          </div>
+          <VButton
+            outline
+            :color="color"
+            :size="size"
+            text="Now"
+            @click.prevent="setNow"
+          />
         </div>
       </div>
     </div>

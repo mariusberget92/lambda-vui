@@ -237,6 +237,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * Whether the input is clearable.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  clearButton: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -461,7 +472,8 @@ const classRemoveButton = computed(() => {
     <div
       class="flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
       :class="{
-        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50': hasError,
+        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50':
+          hasError,
         'rounded-full': shape === 'pill',
         'rounded-none': shape === 'square',
         rounded: shape === 'rounded',
@@ -485,7 +497,7 @@ const classRemoveButton = computed(() => {
         @keydown.prevent
       />
 
-      <div class="relative flex items-center">
+      <div v-if="clearButton" class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100/50 dark:text-nord-snow-storm-300 dark:hover:bg-nord-300/50"

@@ -179,6 +179,43 @@ const props = defineProps({
       return ['square', 'rounded', 'pill'].includes(val)
     },
   },
+
+  /**
+   * Whether or not to show the datepicker.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  datePicker: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
+   * Whether or not to show the timepicker.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  timePicker: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * The color of the datepicker buttons.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+    },
+  },
 })
 
 /**
@@ -252,10 +289,21 @@ const toggleDropdown = () => {
 const handleSelect = (event) => {
   const day = event.day.toString().padStart(2, '0')
   const month = event.month.toString().padStart(2, '0')
-  const year = event.year
+  const year = event.year.toString()
+  const hour = event.hour.toString()
+  const minute = event.minute.toString()
 
   const formattedDate = `${year}-${month}-${day}`
-  emit('update:modelValue', formattedDate)
+  const formattedTime = `${hour}:${minute}`
+  const formattedDateTime = `${formattedDate} ${formattedTime}`
+
+  if (props.datePicker && props.timePicker) {
+    emit('update:modelValue', formattedDateTime)
+  } else if (props.datePicker && !props.timePicker) {
+    emit('update:modelValue', formattedDate)
+  } else if (props.timePicker && !props.datePicker) {
+    emit('update:modelValue', formattedTime)
+  }
 }
 
 /**
@@ -278,6 +326,9 @@ provide('sendKey', sendKey)
 const reset = (event) => {
   emit('update:modelValue', '')
   doReset.value = true
+  setTimeout(() => {
+    doReset.value = false
+  }, 100)
   event.stopPropagation()
 }
 
@@ -289,6 +340,10 @@ const reset = (event) => {
  */
 const keyHandler = (event) => {
   sendKey.value = event.key
+  if (event.key === 'Escape') {
+    closeDropdown()
+  }
+
   setTimeout(() => {
     sendKey.value = ''
   }, 100)
@@ -314,7 +369,8 @@ const keyHandler = (event) => {
     <div
       class="flex cursor-pointer border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100"
       :class="{
-        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50': hasError,
+        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50':
+          hasError,
         'rounded-full': shape === 'pill',
         'rounded-none': shape === 'square',
         rounded: shape === 'rounded',
@@ -359,7 +415,11 @@ const keyHandler = (event) => {
       :shape="shape"
       :selected-date="modelValue"
       :show="isDropdownOpen"
+      :date-picker="datePicker"
+      :time-picker="timePicker"
+      :color="color"
       @select="handleSelect($event)"
+      @close-dropdown="closeDropdown"
     />
   </div>
 </template>

@@ -160,37 +160,37 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['p-2', 'space-x-2'],
-      icon: ['p-2', 'h-[34px]'],
-      both: ['p-2', 'space-x-2'],
+      text: ['space-x-2'],
+      icon: ['h-[34px]'],
+      both: ['space-x-2'],
     },
     sm: {
-      text: ['p-2', 'space-x-2'],
-      icon: ['p-2', 'h-[38px]'],
-      both: ['p-2', 'space-x-2'],
+      text: ['space-x-2'],
+      icon: ['h-[38px]'],
+      both: ['space-x-2'],
     },
     base: {
-      text: ['p-2', 'space-x-2.5'],
-      icon: ['p-2', 'h-[42px]'],
-      both: ['p-2', 'space-x-2.5'],
+      text: ['space-x-2.5'],
+      icon: ['h-[42px]'],
+      both: ['space-x-2.5'],
     },
     lg: {
-      text: ['p-3', 'space-x-2.5'],
-      icon: ['p-3', 'h-[46px]'],
-      both: ['p-3', 'space-x-2.5'],
+      text: ['space-x-2.5'],
+      icon: ['h-[46px]'],
+      both: ['space-x-2.5'],
     },
     xl: {
-      text: ['p-3', 'space-x-3'],
-      icon: ['p-3', 'h-[46px]'],
-      both: ['p-3', 'space-x-3'],
+      text: ['space-x-3'],
+      icon: ['h-[46px]'],
+      both: ['space-x-3'],
     },
     '2xl': {
-      text: ['p-4', 'space-x-3'],
-      icon: ['p-4', 'h-[50px]'],
-      both: ['p-4', 'space-x-3'],
+      text: ['space-x-3'],
+      icon: ['h-[50px]'],
+      both: ['space-x-3'],
     },
   }
-  
+
   if (!props.unstyled) {
     if (hasText.value && hasIcon.value) {
       classes.push(...sizeClasses[props.size].both)
@@ -206,48 +206,36 @@ const classButton = computed(() => {
       'bg-nord-aurora-200',
       'border-nord-aurora-100',
       'hover:bg-nord-aurora-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-100/75',
       'text-white',
     ],
     green: [
       'bg-nord-aurora-1100',
       'border-nord-aurora-1000',
       'hover:bg-nord-aurora-1000',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-1000/75',
       'text-white',
     ],
     blue: [
       'bg-nord-frost-300',
       'border-nord-frost-400',
       'hover:bg-nord-frost-400',
-      'dark:shadow-lg',
-      'dark:shadow-nord-frost-400/75',
       'text-white',
     ],
     orange: [
       'bg-nord-aurora-500',
       'border-nord-aurora-400',
       'hover:bg-nord-aurora-400',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-400/75',
       'text-white',
     ],
     yellow: [
       'bg-nord-aurora-800',
       'border-nord-aurora-700',
       'hover:bg-nord-aurora-700',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-700/75',
       'text-white',
     ],
     mauve: [
       'bg-nord-aurora-1400',
       'border-nord-aurora-1300',
       'hover:bg-nord-aurora-1300',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-1300/75',
       'text-white',
     ],
   }
@@ -261,8 +249,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-100',
       'text-nord-aurora-200',
       'hover:text-nord-aurora-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-100/75',
     ],
     green: [
       'bg-transparent',
@@ -272,8 +258,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-1000',
       'text-nord-aurora-1100',
       'hover:text-nord-aurora-1000',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-1000/75',
     ],
     blue: [
       'bg-transparent',
@@ -283,8 +267,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-frost-400',
       'text-nord-frost-300',
       'hover:text-nord-frost-400',
-      'dark:shadow-lg',
-      'dark:shadow-nord-frost-400/75',
     ],
     orange: [
       'bg-transparent',
@@ -294,8 +276,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-400',
       'text-nord-aurora-500',
       'hover:text-nord-aurora-400',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-400/75',
     ],
     yellow: [
       'bg-transparent',
@@ -305,8 +285,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-700',
       'text-nord-aurora-800',
       'hover:text-nord-aurora-700',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-700/75',
     ],
     mauve: [
       'bg-transparent',
@@ -316,8 +294,6 @@ const classButton = computed(() => {
       'dark:hover:border-nord-aurora-1300',
       'text-nord-aurora-1400',
       'hover:text-nord-aurora-1300',
-      'dark:shadow-lg',
-      'dark:shadow-nord-aurora-1300/75',
     ],
   }
 
@@ -332,7 +308,7 @@ const classButton = computed(() => {
 <template>
   <button
     :type="type"
-    class="flex items-center justify-center border transition-colors dark:border-transparent"
+    class="flex items-center justify-center border p-2 transition-colors"
     :class="[
       classButton,
       {
@@ -341,6 +317,7 @@ const classButton = computed(() => {
         'rounded-full': shape == 'pill',
         'opacity-50': processing || disabled,
         'aspect-square': hasIcon && !hasText,
+        'dark:border-transparent': !outline,
       },
     ]"
     :disabled="processing || disabled"
