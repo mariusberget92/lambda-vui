@@ -9,27 +9,40 @@ html, body {
     font-family:'Nunito', sans-serif;
 }
 
+/* Remove selections from icons. */ 
 .material-symbols-rounded {
     @apply select-none;
 }
 
+/* Set default dark background color */
 body.dark {
-    @apply bg-nord-300;
+    @apply bg-nord-dark-200;
 }
 
-input:not([type=checkbox]), select, textarea {
+/* Apply default text color to inputs. */
+input[type="text"], 
+input[type="password"], 
+input[type="email"],
+textarea {
+    @apply text-nord-dark-300;
+    @apply dark:text-nord-light-300;
+    @apply placeholder:text-nord-dark-300/50;
+    @apply dark:placeholder:text-nord-light-300/50;
+}
+
+/* Remove  ring, outline and border from inputs that is not checkbox. */
+input:not([type=checkbox]), 
+select, 
+textarea {
     @apply !ring-0;
     @apply !ring-offset-0;
     @apply !outline-none;
     @apply border-none
 }
 
-input[type="checkbox"], input[type="radio"] {
-    @apply !ring-0;
-    @apply !ring-offset-0;
-    @apply !outline-none; 
-}
-
+/* Remove ring and outline from checkboxes, radio inputs and buttons. */
+input[type="checkbox"], 
+input[type="radio"], 
 button {
     @apply !ring-0;
     @apply !ring-offset-0;

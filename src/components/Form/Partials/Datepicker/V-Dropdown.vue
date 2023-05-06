@@ -103,13 +103,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @options red, green, blue, orange, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
     },
   },
 })
@@ -290,23 +290,6 @@ const classRowStart = computed(() => {
 })
 
 /**
- * CSS for months paging.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classMonthsPaging = computed(() => {
-  return {
-    xs: ['w-[34px]', 'h-[34px]', 'text-base'],
-    sm: ['w-[38px]', 'h-[38px]', 'text-base'],
-    base: ['w-[42px]', 'h-[42px]', 'text-base'],
-    lg: ['w-[46px]', 'h-[46px]', 'text-lg'],
-    xl: ['w-[46px]', 'h-[46px]', 'text-xl'],
-    '2xl': ['w-[50px]', 'h-[50px]', 'text-2xl'],
-  }[props.size].join(' ')
-})
-
-/**
  * CSS for dropdown width.
  *
  * @type {import ('vue').ComputedRef<string>}
@@ -314,54 +297,35 @@ const classMonthsPaging = computed(() => {
  */
 const classDropdownWidth = computed(() => {
   return {
-    xs: ['w-[340px]'],
-    sm: ['w-[370px]'],
-    base: ['w-[400px]'],
-    lg: ['w-[435px]'],
-    xl: ['w-[470px]'],
-    '2xl': ['w-[540px]'],
+    xs: ['w-[340px]', 'max-w-[340px]'],
+    sm: ['w-[370px]', 'max-w-[370px]'],
+    base: ['w-[400px]', 'max-w-[400px]'],
+    lg: ['w-[435px]', 'max-w-[435px]'],
+    xl: ['w-[470px]', 'max-w-[470px]'],
+    '2xl': ['w-[540px]', 'max-w-[540px]'],
   }[props.size].join(' ')
 })
 
 const classSelectedColor = computed(() => {
   const colorClasses = {
-    red: [
-      'bg-nord-aurora-200',
-      'border-nord-aurora-100',
-      'hover:bg-nord-aurora-100',
-      'text-white',
-    ],
-    green: [
-      'bg-nord-aurora-1100',
-      'border-nord-aurora-1000',
-      'hover:bg-nord-aurora-1000',
-      'text-white',
-    ],
-    blue: [
-      'bg-nord-frost-300',
-      'border-nord-frost-400',
-      'hover:bg-nord-frost-400',
-      'text-white',
-    ],
-    orange: [
-      'bg-nord-aurora-500',
-      'border-nord-aurora-400',
-      'hover:bg-nord-aurora-400',
-      'text-white',
-    ],
-    yellow: [
-      'bg-nord-aurora-800',
-      'border-nord-aurora-700',
-      'hover:bg-nord-aurora-700',
-      'text-white',
-    ],
-    mauve: [
-      'bg-nord-aurora-1400',
-      'border-nord-aurora-1300',
-      'hover:bg-nord-aurora-1300',
-      'text-white',
-    ],
+    red: ['bg-nord-red-300', 'border-nord-red-100'],
+    green: ['bg-nord-green-300', 'border-nord-green-100'],
+    blue: ['bg-nord-blue-300', 'border-nord-blue-100'],
+    orange: ['bg-nord-orange-300', 'border-nord-orange-100'],
+    mauve: ['bg-nord-mauve-300', 'border-nord-mauve-100'],
   }
+  return colorClasses[props.color].join(' ')
+})
+
+const classNormalColor = computed(() => {
+  const colorClasses = {
+    red: ['hover:bg-nord-red-300/50'],
+    green: ['hover:bg-nord-green-300/50'],
+    blue: ['hover:bg-nord-blue-300/50'],
+    orange: ['hover:bg-nord-orange-300/50'],
+    mauve: ['hover:bg-nord-mauve-300/50'],
+  }
+
   return colorClasses[props.color].join(' ')
 })
 
@@ -479,6 +443,11 @@ const keyHandler = (key) => {
   }
 }
 
+/**
+ * Selects the previous day.
+ *
+ * @returns {void}
+ */
 const previousDay = () => {
   if (selectedDay.value == 1) {
     previousMonth()
@@ -488,6 +457,11 @@ const previousDay = () => {
   }
 }
 
+/**
+ * Selects the next day.
+ *
+ * @returns {void}
+ */
 const nextDay = () => {
   if (selectedDay.value == daysInMonth.value) {
     nextMonth()
@@ -497,6 +471,11 @@ const nextDay = () => {
   }
 }
 
+/**
+ * Selects the previous week.
+ *
+ * @returns {void}
+ */
 const previousWeek = () => {
   if (selectedDay.value <= 7) {
     previousMonth()
@@ -506,6 +485,11 @@ const previousWeek = () => {
   }
 }
 
+/**
+ * Selects the next week.
+ *
+ * @returns {void}
+ */
 const nextWeek = () => {
   if (selectedDay.value + 7 > daysInMonth.value) {
     nextMonth()
@@ -515,6 +499,11 @@ const nextWeek = () => {
   }
 }
 
+/**
+ * Selects the previous month.
+ *
+ * @returns {void}
+ */
 const previousMonth = () => {
   if (selectedMonth.value == 1) {
     selectedMonth.value = 12
@@ -524,6 +513,11 @@ const previousMonth = () => {
   }
 }
 
+/**
+ * Selects the next month.
+ *
+ * @returns {void}
+ */
 const nextMonth = () => {
   if (selectedMonth.value == 12) {
     selectedMonth.value = 1
@@ -533,63 +527,103 @@ const nextMonth = () => {
   }
 }
 
+/**
+ * Selects the first day of the month.
+ *
+ * @returns {void}
+ */
 const firstDayOfTheMonth = () => {
   selectedDay.value = 1
 }
 
+/**
+ * Selects the last day of the month.
+ *
+ * @returns {void}
+ */
 const lastDayOfTheMonth = () => {
   selectedDay.value = daysInMonth.value
 }
 
+/**
+ * Selects the previous year.
+ *
+ * @returns {void}
+ */
 const previousYear = () => {
   selectedYear.value--
 }
 
+/**
+ * Selects the next year.
+ *
+ * @returns {void}
+ */
 const nextYear = () => {
   selectedYear.value++
 }
 
+/**
+ * Closes the dropdown.
+ *
+ * @returns {void}
+ */
 const closeDropdown = () => {
   emit('closeDropdown', true)
 }
 </script>
 
 <template>
-  <div class="relative">
+  <div
+    class="absolute z-10 mt-[4.35rem] w-full transform transition-all duration-300 ease-in-out"
+    :class="{
+      'scale-90 opacity-0 ': !show,
+      'scale-100 opacity-100': show,
+    }"
+  >
     <div
       :class="[
         classDropdownWidth,
         {
           hidden: !show,
+          block: show,
           'rounded-none': shape == 'square',
           rounded: shape == 'rounded' || shape == 'pill',
         },
       ]"
-      class="absolute mt-1 border border-nord-snow-storm-100 bg-white p-2 shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
+      class="absolute relative mt-1 w-full overflow-visible border border-nord-light-100 bg-white p-2 shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
     >
-      <div v-if="datePicker" class="flex flex-col space-y-4 pb-4">
+      <div
+        v-if="datePicker"
+        class="flex flex-col space-y-4"
+        :class="{ 'pb-4': timePicker }"
+      >
         <div class="flex flex-col">
           <span
-            class="font-bold text-nord-300 dark:text-nord-snow-storm-300"
+            class="font-bold text-nord-dark-300 dark:text-nord-light-300"
             :class="$sizeToClass(size)"
             >Date</span
           >
           <div class="flex items-center justify-between space-x-2">
-            <button
-              class="material-symbols-rounded aspect-square flex-none rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
-              :class="classMonthsPaging"
-              @click="previousMonth"
-            >
-              chevron_left
-            </button>
+            <VButton
+              v-if="datePicker"
+              class="flex-none"
+              :size="size"
+              icon="chevron_left"
+              outline
+              :color="color"
+              @click.prevent="previousMonth"
+            />
 
             <VSelect
               v-model="selectedMonth"
               class="grow"
               :options="months"
               :size="size"
+              :color="color"
               :clear-button="false"
             />
+
             <VButton
               v-if="datePicker"
               class="flex-none"
@@ -599,26 +633,30 @@ const closeDropdown = () => {
               :color="color"
               @click.prevent="setToday"
             />
+
             <VSelect
               v-model="selectedYear"
               class="shrink"
               :options="years"
               :size="size"
+              :color="color"
               :clear-button="false"
             />
 
-            <button
-              class="material-symbols-rounded aspect-square flex-none rounded border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100 dark:text-nord-snow-storm-300"
-              :class="classMonthsPaging"
-              @click="nextMonth"
-            >
-              chevron_right
-            </button>
+            <VButton
+              v-if="datePicker"
+              class="flex-none"
+              :size="size"
+              icon="chevron_right"
+              outline
+              :color="color"
+              @click.prevent="nextMonth"
+            />
           </div>
         </div>
         <div class="flex justify-center">
           <div
-            class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-y-2 gap-x-4 font-bold text-nord-300 dark:text-nord-snow-storm-300"
+            class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-x-4 gap-y-2 font-bold text-nord-dark-300 dark:text-nord-light-300"
             :class="[$sizeToClass(size)]"
           >
             <template v-for="(day, index) in days" :key="index">
@@ -629,9 +667,9 @@ const closeDropdown = () => {
 
             <template v-for="(day, index) in daysInMonth" :key="index">
               <button
-                class="aspect-square h-full rounded p-2 transition-colors hover:bg-nord-snow-storm-100 dark:hover:bg-nord-100"
+                class="aspect-square h-full rounded p-2 transition-colors"
                 :class="[
-                  isSelected(day) ? classSelectedColor : '',
+                  isSelected(day) ? classSelectedColor : classNormalColor,
                   {
                     'font-black': isToday(day) || isSelected(day),
                     'font-semibold': !isToday(day),
@@ -650,27 +688,27 @@ const closeDropdown = () => {
 
       <div v-if="timePicker" class="w-full flex-col">
         <span
-          class="font-bold text-nord-300 dark:text-nord-snow-storm-300"
+          class="font-bold text-nord-dark-300 dark:text-nord-light-300"
           :class="$sizeToClass(size)"
           >Time</span
         >
+
         <div class="flex space-x-2">
-          <div class="flex flex-col">
-            <VSelect
-              v-model="selectedHour"
-              :options="hours"
-              :size="size"
-              :clear-button="false"
-            />
-          </div>
-          <div class="flex flex-col">
-            <VSelect
-              v-model="selectedMinute"
-              :options="minutes"
-              :size="size"
-              :clear-button="false"
-            />
-          </div>
+          <VSelect
+            v-model="selectedHour"
+            :options="hours"
+            :size="size"
+            :clear-button="false"
+            :color="color"
+          />
+          <VSelect
+            v-model="selectedMinute"
+            :options="minutes"
+            :size="size"
+            :clear-button="false"
+            :color="color"
+          />
+
           <VButton
             outline
             :color="color"

@@ -109,17 +109,6 @@ const props = defineProps({
   },
 
   /**
-   * Wheter the datepicker is readonly.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  readOnly: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * The label of the datepicker.
    *
    * @type {String|Boolean}
@@ -213,7 +202,7 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
     },
   },
 })
@@ -234,27 +223,6 @@ const classRemoveButton = computed(() => {
     '2xl': ['w-9'],
   }[props.size].join(' ')
 })
-
-/**
- * Whether the input has a label.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasLabel = computed(() => props.label !== false)
-
-/**
- * Whether the input has an error.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasError = computed(() => props.error !== false)
-
-/**
- * Whether the input has an icon.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasIcon = computed(() => props.icon !== false)
 
 /**
  * Whether the dropdown is open or not.
@@ -328,7 +296,7 @@ const reset = (event) => {
   doReset.value = true
   setTimeout(() => {
     doReset.value = false
-  }, 100)
+  }, 200)
   event.stopPropagation()
 }
 
@@ -355,10 +323,10 @@ const keyHandler = (event) => {
   <div
     v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
-    :class="{ 'opacity-50': readOnly || disabled }"
+    :class="{ 'opacity-50': disabled }"
   >
     <VLabel
-      v-if="hasLabel"
+      v-if="props.label !== false"
       :id="id"
       :label="label"
       :required="required"
@@ -367,40 +335,41 @@ const keyHandler = (event) => {
     />
 
     <div
-      class="flex cursor-pointer border border-nord-snow-storm-100 bg-white dark:border-nord-400 dark:bg-nord-100"
+      class="flex border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out focus-within:border-nord-blue-300 dark:border-nord-light-100/25 focus-within:dark:border-nord-blue-300 focus-within:dark:shadow-lg focus-within:dark:shadow-nord-blue-100/25"
       :class="{
-        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50':
-          hasError,
+        '!border-nord-red-300 dark:shadow-lg dark:!shadow-nord-red-100/25':
+          props.error !== false,
         'rounded-full': shape === 'pill',
         'rounded-none': shape === 'square',
         rounded: shape === 'rounded',
       }"
       tabindex="0"
       @keydown="keyHandler"
-      @click=";(readOnly || disabled) == false && toggleDropdown()"
+      @click="disabled == false && toggleDropdown()"
     >
-      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
+      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
 
       <input
         :id="id"
         type="text"
-        class="pointer-events-none w-full bg-transparent p-2 text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
-        :class="[$sizeToClass(size), $placeholderColors]"
+        class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
+        :class="[$sizeToClass(size)]"
         :placeholder="placeholder"
         :value="modelValue"
         :required="required"
         :readonly="readOnly"
         :disabled="disabled"
-        :aria-labelledby="hasLabel ? `${id}-label` : null"
-        :aria-describedby="hasLabel ? `${id}-helper` : null"
+        :aria-labelledby="props.label !== false ? `${id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+        @keydown.prevent
       />
 
       <div class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100 dark:text-nord-snow-storm-300 hover:dark:bg-nord-300"
+          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
           :class="[classRemoveButton, $sizeToClass(size)]"
-          @click="reset"
+          @click.prevent="reset"
         >
           clear
         </span>

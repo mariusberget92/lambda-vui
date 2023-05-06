@@ -82,13 +82,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default 'blue'
-   * @options ['blue', 'red', 'green', 'yellow', 'orange', 'mauve']
+   * @options ['blue', 'red', 'green', 'orange', 'mauve', 'default']
    */
   color: {
     type: String,
     default: 'blue',
     validator: (value) =>
-      ['blue', 'red', 'green', 'yellow', 'orange', 'mauve'].includes(value),
+      ['blue', 'red', 'green', 'orange', 'mauve', 'default'].includes(value),
   },
 
   /**
@@ -152,34 +152,34 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['px-2', 'py-1'],
-      icon: ['p-1', 'aspect-square'],
-      both: ['px-2', 'py-1', 'space-x-2'],
+      text: ['space-x-2'],
+      icon: ['h-[34px]'],
+      both: ['space-x-2'],
     },
     sm: {
-      text: ['px-3', 'py-1'],
-      icon: ['p-1', 'aspect-square'],
-      both: ['px-3', 'py-1', 'space-x-2'],
+      text: ['space-x-2'],
+      icon: ['h-[38px]'],
+      both: ['space-x-2'],
     },
     base: {
-      text: ['px-4', 'py-2'],
-      icon: ['p-2', 'aspect-square'],
-      both: ['px-4', 'py-2', 'space-x-2.5'],
+      text: ['space-x-2.5'],
+      icon: ['h-[42px]'],
+      both: ['space-x-2.5'],
     },
     lg: {
-      text: ['px-6', 'py-3'],
-      icon: ['p-3', 'aspect-square'],
-      both: ['px-6', 'py-3', 'space-x-2.5'],
+      text: ['space-x-2.5'],
+      icon: ['h-[46px]'],
+      both: ['space-x-2.5'],
     },
     xl: {
-      text: ['px-8', 'py-4'],
-      icon: ['p-4', 'aspect-square'],
-      both: ['px-8', 'py-4', 'space-x-3'],
+      text: ['space-x-3'],
+      icon: ['h-[46px]'],
+      both: ['space-x-3'],
     },
     '2xl': {
-      text: ['px-10', 'py-5'],
-      icon: ['p-5', 'aspect-square'],
-      both: ['px-10', 'py-5', 'space-x-3'],
+      text: ['space-x-3'],
+      icon: ['h-[50px]'],
+      both: ['space-x-3'],
     },
   }
 
@@ -194,40 +194,34 @@ const classButton = computed(() => {
 
   const colorClasses = {
     red: [
-      'bg-nord-aurora-200',
-      'border-nord-aurora-100',
-      'dark:shadow-xl dark:shadow-nord-aurora-100/50',
-      'hover:bg-nord-aurora-100',
+      'bg-nord-red-300',
+      'border-nord-red-100',
+      'dark:shadow-xl dark:shadow-nord-red-100/50',
+      'hover:bg-nord-red-100',
     ],
     green: [
-      'bg-nord-aurora-1100',
-      'border-nord-aurora-1000',
-      'dark:shadow-xl dark:shadow-nord-aurora-1000/50',
-      'hover:bg-nord-aurora-1000',
+      'bg-nord-green-300',
+      'border-nord-green-100',
+      'dark:shadow-xl dark:shadow-nord-green-100/50',
+      'hover:bg-nord-green-100',
     ],
     blue: [
-      'bg-nord-frost-300',
-      'border-nord-frost-400',
-      'dark:shadow-xl dark:shadow-nord-frost-400/50',
-      'hover:bg-nord-frost-400',
+      'bg-nord-blue-300',
+      'border-nord-blue-100',
+      'dark:shadow-xl dark:shadow-nord-blue-100/50',
+      'hover:bg-nord-blue-100',
     ],
     orange: [
-      'bg-nord-aurora-500',
-      'border-nord-aurora-400',
-      'dark:shadow-xl dark:shadow-nord-aurora-400/50',
-      'hover:bg-nord-aurora-400',
-    ],
-    yellow: [
-      'bg-nord-aurora-800',
-      'border-nord-aurora-700',
-      'dark:shadow-xl dark:shadow-nord-aurora-700/50',
-      'hover:bg-nord-aurora-700',
+      'bg-nord-orange-300',
+      'border-nord-orange-100',
+      'dark:shadow-xl dark:shadow-nord-orange-100/50',
+      'hover:bg-nord-orange-100',
     ],
     mauve: [
-      'bg-nord-aurora-1400',
-      'border-nord-aurora-1300',
-      'dark:shadow-xl dark:shadow-nord-aurora-1300/50',
-      'hover:bg-nord-aurora-1300',
+      'bg-nord-mauve-300',
+      'border-nord-mauve-100',
+      'dark:shadow-xl dark:shadow-nord-mauve-100/50',
+      'hover:bg-nord-mauve-100',
     ],
   }
 
@@ -247,64 +241,62 @@ const classLink = computed(() => {
 
   const colorClasses = {
     red: [
-      'text-nord-aurora-200',
-      'hover:text-nord-aurora-100',
-      'focus:text-nord-aurora-100',
-      'dark:text-nord-aurora-200',
-      'dark:hover:text-nord-aurora-100',
-      'dark:focus:text-nord-aurora-100',
+      'text-nord-red-300',
+      'hover:text-nord-red-100',
+      'focus:text-nord-red-100',
+      'dark:text-nord-red-300',
+      'dark:hover:text-nord-red-100',
+      'dark:focus:text-nord-red-100',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-100/75',
+      'dark:shadow-nord-red-100/50',
     ],
     green: [
-      'text-nord-aurora-1100',
-      'hover:text-nord-aurora-1000',
-      'focus:text-nord-aurora-1000',
-      'dark:text-nord-aurora-1100',
-      'dark:hover:text-nord-aurora-1000',
-      'dark:focus:text-nord-aurora-1000',
+      'text-nord-green-300',
+      'hover:text-nord-green-100',
+      'focus:text-nord-green-100',
+      'dark:text-nord-green-300',
+      'dark:hover:text-nord-green-100',
+      'dark:focus:text-nord-green-100',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-1000/75',
+      'dark:shadow-nord-green-100/50',
     ],
     blue: [
-      'text-nord-frost-300',
-      'hover:text-nord-frost-400',
-      'focus:text-nord-frost-400',
-      'dark:text-nord-frost-300',
-      'dark:hover:text-nord-frost-400',
-      'dark:focus:text-nord-frost-400',
+      'text-nord-blue-300',
+      'hover:text-nord-blue-100',
+      'focus:text-nord-blue-100',
+      'dark:text-nord-blue-300',
+      'dark:hover:text-nord-blue-100',
+      'dark:focus:text-nord-blue-100',
       'dark:text-shadow',
-      'dark:shadow-nord-frost-400/75',
+      'dark:shadow-nord-blue-100/50',
     ],
     orange: [
-      'text-nord-aurora-500',
-      'hover:text-nord-aurora-400',
-      'focus:text-nord-aurora-400',
-      'dark:text-nord-aurora-500',
-      'dark:hover:text-nord-aurora-400',
-      'dark:focus:text-nord-aurora-400',
+      'text-nord-orange-300',
+      'hover:text-nord-orange-100',
+      'focus:text-nord-orange-100',
+      'dark:text-nord-orange-300',
+      'dark:hover:text-nord-orange-100',
+      'dark:focus:text-nord-orange-100',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-400/75',
-    ],
-    yellow: [
-      'text-nord-aurora-800',
-      'hover:text-nord-aurora-700',
-      'focus:text-nord-aurora-700',
-      'dark:text-nord-aurora-800',
-      'dark:hover:text-nord-aurora-700',
-      'dark:focus:text-nord-aurora-700',
-      'dark:text-shadow',
-      'dark:shadow-nord-aurora-700/75',
+      'dark:shadow-nord-orange-100/50',
     ],
     mauve: [
-      'text-nord-aurora-1400',
-      'hover:text-nord-aurora-1300',
-      'focus:text-nord-aurora-1300',
-      'dark:text-nord-aurora-1400',
-      'dark:hover:text-nord-aurora-1300',
-      'dark:focus:text-nord-aurora-1300',
+      'text-nord-mauve-300',
+      'hover:text-nord-mauve-100',
+      'focus:text-nord-mauve-100',
+      'dark:text-nord-mauve-300',
+      'dark:hover:text-nord-mauve-100',
+      'dark:focus:text-nord-mauve-100',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-1300/75',
+      'dark:shadow-nord-mauve-100/50',
+    ],
+    default: [
+      'text-nord-dark-300',
+      'hover:text-nord-dark-100',
+      'focus:text-nord-dark-100',
+      'dark:text-nord-light-300',
+      'dark:hover:text-nord-light-100',
+      'dark:focus:text-nord-light-100',
     ],
   }
 
@@ -337,34 +329,29 @@ const getButtonClasses = () => {
 </script>
 
 <template>
-  <div class="flex">
-    <component
-      :is="tag"
-      :href="href"
-      :class="[
-        getButtonClasses(),
-        getLinkClasses(),
-        $sizeToClass(size),
-        {
-          'aspect-square h-full justify-center': button && hasIcon && !hasText,
-          'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
-            button,
-          'cursor-pointer transition-colors': !button,
-        },
-      ]"
-    >
-      <div
-        class="flex items-center"
-        :class="{ 'space-x-1': hasIcon && hasText }"
+  <component
+    :is="tag"
+    :href="href"
+    :class="[
+      getButtonClasses(),
+      getLinkClasses(),
+      $sizeToClass(size),
+      {
+        'aspect-square h-full justify-center': button && hasIcon && !hasText,
+        'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
+          button,
+        'cursor-pointer transition-colors': !button,
+      },
+    ]"
+  >
+    <div class="flex items-center" :class="{ 'space-x-1': hasIcon && hasText }">
+      <span
+        v-if="hasIcon"
+        class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
+        :class="$sizeToClass(size)"
+        >{{ icon }}</span
       >
-        <span
-          v-if="hasIcon"
-          class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
-          :class="$sizeToClass(size)"
-          >{{ icon }}</span
-        >
-        <span v-if="hasText" class="items-center">{{ text }}</span>
-      </div>
-    </component>
-  </div>
+      <span v-if="hasText" class="items-center">{{ text }}</span>
+    </div>
+  </component>
 </template>

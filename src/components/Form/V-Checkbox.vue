@@ -98,13 +98,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @options red, green, blue, orange, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
     },
   },
 
@@ -148,15 +148,6 @@ const props = defineProps({
 })
 
 /**
- * Whether the input has an error.
- *
- * @type {import('vue').ComputedRef<Boolean>}
- */
-const hasLabel = computed(() => {
-  return props.label !== false
-})
-
-/**
  * The classes of the checkbox.
  *
  * @type {import('vue').ComputedRef<String>}
@@ -175,46 +166,39 @@ const classCheckbox = computed(() => {
 
   const colorClasses = {
     red: [
-      'text-nord-aurora-200',
-      'checked:!border-nord-aurora-100',
+      'text-nord-red-300',
+      'checked:!border-nord-red-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-100/75',
+      'checked:dark:shadow-nord-red-100/25',
     ],
     green: [
-      'text-nord-aurora-1100',
-      'checked:!border-nord-aurora-1000',
+      'text-nord-green-300',
+      'checked:!border-nord-green-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-1000/75',
+      'checked:dark:shadow-nord-green-100/25',
     ],
     blue: [
-      'text-nord-frost-300',
-      'checked:!border-nord-frost-400',
+      'text-nord-blue-300',
+      'checked:!border-nord-blue-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-frost-400/75',
+      'checked:dark:shadow-nord-blue-100/25',
     ],
     orange: [
-      'text-nord-aurora-500',
-      'checked:!border-nord-aurora-400',
+      'text-nord-orange-300',
+      'checked:!border-nord-orange-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-400/75',
-    ],
-    yellow: [
-      'text-nord-aurora-800',
-      'checked:!border-nord-aurora-700',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-700/75',
+      'checked:dark:shadow-nord-orange-100/25',
     ],
     mauve: [
-      'text-nord-aurora-1400',
-      'checked:!border-nord-aurora-1300',
+      'text-nord-mauve-300',
+      'checked:!border-nord-mauve-100',
       'checked:dark:!border-transparent',
       'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-aurora-1300/75',
+      'checked:dark:shadow-nord-mauve-100/25',
     ],
   }
 
@@ -230,7 +214,7 @@ const classCheckbox = computed(() => {
     <input
       :id="id"
       type="checkbox"
-      class="cursor-pointer rounded border-nord-snow-storm-100 bg-nord-snow-storm-300 dark:border-nord-400 dark:bg-nord-100"
+      class="cursor-pointer border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out dark:border-nord-light-100/25"
       :class="[
         classCheckbox,
         {
@@ -242,15 +226,16 @@ const classCheckbox = computed(() => {
       :disabled="disabled"
       :checked="modelValue || checked"
       :required="required"
-      :aria-labelledby="hasLabel ? `${id}-label` : null"
-      :aria-describedby="hasLabel ? `${id}-helper` : null"
+      :aria-labelledby="props.label !== false ? `${id}-label` : null"
+      :aria-describedby="props.helper !== false ? `${id}-helper` : null"
       @change="$emit('update:modelValue', $event.target.checked)"
     />
 
-    <div class="flex-col">
+    <div class="flex flex-col">
       <VLabel
-        v-if="hasLabel"
+        v-if="props.label !== false"
         :id="id"
+        compact
         :label="label"
         :required="required"
         :helper="helper"

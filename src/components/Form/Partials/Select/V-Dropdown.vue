@@ -181,17 +181,35 @@ const isSelected = computed(() => {
 const allOptionsSelected = computed(() => {
   return props.options.every((option) => isSelected.value(option))
 })
+
+const checkboxSize = computed(() => {
+  return {
+    xs: 'xs',
+    sm: 'xs',
+    base: 'sm',
+    lg: 'base',
+    xl: 'lg',
+    '2xl': 'xl',
+  }[props.size]
+})
 </script>
 
 <template>
-  <div class="relative">
+  <div
+    class="relative z-20 w-full transform transition-all duration-300 ease-in-out"
+    :class="{
+      'scale-75 opacity-0 ': !show,
+      'scale-100 opacity-100': show,
+    }"
+  >
     <div
       :class="{
         hidden: !show,
+        block: show,
         'rounded-none': shape == 'square',
         rounded: shape == 'rounded' || shape == 'pill',
       }"
-      class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-snow-storm-100 bg-white shadow-[0_10px_15px_rgba(0,0,0,.15)] dark:border-nord-400 dark:bg-nord-200"
+      class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-light-100 bg-white shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
     >
       <perfect-scrollbar>
         <div v-if="multiple || search" class="flex flex-col space-y-3 p-2 pt-3">
@@ -200,19 +218,39 @@ const allOptionsSelected = computed(() => {
             :size="size"
             @on-search="emit('onSearch', $event)"
           />
+        </div>
 
+        <div
+          v-if="multiple"
+          class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
+          :class="{
+            'first:rounded-t last:rounded-b':
+              shape == 'rounded' || shape == 'pill',
+          }"
+        >
           <VCheckbox
-            v-if="multiple"
             :checked="allOptionsSelected"
-            :size="size"
+            :size="checkboxSize"
             color="green"
+            class="pl-2"
             @change="emit('toggleAll')"
           />
+
+          <button
+            type="button"
+            class="flex w-full cursor-pointer flex-col p-1.5 italic text-nord-blue-300 dark:text-nord-blue-300"
+            :class="$sizeToClass(size)"
+            @click="emit('toggleAll')"
+          >
+            <span class="flex items-center">
+              <span>Toggle all</span>
+            </span>
+          </button>
         </div>
 
         <template v-for="(option, index) in filteredOptions" :key="index">
           <div
-            class="flex hover:bg-nord-snow-storm-100/50 dark:hover:bg-nord-100/50"
+            class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
             :class="{
               'first:rounded-t last:rounded-b':
                 shape == 'rounded' || shape == 'pill',
@@ -222,13 +260,13 @@ const allOptionsSelected = computed(() => {
               v-if="multiple"
               :checked="isSelected(option)"
               class="pl-2"
-              :size="size"
+              :size="checkboxSize"
               @input="emit('select', option)"
             />
 
             <button
               type="button"
-              class="flex w-full cursor-pointer flex-col p-2 text-nord-300 dark:text-nord-snow-storm-300"
+              class="flex w-full cursor-pointer flex-col p-1.5 text-nord-dark-300 dark:text-nord-light-300"
               :class="$sizeToClass(size)"
               @click="emit('select', option)"
             >

@@ -46,7 +46,6 @@ const searchQuery = ref('')
     placeholder="Search for items"
     :size="size"
     icon="search"
-    :search="true"
     @input="emit('onSearch', searchQuery)"
   />
 </template>

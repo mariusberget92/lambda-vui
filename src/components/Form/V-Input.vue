@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineProps, defineEmits } from 'vue'
+import { defineProps, defineEmits, computed } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VIcon from './Partials/V-Icon.vue'
 
@@ -115,17 +115,6 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is read-only.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  readOnly: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
    * Whether the input is disabled.
    *
    * @type {Boolean}
@@ -176,44 +165,67 @@ const props = defineProps({
       return ['square', 'rounded', 'pill'].includes(val)
     },
   },
+
+  /**
+   * The color of the datepicker buttons.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+    },
+  },
 })
 
 /**
- * Whether the input is hidden.
+ * CSS Border color classes.
  *
- * @type {import('vue').ComputedRef<boolean>}
+ * @type {import ('vue').ComputedRef<string>}
+ * @returns {string}
  */
-const isHidden = computed(() => props.type === 'hidden')
-
-/**
- * Whether the input has a label.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasLabel = computed(() => props.label !== false)
-
-/**
- * Whether the input has an error.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasError = computed(() => props.error !== false)
-
-/**
- * Whether the input has an icon.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasIcon = computed(() => props.icon !== false)
+const classBorderColor = computed(() => {
+  return {
+    red: [
+      'focus-within:border-nord-red-300',
+      'focus-within:dark:border-nord-red-300',
+      'focus-within:dark:shadow-nord-red-100/25',
+    ],
+    blue: [
+      'focus-within:border-nord-blue-300',
+      'focus-within:dark:border-nord-blue-300',
+      'focus-within:dark:shadow-nord-blue-100/25',
+    ],
+    green: [
+      'focus-within:border-nord-green-300',
+      'focus-within:dark:border-nord-green-300',
+      'focus-within:dark:shadow-nord-green-100/25',
+    ],
+    mauve: [
+      'focus-within:border-nord-mauve-300',
+      'focus-within:dark:border-nord-mauve-300',
+      'focus-within:dark:shadow-nord-mauve-100/25',
+    ],
+    orange: [
+      'focus-within:border-nord-orange-300',
+      'focus-within:dark:border-nord-orange-300',
+      'focus-within:dark:shadow-nord-orange-100/25',
+    ],
+  }[props.color].join(' ')
+})
 </script>
 
 <template>
   <div
     class="flex w-full flex-col"
-    :class="{ hidden: isHidden, 'opacity-50': readOnly || disabled }"
+    :class="{ hidden: props.type === 'hidden', 'opacity-50': disabled }"
   >
     <VLabel
-      v-if="hasLabel"
+      v-if="props.label !== false"
       :id="id"
       :label="label"
       :required="required"
@@ -222,29 +234,31 @@ const hasIcon = computed(() => props.icon !== false)
     />
 
     <div
-      class="flex border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
-      :class="{
-        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50':
-          hasError,
-        'rounded-full': shape === 'pill',
-        'rounded-none': shape === 'square',
-        rounded: shape === 'rounded',
-      }"
+      class="flex border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out focus-within:border-nord-blue-300 dark:border-nord-light-100/25 focus-within:dark:border-nord-blue-300 focus-within:dark:shadow-lg focus-within:dark:shadow-nord-blue-100/25"
+      :class="[
+        classBorderColor,
+        {
+          '!border-nord-red-300 dark:shadow-lg dark:!shadow-nord-red-100/25':
+            props.error !== false,
+          'rounded-full': shape === 'pill',
+          'rounded-none': shape === 'square',
+          rounded: shape === 'rounded',
+        },
+      ]"
     >
-      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
+      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
 
       <input
         :id="id"
         :type="type"
-        class="w-full bg-transparent p-2 text-nord-300 dark:text-nord-snow-storm-300"
-        :class="[$placeholderColors, $sizeToClass(props.size)]"
+        class="w-full bg-transparent p-2"
+        :class="[$sizeToClass(props.size)]"
         :placeholder="placeholder"
         :required="required"
-        :readonly="readOnly"
         :disabled="disabled"
         :value="modelValue"
-        :aria-labelledby="hasLabel ? `${id}-label` : null"
-        :aria-describedby="hasLabel ? `${id}-helper` : null"
+        :aria-labelledby="props.label !== false ? `${id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
         @input="$emit('update:modelValue', $event.target.value)"
       />
     </div>

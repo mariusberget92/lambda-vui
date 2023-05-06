@@ -111,6 +111,21 @@ const props = defineProps({
   },
 
   /**
+   * The color of the datepicker buttons.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+    },
+  },
+
+  /**
    * The icon of the input.
    *
    * @type {String|Boolean}
@@ -139,17 +154,6 @@ const props = defineProps({
    * @default false
    */
   multiple: {
-    type: Boolean,
-    default: false,
-  },
-
-  /**
-   * Whether the input is read-only.
-   *
-   * @type {Boolean}
-   * @default false
-   */
-  readOnly: {
     type: Boolean,
     default: false,
   },
@@ -242,37 +246,13 @@ const props = defineProps({
    * Whether the input is clearable.
    *
    * @type {Boolean}
-   * @default false
+   * @default true
    */
   clearButton: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 })
-
-/**
- * Whether the input has a label.
- *
- * @type {import('vue').ComputedRef<boolean>}
- * @default false
- */
-const hasLabel = computed(() => props.label !== false)
-
-/**
- * Whether the input has an error.
- *
- * @type {import('vue').ComputedRef<boolean>}
- * @default false
- */
-const hasError = computed(() => props.error !== false)
-
-/**
- * Whether the input has an icon.
- *
- * @type {import('vue').ComputedRef<boolean>}
- * @default false
- */
-const hasIcon = computed(() => props.icon !== false)
 
 /**
  * Whether the dropdown is open or not.
@@ -452,16 +432,52 @@ const classRemoveButton = computed(() => {
     '2xl': ['w-9'],
   }[props.size].join(' ')
 })
+
+/**
+ * CSS Border color classes.
+ *
+ * @type {import ('vue').ComputedRef<string>}
+ * @returns {string}
+ */
+const classBorderColor = computed(() => {
+  return {
+    red: [
+      'focus-within:border-nord-red-300',
+      'focus-within:dark:border-nord-red-300',
+      'focus-within:dark:shadow-nord-red-100/25',
+    ],
+    blue: [
+      'focus-within:border-nord-blue-300',
+      'focus-within:dark:border-nord-blue-300',
+      'focus-within:dark:shadow-nord-blue-100/25',
+    ],
+    green: [
+      'focus-within:border-nord-green-300',
+      'focus-within:dark:border-nord-green-300',
+      'focus-within:dark:shadow-nord-green-100/25',
+    ],
+    mauve: [
+      'focus-within:border-nord-mauve-300',
+      'focus-within:dark:border-nord-mauve-300',
+      'focus-within:dark:shadow-nord-mauve-100/25',
+    ],
+    orange: [
+      'focus-within:border-nord-orange-300',
+      'focus-within:dark:border-nord-orange-300',
+      'focus-within:dark:shadow-nord-orange-100/25',
+    ],
+  }[props.color].join(' ')
+})
 </script>
 
 <template>
   <div
     v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
-    :class="{ 'opacity-50': readOnly || disabled }"
+    :class="{ 'opacity-50': disabled }"
   >
     <VLabel
-      v-if="hasLabel"
+      v-if="props.label !== false"
       :id="id"
       :label="label"
       :required="required"
@@ -470,37 +486,39 @@ const classRemoveButton = computed(() => {
     />
 
     <div
-      class="flex cursor-pointer border border-nord-snow-storm-100 bg-white focus:border-nord-frost-300 dark:border-nord-400 dark:bg-nord-100"
-      :class="{
-        '!border-nord-aurora-200 dark:shadow-lg dark:shadow-nord-aurora-100/50':
-          hasError,
-        'rounded-full': shape === 'pill',
-        'rounded-none': shape === 'square',
-        rounded: shape === 'rounded',
-      }"
-      @click=";(readOnly || disabled) == false && toggleDropdown()"
+      class="flex border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      :class="[
+        classBorderColor,
+        {
+          '!border-nord-red-300 dark:shadow-lg dark:!shadow-nord-red-100/25':
+            props.error !== false,
+          'rounded-full': shape === 'pill',
+          'rounded-none': shape === 'square',
+          rounded: shape === 'rounded',
+        },
+      ]"
+      @click="disabled == false && toggleDropdown()"
     >
-      <VIcon v-if="hasIcon" :icon="icon" :size="size" />
+      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
 
       <input
         :id="id"
         type="text"
-        class="pointer-events-none w-full bg-transparent p-2 text-nord-300 caret-transparent dark:text-nord-snow-storm-300"
-        :class="[$sizeToClass(size), $placeholderColors]"
+        class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
+        :class="[$sizeToClass(size)]"
         :placeholder="placeholder"
         :value="inputValue"
         :required="required"
-        :readonly="readOnly"
         :disabled="disabled"
-        :aria-labelledby="hasLabel ? `${id}-label` : null"
-        :aria-describedby="hasLabel ? `${id}-helper` : null"
+        :aria-labelledby="props.label !== false ? `${id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
         @keydown.prevent
       />
 
       <div v-if="clearButton" class="relative flex items-center">
         <span
           v-if="modelValue.length > 0"
-          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-300 hover:bg-nord-snow-storm-100/50 dark:text-nord-snow-storm-300 dark:hover:bg-nord-300/50"
+          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
           :class="[classRemoveButton, $sizeToClass(size)]"
           @click="reset"
         >
@@ -512,7 +530,6 @@ const classRemoveButton = computed(() => {
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
         :size="size"
         side="right"
-        :shape="shape"
       />
     </div>
 

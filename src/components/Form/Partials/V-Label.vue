@@ -65,15 +65,17 @@ const props = defineProps({
     type: [String, Boolean],
     default: false,
   },
-})
 
-/**
- * Wheter the input has a helper text.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasHelper = computed(() => {
-  return props.helper !== false
+  /**
+   * Whether the label and helper should be compact (for checkboxes)
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  compact: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -102,7 +104,7 @@ const idLabel = computed(() => {
 })
 
 /**
- * The ID of the helper text.
+ * The ID of the helper.
  *
  * @type {import('vue').ComputedRef<string>}
  */
@@ -112,29 +114,37 @@ const idHelper = computed(() => {
 </script>
 
 <template>
-  <div class="mb-1 flex flex-col">
-    <label
-      :id="idLabel"
-      :for="id"
-      class="font-semibold leading-none text-nord-300 dark:text-nord-snow-storm-300"
-      :class="$sizeToClass(props.size)"
-    >
-      {{ label }}
-
-      <span
-        v-if="required"
-        class="leading-none text-nord-aurora-200"
-        :class="$sizeToClass(props.size)"
-        >*</span
-      >
-    </label>
+  <label
+    :id="idLabel"
+    :for="id"
+    class="font-semibold leading-none text-nord-dark-300 dark:text-nord-light-300"
+    :class="[
+      $sizeToClass(props.size),
+      {
+        'mb-0.5': !props.compact,
+      },
+    ]"
+  >
+    {{ label }}
 
     <span
-      v-if="hasHelper"
-      :id="idHelper"
-      class="mt-0.5 leading-none text-nord-300 opacity-75 dark:text-nord-snow-storm-300"
-      :class="classHelperSize"
-      >{{ helper }}</span
+      v-if="required"
+      class="leading-none text-nord-red-300"
+      :class="$sizeToClass(props.size)"
+      >*</span
     >
-  </div>
+  </label>
+
+  <span
+    v-if="props.helper !== false"
+    :id="idHelper"
+    class="leading-none text-nord-dark-300/75 dark:text-nord-light-300/75"
+    :class="[
+      classHelperSize,
+      {
+        'mb-1': !props.compact,
+      },
+    ]"
+    >{{ helper }}</span
+  >
 </template>

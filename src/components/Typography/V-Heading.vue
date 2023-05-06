@@ -27,21 +27,15 @@ const props = defineProps({
    *
    * @type {String}
    * @default default
-   * @options red, green, blue, orange, yellow, mauve, default
+   * @options red, green, blue, orange, mauve, default
    */
   color: {
     type: String,
     default: 'default',
     validator: (value) => {
-      return [
-        'red',
-        'green',
-        'blue',
-        'orange',
-        'yellow',
-        'mauve',
-        'default',
-      ].includes(value)
+      return ['red', 'green', 'blue', 'orange', 'mauve', 'default'].includes(
+        value
+      )
     },
   },
 
@@ -71,42 +65,36 @@ const classColor = computed(() => {
 
   const colorClasses = {
     red: [
-      'text-nord-aurora-200',
-      'dark:text-nord-aurora-200',
+      'text-nord-red-300',
+      'dark:text-nord-red-300',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-100/75',
+      'dark:shadow-nord-red-100/50',
     ],
     green: [
-      'text-nord-aurora-1100',
-      'dark:text-nord-aurora-1100',
+      'text-nord-green-300',
+      'dark:text-nord-green-300',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-1000/75',
+      'dark:shadow-nord-green-100/50',
     ],
     blue: [
-      'text-nord-frost-300',
-      'dark:text-nord-frost-300',
+      'text-nord-blue-300',
+      'dark:text-nord-blue-300',
       'dark:text-shadow',
-      'dark:shadow-nord-frost-400/75',
+      'dark:shadow-nord-blue-100/50',
     ],
     orange: [
-      'text-nord-aurora-500',
-      'dark:text-nord-aurora-500',
+      'text-nord-orange-300',
+      'dark:text-nord-orange-300',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-400/75',
-    ],
-    yellow: [
-      'text-nord-aurora-800',
-      'dark:text-nord-aurora-800',
-      'dark:text-shadow',
-      'dark:shadow-nord-aurora-700/75',
+      'dark:shadow-nord-orange-100/50',
     ],
     mauve: [
-      'text-nord-aurora-1400',
-      'dark:text-nord-aurora-1400',
+      'text-nord-mauve-300',
+      'dark:text-nord-mauve-300',
       'dark:text-shadow',
-      'dark:shadow-nord-aurora-1300/75',
+      'dark:shadow-nord-mauve-100/50',
     ],
-    default: ['text-nord-300', 'dark:text-nord-snow-storm-300'],
+    default: ['text-nord-dark-300', 'dark:text-nord-light-300'],
   }
 
   classes.push(...colorClasses[props.color])
