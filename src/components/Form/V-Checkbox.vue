@@ -214,7 +214,7 @@ const classCheckbox = computed(() => {
     <input
       :id="id"
       type="checkbox"
-      class="cursor-pointer border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out dark:border-nord-light-100/25"
+      class="cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25"
       :class="[
         classCheckbox,
         {

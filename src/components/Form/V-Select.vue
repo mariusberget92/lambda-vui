@@ -486,7 +486,7 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex border border-nord-light-100 bg-transparent transition-colors duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
       :class="[
         classBorderColor,
         {

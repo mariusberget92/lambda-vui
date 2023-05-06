@@ -575,11 +575,14 @@ const closeDropdown = () => {
 
 <template>
   <div
-    class="absolute z-10 mt-[4.35rem] w-full transform transition-all duration-300 ease-in-out"
-    :class="{
-      'scale-90 opacity-0 ': !show,
-      'scale-100 opacity-100': show,
-    }"
+    class="absolute z-10 w-full transform transition-all duration-300 ease-in-out"
+    :class="[
+      classDropdownWidth,
+      {
+        'scale-90 opacity-0': !show,
+        'scale-100 opacity-100': show,
+      },
+    ]"
   >
     <div
       :class="[

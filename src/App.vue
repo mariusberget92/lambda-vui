@@ -41,7 +41,6 @@ const boolean = ref(true)
             <VInput
               v-model="string"
               placeholder="Placeholder"
-              size="sm"
               color="mauve"
               icon="search"
               label="Label"
@@ -156,7 +155,7 @@ const boolean = ref(true)
               v-model="string"
               time-picker
               placeholder="Placeholder"
-              size="sm"
+              size="base"
               label="Label"
               icon="calendar_month"
               helper="Helper"
