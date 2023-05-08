@@ -117,24 +117,6 @@ const tag = computed(() => {
 })
 
 /**
- * Whether the link has an icon.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasIcon = computed(() => {
-  return props.icon !== false
-})
-
-/**
- * Whether the link has text.
- *
- * @type {import('vue').ComputedRef<boolean>}
- */
-const hasText = computed(() => {
-  return props.text !== false
-})
-
-/**
  * CSS button classes.
  *
  * @type {import ('vue').ComputedRef<String>}
@@ -184,9 +166,9 @@ const classButton = computed(() => {
   }
 
   const sizeClass = sizeClasses[props.size]
-  if (hasText.value && hasIcon.value) {
+  if (props.text !== false && props.icon !== false) {
     classes.push(...sizeClass.both)
-  } else if (hasText.value) {
+  } else if (props.text !== false) {
     classes.push(...sizeClass.text)
   } else {
     classes.push(...sizeClass.icon)
@@ -196,31 +178,31 @@ const classButton = computed(() => {
     red: [
       'bg-nord-red-300',
       'border-nord-red-100',
-      'dark:shadow-xl dark:shadow-nord-red-100/50',
+      'dark:shadow-xl dark:shadow-nord-red-100/25',
       'hover:bg-nord-red-100',
     ],
     green: [
       'bg-nord-green-300',
       'border-nord-green-100',
-      'dark:shadow-xl dark:shadow-nord-green-100/50',
+      'dark:shadow-xl dark:shadow-nord-green-100/25',
       'hover:bg-nord-green-100',
     ],
     blue: [
       'bg-nord-blue-300',
       'border-nord-blue-100',
-      'dark:shadow-xl dark:shadow-nord-blue-100/50',
+      'dark:shadow-xl dark:shadow-nord-blue-100/25',
       'hover:bg-nord-blue-100',
     ],
     orange: [
       'bg-nord-orange-300',
       'border-nord-orange-100',
-      'dark:shadow-xl dark:shadow-nord-orange-100/50',
+      'dark:shadow-xl dark:shadow-nord-orange-100/25',
       'hover:bg-nord-orange-100',
     ],
     mauve: [
       'bg-nord-mauve-300',
       'border-nord-mauve-100',
-      'dark:shadow-xl dark:shadow-nord-mauve-100/50',
+      'dark:shadow-xl dark:shadow-nord-mauve-100/25',
       'hover:bg-nord-mauve-100',
     ],
   }
@@ -248,7 +230,7 @@ const classLink = computed(() => {
       'dark:hover:text-nord-red-100',
       'dark:focus:text-nord-red-100',
       'dark:text-shadow',
-      'dark:shadow-nord-red-100/50',
+      'dark:shadow-nord-red-100/25',
     ],
     green: [
       'text-nord-green-300',
@@ -258,7 +240,7 @@ const classLink = computed(() => {
       'dark:hover:text-nord-green-100',
       'dark:focus:text-nord-green-100',
       'dark:text-shadow',
-      'dark:shadow-nord-green-100/50',
+      'dark:shadow-nord-green-100/25',
     ],
     blue: [
       'text-nord-blue-300',
@@ -268,7 +250,7 @@ const classLink = computed(() => {
       'dark:hover:text-nord-blue-100',
       'dark:focus:text-nord-blue-100',
       'dark:text-shadow',
-      'dark:shadow-nord-blue-100/50',
+      'dark:shadow-nord-blue-100/25',
     ],
     orange: [
       'text-nord-orange-300',
@@ -278,7 +260,7 @@ const classLink = computed(() => {
       'dark:hover:text-nord-orange-100',
       'dark:focus:text-nord-orange-100',
       'dark:text-shadow',
-      'dark:shadow-nord-orange-100/50',
+      'dark:shadow-nord-orange-100/25',
     ],
     mauve: [
       'text-nord-mauve-300',
@@ -288,7 +270,7 @@ const classLink = computed(() => {
       'dark:hover:text-nord-mauve-100',
       'dark:focus:text-nord-mauve-100',
       'dark:text-shadow',
-      'dark:shadow-nord-mauve-100/50',
+      'dark:shadow-nord-mauve-100/25',
     ],
     default: [
       'text-nord-dark-300',
@@ -337,21 +319,25 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(size),
       {
-        'aspect-square h-full justify-center': button && hasIcon && !hasText,
+        'aspect-square h-full justify-center':
+          button && props.icon !== false && !props.text,
         'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
           button,
         'cursor-pointer transition-colors': !button,
       },
     ]"
   >
-    <div class="flex items-center" :class="{ 'space-x-1': hasIcon && hasText }">
+    <div
+      class="flex items-center"
+      :class="{ 'space-x-1': props.icon !== false && props.text !== false }"
+    >
       <span
-        v-if="hasIcon"
+        v-if="props.icon !== false"
         class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
         :class="$sizeToClass(size)"
         >{{ icon }}</span
       >
-      <span v-if="hasText" class="items-center">{{ text }}</span>
+      <span v-if="props.text !== false" class="items-center">{{ text }}</span>
     </div>
   </component>
 </template>

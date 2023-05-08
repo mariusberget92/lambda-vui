@@ -10,7 +10,7 @@ import VDropdown from './Partials/Select/V-Dropdown.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'select'])
 
 /**
  * Click outside handler.
@@ -350,11 +350,13 @@ const handleSelect = (option) => {
       : [...props.modelValue, value]
 
     emit('update:modelValue', modelValue)
+    emit('select', value)
     return
   }
 
   // If the select is not multiple, just emit the value.
   emit('update:modelValue', value)
+  emit('select', value)
   closeDropdown()
 }
 
@@ -486,7 +488,7 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      class="flex cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
       :class="[
         classBorderColor,
         {
@@ -499,7 +501,12 @@ const classBorderColor = computed(() => {
       ]"
       @click="disabled == false && toggleDropdown()"
     >
-      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
+      <VIcon
+        v-if="props.icon !== false"
+        :icon="icon"
+        :size="size"
+        class="pointer-events-none"
+      />
 
       <input
         :id="id"
@@ -530,6 +537,7 @@ const classBorderColor = computed(() => {
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
         :size="size"
         side="right"
+        class="pointer-events-none"
       />
     </div>
 
@@ -545,7 +553,7 @@ const classBorderColor = computed(() => {
       :search="search"
       :show="isDropdownOpen"
       :multiple="multiple"
-      @select="handleSelect($event)"
+      @select=";[handleSelect($event), emit('select', $event)]"
       @toggle-all="handleToggleAll"
       @on-search="handleSearchQuery"
     />

@@ -21,9 +21,7 @@ const onClickOutsideHandler = [
   () => {
     closeDropdown()
   },
-  {
-    ignore: [],
-  },
+  { ignore: [] },
 ]
 
 /**
@@ -50,13 +48,13 @@ const props = defineProps({
   /**
    * Model value of the datepicker.
    *
-   * @type {String}
-   * @default ''
+   * @type {String|False}
+   * @default false
    * @required
    */
   modelValue: {
-    type: String,
-    default: '',
+    type: [String, Boolean],
+    default: false,
     required: true,
   },
 
@@ -232,19 +230,13 @@ const classRemoveButton = computed(() => {
 const isDropdownOpen = ref(false)
 
 /**
- * Close the dropdown.
+ * Close or toggle the dropdown.
  *
  * @returns {void}
  */
 const closeDropdown = () => {
   isDropdownOpen.value = false
 }
-
-/**
- * Toggle the dropdown.
- *
- * @returns {void}
- */
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
@@ -255,6 +247,10 @@ const toggleDropdown = () => {
  * @param {Object} event
  */
 const handleSelect = (event) => {
+  if (event == false) {
+    emit('update:modelValue', '')
+    return
+  }
   const day = event.day.toString().padStart(2, '0')
   const month = event.month.toString().padStart(2, '0')
   const year = event.year.toString()
@@ -280,10 +276,10 @@ const handleSelect = (event) => {
  * @type {import('vue').Ref<boolean>}
  * @type {import('vue').Ref<string>}
  */
-const doReset = ref(false)
-const sendKey = ref('')
-provide('reset', doReset)
-provide('sendKey', sendKey)
+const shouldReset = ref(false)
+const keyToSend = ref('')
+provide('reset', shouldReset)
+provide('sendKey', keyToSend)
 
 /**
  * Handle the reset event.
@@ -292,11 +288,11 @@ provide('sendKey', sendKey)
  * @returns {void}
  */
 const reset = (event) => {
-  emit('update:modelValue', '')
-  doReset.value = true
+  shouldReset.value = true
   setTimeout(() => {
-    doReset.value = false
+    shouldReset.value = false
   }, 200)
+  emit('update:modelValue', '')
   event.stopPropagation()
 }
 
@@ -307,13 +303,13 @@ const reset = (event) => {
  * @returns {void}
  */
 const keyHandler = (event) => {
-  sendKey.value = event.key
+  keyToSend.value = event.key
   if (event.key === 'Escape') {
     closeDropdown()
   }
 
   setTimeout(() => {
-    sendKey.value = ''
+    keyToSend.value = ''
   }, 100)
   event.stopPropagation()
 }
@@ -357,7 +353,6 @@ const keyHandler = (event) => {
         :placeholder="placeholder"
         :value="modelValue"
         :required="required"
-        :readonly="readOnly"
         :disabled="disabled"
         :aria-labelledby="props.label !== false ? `${id}-label` : null"
         :aria-describedby="props.helper !== false ? `${id}-helper` : null"

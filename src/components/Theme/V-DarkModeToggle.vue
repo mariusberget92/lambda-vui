@@ -33,20 +33,12 @@ const isDarkMode = ref(false)
  * @type {import('vue').ComputedRef<String>}
  */
 const classWrapper = computed(() => {
-  let classes = []
-
-  const positionClasses = {
+  return {
     'top-right': ['top-5', 'right-5'],
     'top-left': ['top-5', 'left-5'],
     'bottom-right': ['bottom-5', 'right-5'],
     'bottom-left': ['bottom-5', 'left-5'],
-  }
-
-  classes.push(
-    ...(positionClasses[props.position] || positionClasses['top-right'])
-  )
-
-  return classes.join(' ')
+  }[props.position].join(' ')
 })
 
 /**

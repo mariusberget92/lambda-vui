@@ -7,7 +7,7 @@ import VCheckbox from './components/Form/V-Checkbox.vue'
 import VButton from './components/Form/V-Button.vue'
 import VTextarea from './components/Form/V-Textarea.vue'
 import VSelect from './components/Form/V-Select.vue'
-import VDatePicker from './components/Form/V-DatePicker.vue'
+import VDatePicker from './components/Form/V-DateTimePicker.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -15,6 +15,8 @@ const string = ref('')
 const array = ref([])
 // eslint-disable-next-line no-unused-vars
 const boolean = ref(true)
+// eslint-disable-next-line no-unused-vars
+const date = ref('')
 </script>
 
 <template>
@@ -142,7 +144,7 @@ const boolean = ref(true)
 
           <div class="flex space-x-4">
             <VDatePicker
-              v-model="string"
+              v-model="date"
               placeholder="Placeholder"
               size="sm"
               label="Label"
@@ -152,10 +154,10 @@ const boolean = ref(true)
             />
 
             <VDatePicker
-              v-model="string"
+              v-model="date"
               time-picker
               placeholder="Placeholder"
-              size="base"
+              size="sm"
               label="Label"
               icon="calendar_month"
               helper="Helper"
