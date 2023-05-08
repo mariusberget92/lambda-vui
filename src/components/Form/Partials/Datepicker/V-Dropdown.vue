@@ -18,7 +18,7 @@ import VTimePicker from './V-TimePicker.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['select', 'closeDropdown'])
+const emit = defineEmits(['select', 'closeDropdown', 'reset'])
 
 /**
  * Component props.
@@ -150,11 +150,6 @@ onMounted(() => {
     selectedHour.value = date.getHours().toString().padStart(2, '0')
     selectedMinute.value = date.getMinutes().toString().padStart(2, '0')
   }
-
-  if (props.selectedDate === '') {
-    selectedDay.value = ''
-    return
-  }
 })
 
 /**
@@ -241,8 +236,11 @@ const keyToSend = inject('sendKey')
  *
  * @returns {void}
  */
-watch([shouldReset, keyToSend], ([shouldReset, keyToSend]) => {
-  if (shouldReset) {
+watch([shouldReset, keyToSend], ([reset, key]) => {
+  const shouldResetRef = ref(reset)
+  const keyToSendRef = ref(key)
+
+  if (shouldResetRef.value) {
     const today = new Date()
     selectedDay.value = today.getDate()
     selectedMonth.value = today.getMonth() + 1
@@ -253,8 +251,8 @@ watch([shouldReset, keyToSend], ([shouldReset, keyToSend]) => {
     }
   }
 
-  if (keyToSend !== '') {
-    keyHandler(keyToSend)
+  if (keyToSendRef.value !== '') {
+    keyHandler(key)
   }
 })
 
@@ -312,6 +310,7 @@ const keyHandler = (key) => {
       closeDropdown()
       break
   }
+  keyToSend.value = ''
 }
 
 /**

@@ -237,6 +237,7 @@ const isDropdownOpen = ref(false)
 const closeDropdown = () => {
   isDropdownOpen.value = false
 }
+
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value
 }
@@ -284,16 +285,10 @@ provide('sendKey', keyToSend)
 /**
  * Handle the reset event.
  *
- * @param {Event} event
  * @returns {void}
  */
-const reset = (event) => {
-  shouldReset.value = true
-  setTimeout(() => {
-    shouldReset.value = false
-  }, 200)
+const reset = () => {
   emit('update:modelValue', '')
-  event.stopPropagation()
 }
 
 /**
@@ -307,10 +302,6 @@ const keyHandler = (event) => {
   if (event.key === 'Escape') {
     closeDropdown()
   }
-
-  setTimeout(() => {
-    keyToSend.value = ''
-  }, 100)
   event.stopPropagation()
 }
 </script>
@@ -364,7 +355,7 @@ const keyHandler = (event) => {
           v-if="modelValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
           :class="[classRemoveButton, $sizeToClass(size)]"
-          @click.prevent="reset"
+          @click.stop.prevent="reset"
         >
           clear
         </span>
@@ -384,6 +375,7 @@ const keyHandler = (event) => {
       :color="color"
       @select="handleSelect($event)"
       @close-dropdown="closeDropdown"
+      @reset="reset"
     />
   </div>
 </template>
