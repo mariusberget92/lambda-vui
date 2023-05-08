@@ -175,8 +175,8 @@ const classButton = computed(() => {
       'bg-nord-red-300',
       'border-nord-red-100',
       'hover:bg-nord-red-100',
+      'hover:shadow-lg hover:shadow-nord-red-100/25',
       'dark:shadow-lg',
-      'dark:shadow-nord-red-100/25',
     ],
     green: [
       'bg-nord-green-300',

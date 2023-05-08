@@ -444,26 +444,31 @@ const classRemoveButton = computed(() => {
 const classBorderColor = computed(() => {
   return {
     red: [
+      'focus-within:shadow-nord-red-100/25',
       'focus-within:border-nord-red-300',
       'focus-within:dark:border-nord-red-300',
       'focus-within:dark:shadow-nord-red-100/25',
     ],
     blue: [
+      'focus-within:shadow-nord-blue-100/25',
       'focus-within:border-nord-blue-300',
       'focus-within:dark:border-nord-blue-300',
       'focus-within:dark:shadow-nord-blue-100/25',
     ],
     green: [
+      'focus-within:shadow-nord-green-100/25',
       'focus-within:border-nord-green-300',
       'focus-within:dark:border-nord-green-300',
       'focus-within:dark:shadow-nord-green-100/25',
     ],
     mauve: [
+      'focus-within:shadow-nord-mauve-100/25',
       'focus-within:border-nord-mauve-300',
       'focus-within:dark:border-nord-mauve-300',
       'focus-within:dark:shadow-nord-mauve-100/25',
     ],
     orange: [
+      'focus-within:shadow-nord-orange-100/25',
       'focus-within:border-nord-orange-300',
       'focus-within:dark:border-nord-orange-300',
       'focus-within:dark:shadow-nord-orange-100/25',
@@ -488,11 +493,11 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:shadow-lg focus-within:dark:shadow-lg cursor-pointer"
       :class="[
         classBorderColor,
         {
-          '!border-nord-red-300 dark:shadow-lg dark:!shadow-nord-red-100/25':
+          '!border-nord-red-300 !shadow-nord-red-100/25 shadow-lg dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
           'rounded-full': shape === 'pill',
           'rounded-none': shape === 'square',

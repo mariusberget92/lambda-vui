@@ -37,16 +37,15 @@ const date = ref('')
               label="Label"
               helper="Helper"
               required
-              color="green"
             />
 
             <VInput
               v-model="string"
               placeholder="Placeholder"
-              color="mauve"
               icon="search"
               label="Label"
               helper="Helper"
+              color="orange"
             />
           </div>
 
