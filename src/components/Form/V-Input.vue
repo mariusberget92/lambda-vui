@@ -239,11 +239,11 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25 focus-within:shadow-lg focus-within:dark:shadow-lg"
+      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out focus-within:shadow-lg dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
       :class="[
         classBorderColor,
         {
-          '!border-nord-red-300 !shadow-nord-red-100/25 shadow-lg dark:shadow-lg dark:!shadow-nord-red-100/25':
+          '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
           'rounded-full': shape === 'pill',
           'rounded-none': shape === 'square',

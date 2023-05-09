@@ -8,6 +8,7 @@ import VButton from './components/Form/V-Button.vue'
 import VTextarea from './components/Form/V-Textarea.vue'
 import VSelect from './components/Form/V-Select.vue'
 import VDatePicker from './components/Form/V-DateTimePicker.vue'
+import VFile from './components/Form/V-File.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -17,6 +18,8 @@ const array = ref([])
 const boolean = ref(true)
 // eslint-disable-next-line no-unused-vars
 const date = ref('')
+// eslint-disable-next-line no-unused-vars
+const file = ref(false)
 </script>
 
 <template>
@@ -161,6 +164,28 @@ const date = ref('')
               icon="calendar_month"
               helper="Helper"
               color="green"
+            />
+          </div>
+
+          <div class="flex space-x-4">
+            <VFile
+              v-model="file"
+              placeholder="Placeholder"
+              size="sm"
+              label="Label"
+              icon="image"
+              helper="Helper"
+            />
+
+            <VFile
+              v-model="file"
+              multiple
+              :max-files="2"
+              placeholder="Placeholder"
+              size="sm"
+              label="Label"
+              icon="image"
+              helper="Helper"
             />
           </div>
 
