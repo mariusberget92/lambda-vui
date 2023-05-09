@@ -407,7 +407,7 @@ const classBorderColor = computed(() => {
           rounded: shape === 'rounded',
         },
       ]"
-      @click="(disabled) ?? openLegacyFileSelect"
+      @click="!disabled && openLegacyFileSelect()"
     >
       <VIcon
         v-if="props.icon !== false"
