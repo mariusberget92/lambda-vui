@@ -33,6 +33,17 @@ const props = defineProps({
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
     },
   },
+
+  /**
+   * Whether the input is rounded.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  rounded: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 /**
@@ -155,7 +166,7 @@ const daysInMonth = computed(() => {
   <div class="flex justify-center">
     <div
       class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-x-4 gap-y-2 font-bold text-nord-dark-300 dark:text-nord-light-300"
-      :class="[$sizeToClass(size)]"
+      :class="[$sizeToClass(props.size)]"
     >
       <template v-for="(day, index) in days" :key="index">
         <div>
@@ -165,7 +176,7 @@ const daysInMonth = computed(() => {
 
       <template v-for="(day, index) in daysInMonth" :key="index">
         <button
-          class="aspect-square h-full rounded p-2 transition-colors"
+          class="aspect-square h-full p-2 transition-colors"
           :class="[
             isSelected(day) ? classSelectedColor : classNormalColor,
             {
@@ -173,8 +184,9 @@ const daysInMonth = computed(() => {
               'font-semibold': !isToday(day),
               'text-white': isSelected(day),
               'hover:text-white': !isSelected(day),
+              rounded: props.rounded,
             },
-            $sizeToClass(size),
+            $sizeToClass(props.size),
             index == 0 ? classRowStart : '',
           ]"
           @click="emit('selectDay', day)"

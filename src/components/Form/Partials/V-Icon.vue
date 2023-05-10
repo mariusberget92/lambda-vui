@@ -61,6 +61,6 @@ const props = defineProps({
       },
     ]"
   >
-    {{ icon }}
+    {{ props.icon }}
   </span>
 </template>

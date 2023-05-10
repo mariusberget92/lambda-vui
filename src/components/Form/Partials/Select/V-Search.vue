@@ -14,7 +14,7 @@ const emit = defineEmits(['search', 'onSearch'])
  *
  * @type {Object}
  */
-defineProps({
+const props = defineProps({
   /**
    * Input size.
    *
@@ -28,6 +28,17 @@ defineProps({
     validator: (val) => {
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
     },
+  },
+
+  /**
+   * Whether the input is rounded.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 })
 
@@ -44,8 +55,9 @@ const searchQuery = ref('')
     v-model="searchQuery"
     class="-mt-1"
     placeholder="Search for items"
-    :size="size"
+    :size="props.size"
     icon="search"
+    :rounded="props.rounded"
     @input="emit('onSearch', searchQuery)"
   />
 </template>

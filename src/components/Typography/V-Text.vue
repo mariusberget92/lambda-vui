@@ -89,7 +89,7 @@ const classColor = computed(() => {
 </script>
 
 <template>
-  <p :class="[$sizeToClass(size), classColor]" class="leading-3">
+  <p :class="[$sizeToClass(props.size), classColor]" class="leading-3">
     <slot />
   </p>
 </template>

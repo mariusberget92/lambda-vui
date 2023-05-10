@@ -217,18 +217,14 @@ const props = defineProps({
   },
 
   /**
-   * The shape of the input.
+   * Whether the input is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -481,15 +477,15 @@ const classBorderColor = computed(() => {
   <div
     v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
-    :class="{ 'opacity-50': disabled }"
+    :class="{ 'opacity-50': props.disabled }"
   >
     <VLabel
       v-if="props.label !== false"
-      :id="id"
-      :label="label"
-      :required="required"
-      :helper="helper"
-      :size="size"
+      :id="props.id"
+      :label="props.label"
+      :required="props.required"
+      :helper="props.helper"
+      :size="props.size"
     />
 
     <div
@@ -499,39 +495,37 @@ const classBorderColor = computed(() => {
         {
           '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
-          'rounded-full': shape === 'pill',
-          'rounded-none': shape === 'square',
-          rounded: shape === 'rounded',
+          rounded: props.rounded,
         },
       ]"
-      @click="disabled == false && toggleDropdown()"
+      @click="!props.disabled && toggleDropdown()"
     >
       <VIcon
         v-if="props.icon !== false"
-        :icon="icon"
-        :size="size"
+        :icon="props.icon"
+        :size="props.size"
         class="pointer-events-none"
       />
 
       <input
-        :id="id"
+        :id="props.id"
         type="text"
         class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
-        :class="[$sizeToClass(size)]"
-        :placeholder="placeholder"
+        :class="[$sizeToClass(props.size)]"
+        :placeholder="props.placeholder"
         :value="inputValue"
-        :required="required"
-        :disabled="disabled"
-        :aria-labelledby="props.label !== false ? `${id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+        :required="props.required"
+        :disabled="props.disabled"
+        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
         @keydown.prevent
       />
 
-      <div v-if="clearButton" class="relative flex items-center">
+      <div v-if="props.clearButton" class="relative flex items-center">
         <span
-          v-if="modelValue.length > 0"
+          v-if="props.modelValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
-          :class="[classRemoveButton, $sizeToClass(size)]"
+          :class="[classRemoveButton, $sizeToClass(props.size)]"
           @click="reset"
         >
           clear
@@ -540,7 +534,7 @@ const classBorderColor = computed(() => {
 
       <VIcon
         :icon="isDropdownOpen ? 'expand_less' : 'expand_more'"
-        :size="size"
+        :size="props.size"
         side="right"
         class="pointer-events-none"
       />
@@ -548,16 +542,16 @@ const classBorderColor = computed(() => {
 
     <VDropdown
       ref="dropdown"
-      :options="options"
+      :options="props.options"
       :filtered-options="filteredOptions"
-      :text-reducer="textReducer"
-      :value-reducer="valueReducer"
-      :size="size"
-      :selected-options="modelValue"
-      :shape="shape"
-      :search="search"
+      :text-reducer="props.textReducer"
+      :value-reducer="props.valueReducer"
+      :size="props.size"
+      :selected-options="props.modelValue"
+      :rounded="props.rounded"
+      :search="props.search"
       :show="isDropdownOpen"
-      :multiple="multiple"
+      :multiple="props.multiple"
       @select=";[handleSelect($event), emit('select', $event)]"
       @toggle-all="handleToggleAll"
       @on-search="handleSearchQuery"

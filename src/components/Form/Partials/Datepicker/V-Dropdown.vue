@@ -64,18 +64,14 @@ const props = defineProps({
   },
 
   /**
-   * Shape of the dropdown.
+   * Whether the input is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options rounded, square, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['rounded', 'square', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -449,8 +445,8 @@ const closeDropdown = () => {
     :class="[
       classDropdownWidth,
       {
-        'scale-90 opacity-0': !show,
-        'scale-100 opacity-100': show,
+        'scale-90 opacity-0': !props.show,
+        'scale-100 opacity-100': props.show,
       },
     ]"
   >
@@ -458,20 +454,20 @@ const closeDropdown = () => {
       :class="[
         classDropdownWidth,
         {
-          hidden: !show,
-          block: show,
-          'rounded-none': shape == 'square',
-          rounded: shape == 'rounded' || shape == 'pill',
+          hidden: !props.show,
+          block: props.show,
+          rounded: props.rounded,
         },
       ]"
       class="absolute mt-1 overflow-visible border border-nord-light-100 bg-white p-2 shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
     >
       <div
-        v-if="datePicker"
+        v-if="props.datePicker"
         class="flex flex-col space-y-4"
-        :class="{ 'pb-4': timePicker }"
+        :class="{ 'pb-4': props.timePicker }"
       >
         <VPagination
+          :rounded="props.rounded"
           :selected-month="selectedMonth"
           :selected-year="selectedYear"
           @set-today="setToday"
@@ -482,13 +478,15 @@ const closeDropdown = () => {
         />
 
         <VDatePicker
+          :rounded="props.rounded"
           :selected-day="selectedDay"
           @select-day="selectDate($event)"
         />
       </div>
 
-      <div v-if="timePicker">
+      <div v-if="props.timePicker">
         <VTimePicker
+          :rounded="props.rounded"
           @update-hour="selectedHour = $event"
           @update-minute="selectedMinute = $event"
           @set-now="setNow"

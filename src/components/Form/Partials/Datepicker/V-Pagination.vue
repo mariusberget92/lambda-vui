@@ -11,7 +11,7 @@ const emit = defineEmits([
   'setToday',
 ])
 
-defineProps({
+const props = defineProps({
   /**
    * The color of the datepicker buttons.
    *
@@ -40,6 +40,17 @@ defineProps({
     validator: (val) => {
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
     },
+  },
+
+  /**
+   * Whether the input is rounded.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 })
 
@@ -87,17 +98,18 @@ const years = computed(() => {
   <div class="flex flex-col">
     <span
       class="font-bold text-nord-dark-300 dark:text-nord-light-300"
-      :class="$sizeToClass(size)"
+      :class="$sizeToClass(props.size)"
       >Date</span
     >
 
     <div class="flex items-center justify-between space-x-2">
       <VButton
         class="flex-none"
-        :size="size"
+        :size="props.size"
         icon="chevron_left"
         outline
-        :color="color"
+        :rounded="props.rounded"
+        :color="props.color"
         @click.prevent="emit('previousMonth')"
       />
 
@@ -105,18 +117,20 @@ const years = computed(() => {
         v-model="selectedMonthRef"
         class="grow"
         :options="months"
-        :size="size"
-        :color="color"
+        :size="props.size"
+        :rounded="props.rounded"
+        :color="props.color"
         :clear-button="false"
         @select="emit('updateMonth', selectedMonthRef)"
       />
 
       <VButton
         class="flex-none"
-        :size="size"
+        :size="props.size"
         text="Today"
         outline
-        :color="color"
+        :rounded="props.rounded"
+        :color="props.color"
         @click.prevent="emit('setToday')"
       />
 
@@ -124,18 +138,20 @@ const years = computed(() => {
         v-model="selectedYearRef"
         class="shrink"
         :options="years"
-        :size="size"
-        :color="color"
+        :size="props.size"
+        :rounded="props.rounded"
+        :color="props.color"
         :clear-button="false"
         @select="emit('updateYear', selectedYearRef)"
       />
 
       <VButton
         class="flex-none"
-        :size="size"
+        :size="props.size"
         icon="chevron_right"
         outline
-        :color="color"
+        :rounded="props.rounded"
+        :color="props.color"
         @click.prevent="emit('nextMonth')"
       />
     </div>

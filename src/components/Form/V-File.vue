@@ -137,18 +137,14 @@ const props = defineProps({
   },
 
   /**
-   * Input shape.
+   * Whether the input is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -385,14 +381,14 @@ const classBorderColor = computed(() => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col" :class="{ 'opacity-50': disabled }">
+  <div class="flex w-full flex-col" :class="{ 'opacity-50': props.disabled }">
     <VLabel
       v-if="props.label !== false"
-      :id="id"
-      :label="label"
-      :required="required"
-      :helper="helper"
-      :size="size"
+      :id="props.id"
+      :label="props.label"
+      :required="props.required"
+      :helper="props.helper"
+      :size="props.size"
     />
 
     <div
@@ -402,25 +398,23 @@ const classBorderColor = computed(() => {
         {
           '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
-          'rounded-full': shape === 'pill',
-          'rounded-none': shape === 'square',
-          rounded: shape === 'rounded',
+          rounded: props.rounded,
         },
       ]"
-      @click="!disabled && openLegacyFileSelect()"
+      @click="!props.disabled && openLegacyFileSelect()"
     >
       <VIcon
         v-if="props.icon !== false"
-        :icon="icon"
-        :size="size"
+        :icon="props.icon"
+        :size="props.size"
         class="pointer-events-none"
       />
 
       <input
-        :id="`${id}-file`"
+        :id="`${props.id}-file`"
         type="file"
         class="hidden"
-        :multiple="multiple"
+        :multiple="props.multiple"
         @change="handleFileSelect"
       />
 
@@ -429,16 +423,16 @@ const classBorderColor = computed(() => {
         type="text"
         class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
         :class="[$sizeToClass(props.size)]"
-        :placeholder="placeholder"
-        :required="required"
-        :disabled="disabled"
+        :placeholder="props.placeholder"
+        :required="props.required"
+        :disabled="props.disabled"
         :value="inputValue"
-        :aria-labelledby="props.label !== false ? `${id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
         @keydown.prevent
       />
 
-      <div v-if="clearButton" class="relative flex items-center">
+      <div v-if="props.clearButton" class="relative flex items-center">
         <span
           v-if="modelValue.length > 0 || inputValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
@@ -451,7 +445,7 @@ const classBorderColor = computed(() => {
 
       <VIcon
         icon="upload"
-        :size="size"
+        :size="props.size"
         side="right"
         class="pointer-events-none"
       />

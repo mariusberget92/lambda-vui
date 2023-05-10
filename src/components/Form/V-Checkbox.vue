@@ -120,18 +120,14 @@ const props = defineProps({
   },
 
   /**
-   * The shape of the checkbox.
+   * Whether the checkbox is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options rounded, square, circle
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['rounded', 'square', 'circle'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -210,36 +206,37 @@ const classCheckbox = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center space-x-2" :class="{ 'opacity-50': disabled }">
+  <div
+    class="flex items-center space-x-2"
+    :class="{ 'opacity-50': props.disabled }"
+  >
     <input
-      :id="id"
+      :id="props.id"
       type="checkbox"
       class="cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25"
       :class="[
         classCheckbox,
         {
-          'rounded-none': shape === 'square',
-          'rounded-full': shape === 'circle',
-          rounded: shape === 'rounded',
+          rounded: props.rounded,
         },
       ]"
-      :disabled="disabled"
-      :checked="modelValue || checked"
-      :required="required"
-      :aria-labelledby="props.label !== false ? `${id}-label` : null"
-      :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+      :disabled="props.disabled"
+      :checked="props.modelValue || props.checked"
+      :required="props.required"
+      :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
+      :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
       @change="$emit('update:modelValue', $event.target.checked)"
     />
 
     <div class="flex flex-col">
       <VLabel
         v-if="props.label !== false"
-        :id="id"
+        :id="props.id"
         compact
-        :label="label"
-        :required="required"
-        :helper="helper"
-        :size="size"
+        :label="props.label"
+        :required="props.required"
+        :helper="props.helper"
+        :size="props.size"
       />
     </div>
   </div>

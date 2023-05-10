@@ -116,7 +116,7 @@ const idHelper = computed(() => {
 <template>
   <label
     :id="idLabel"
-    :for="id"
+    :for="props.id"
     class="font-semibold leading-none text-nord-dark-300 dark:text-nord-light-300"
     :class="[
       $sizeToClass(props.size),
@@ -125,10 +125,10 @@ const idHelper = computed(() => {
       },
     ]"
   >
-    {{ label }}
+    {{ props.label }}
 
     <span
-      v-if="required"
+      v-if="props.required"
       class="leading-none text-nord-red-300"
       :class="$sizeToClass(props.size)"
       >*</span
@@ -145,6 +145,6 @@ const idHelper = computed(() => {
         'mb-1': !props.compact,
       },
     ]"
-    >{{ helper }}</span
+    >{{ props.helper }}</span
   >
 </template>

@@ -152,18 +152,14 @@ const props = defineProps({
   },
 
   /**
-   * Input shape.
+   * Whether the input is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -227,15 +223,15 @@ const classBorderColor = computed(() => {
 <template>
   <div
     class="flex w-full flex-col"
-    :class="{ hidden: props.type === 'hidden', 'opacity-50': disabled }"
+    :class="{ hidden: props.type === 'hidden', 'opacity-50': props.disabled }"
   >
     <VLabel
       v-if="props.label !== false"
-      :id="id"
-      :label="label"
-      :required="required"
-      :helper="helper"
-      :size="size"
+      :id="props.id"
+      :label="props.label"
+      :required="props.required"
+      :helper="props.helper"
+      :size="props.size"
     />
 
     <div
@@ -245,25 +241,27 @@ const classBorderColor = computed(() => {
         {
           '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
-          'rounded-full': shape === 'pill',
-          'rounded-none': shape === 'square',
-          rounded: shape === 'rounded',
+          rounded: props.rounded,
         },
       ]"
     >
-      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
+      <VIcon
+        v-if="props.icon !== false"
+        :icon="props.icon"
+        :size="props.size"
+      />
 
       <input
-        :id="id"
-        :type="type"
+        :id="props.id"
+        :type="props.type"
         class="w-full bg-transparent p-2"
         :class="[$sizeToClass(props.size)]"
-        :placeholder="placeholder"
-        :required="required"
-        :disabled="disabled"
-        :value="modelValue"
-        :aria-labelledby="props.label !== false ? `${id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+        :placeholder="props.placeholder"
+        :required="props.required"
+        :disabled="props.disabled"
+        :value="props.modelValue"
+        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
         @input="$emit('update:modelValue', $event.target.value)"
       />
     </div>

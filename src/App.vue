@@ -49,6 +49,7 @@ const file = ref(false)
               label="Label"
               helper="Helper"
               color="orange"
+              :rounded="false"
             />
           </div>
 
@@ -67,6 +68,7 @@ const file = ref(false)
               helper="Helper"
               size="sm"
               color="green"
+              :rounded="false"
             />
 
             <VCheckbox
@@ -83,6 +85,7 @@ const file = ref(false)
               helper="Helper"
               size="sm"
               color="orange"
+              :rounded="false"
             />
 
             <VCheckbox
@@ -110,6 +113,7 @@ const file = ref(false)
               error="test"
               label="Label"
               helper="Helper"
+              :rounded="false"
             />
           </div>
 
@@ -126,6 +130,7 @@ const file = ref(false)
 
             <VSelect
               v-model="array"
+              :rounded="false"
               placeholder="Placeholder"
               size="sm"
               label="Label"
@@ -164,6 +169,7 @@ const file = ref(false)
               icon="calendar_month"
               helper="Helper"
               color="green"
+              :rounded="false"
             />
           </div>
 
@@ -186,6 +192,7 @@ const file = ref(false)
               label="Label"
               icon="image"
               helper="Helper"
+              :rounded="false"
             />
           </div>
 
@@ -200,11 +207,23 @@ const file = ref(false)
               processing
             />
 
-            <VButton type="button" size="sm" color="green" text="Button" />
+            <VButton
+              type="button"
+              size="sm"
+              color="green"
+              text="Button"
+              :rounded="false"
+            />
 
             <VButton type="button" size="sm" color="blue" text="Button" />
 
-            <VButton type="button" size="sm" color="orange" text="Button" />
+            <VButton
+              type="button"
+              size="sm"
+              color="orange"
+              text="Button"
+              :rounded="false"
+            />
 
             <VButton type="button" size="sm" color="mauve" text="Button" />
           </div>
@@ -220,6 +239,7 @@ const file = ref(false)
 
             <VButton
               type="button"
+              :rounded="false"
               size="sm"
               color="green"
               text="Button"
@@ -232,6 +252,7 @@ const file = ref(false)
               size="sm"
               color="blue"
               text="Button"
+              :rounded="false"
               outline
             />
 
@@ -246,6 +267,7 @@ const file = ref(false)
             <VButton
               type="button"
               size="sm"
+              :rounded="false"
               color="mauve"
               text="Button"
               outline
@@ -264,6 +286,7 @@ const file = ref(false)
             <VButton
               type="button"
               size="sm"
+              :rounded="false"
               color="green"
               text="Button"
               icon="calendar_month"
@@ -281,6 +304,7 @@ const file = ref(false)
             <VButton
               type="button"
               size="sm"
+              :rounded="false"
               color="orange"
               text="Button"
               icon="settings"
@@ -301,6 +325,7 @@ const file = ref(false)
             <VButton
               type="button"
               size="sm"
+              :rounded="false"
               color="green"
               icon="calendar_month"
             />
@@ -311,6 +336,7 @@ const file = ref(false)
               type="button"
               size="sm"
               color="orange"
+              :rounded="false"
               processing
               icon="settings"
             />
@@ -319,7 +345,14 @@ const file = ref(false)
           </div>
 
           <div class="flex justify-between">
-            <VButton type="button" size="sm" color="red" icon="group" outline />
+            <VButton
+              type="button"
+              size="sm"
+              :rounded="false"
+              color="red"
+              icon="group"
+              outline
+            />
 
             <VButton
               type="button"
@@ -329,7 +362,14 @@ const file = ref(false)
               outline
             />
 
-            <VButton type="button" size="sm" color="blue" icon="save" outline />
+            <VButton
+              type="button"
+              :rounded="false"
+              size="sm"
+              color="blue"
+              icon="save"
+              outline
+            />
 
             <VButton
               type="button"
@@ -342,6 +382,7 @@ const file = ref(false)
             <VButton
               type="button"
               size="sm"
+              :rounded="false"
               color="mauve"
               icon="music_note"
               processing

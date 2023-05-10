@@ -100,18 +100,14 @@ const props = defineProps({
   },
 
   /**
-   * Shape of the dropdown.
+   * Whether the input is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options rounded, square, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['rounded', 'square', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -198,40 +194,43 @@ const checkboxSize = computed(() => {
   <div
     class="relative z-20 w-full transform transition-all duration-300 ease-in-out"
     :class="{
-      'scale-75 opacity-0 ': !show,
-      'scale-100 opacity-100': show,
+      'scale-75 opacity-0 ': !props.show,
+      'scale-100 opacity-100': props.show,
     }"
   >
     <div
       :class="{
-        hidden: !show,
-        block: show,
-        'rounded-none': shape == 'square',
-        rounded: shape == 'rounded' || shape == 'pill',
+        hidden: !props.show,
+        block: props.show,
+        rounded: props.rounded,
       }"
       class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-light-100 bg-white shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
     >
       <perfect-scrollbar>
-        <div v-if="multiple || search" class="flex flex-col space-y-3 p-2 pt-3">
+        <div
+          v-if="props.multiple || props.search"
+          class="flex flex-col space-y-3 p-2 pt-3"
+        >
           <VSearch
-            v-if="search"
-            :size="size"
+            v-if="props.search"
+            :size="props.size"
+            :rounded="props.rounded"
             @on-search="emit('onSearch', $event)"
           />
         </div>
 
         <div
-          v-if="multiple"
+          v-if="props.multiple"
           class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
           :class="{
-            'first:rounded-t last:rounded-b':
-              shape == 'rounded' || shape == 'pill',
+            'first:rounded-t last:rounded-b': props.rounded,
           }"
         >
           <VCheckbox
             :checked="allOptionsSelected"
             :size="checkboxSize"
             color="green"
+            :rounded="props.rounded"
             class="pl-2"
             @change="emit('toggleAll')"
           />
@@ -239,7 +238,7 @@ const checkboxSize = computed(() => {
           <button
             type="button"
             class="flex w-full cursor-pointer flex-col p-1.5 italic text-nord-blue-300 dark:text-nord-blue-300"
-            :class="$sizeToClass(size)"
+            :class="$sizeToClass(props.size)"
             @click="emit('toggleAll')"
           >
             <span class="flex items-center">
@@ -252,14 +251,14 @@ const checkboxSize = computed(() => {
           <div
             class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
             :class="{
-              'first:rounded-t last:rounded-b':
-                shape == 'rounded' || shape == 'pill',
+              'first:rounded-t last:rounded-b': props.rounded,
             }"
           >
             <VCheckbox
-              v-if="multiple"
+              v-if="props.multiple"
               :checked="isSelected(option)"
               class="pl-2"
+              :rounded="props.rounded"
               :size="checkboxSize"
               @input="emit('select', option)"
             />
@@ -267,7 +266,7 @@ const checkboxSize = computed(() => {
             <button
               type="button"
               class="flex w-full cursor-pointer flex-col p-1.5 text-nord-dark-300 dark:text-nord-light-300"
-              :class="$sizeToClass(size)"
+              :class="$sizeToClass(props.size)"
               @click="emit('select', option)"
             >
               <span

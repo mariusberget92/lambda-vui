@@ -153,18 +153,14 @@ const props = defineProps({
   },
 
   /**
-   * The shape of the datepicker.
+   * Whether the datepicker is rounded or not.
    *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -351,15 +347,15 @@ const classBorderColor = computed(() => {
   <div
     v-on-click-outside="onClickOutsideHandler"
     class="flex w-full flex-col"
-    :class="{ 'opacity-50': disabled }"
+    :class="{ 'opacity-50': props.disabled }"
   >
     <VLabel
       v-if="props.label !== false"
-      :id="id"
-      :label="label"
-      :required="required"
-      :helper="helper"
-      :size="size"
+      :id="props.id"
+      :label="props.label"
+      :required="props.required"
+      :helper="props.helper"
+      :size="props.size"
     />
 
     <div
@@ -369,54 +365,56 @@ const classBorderColor = computed(() => {
         {
           '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
             props.error !== false,
-          'rounded-full': shape === 'pill',
-          'rounded-none': shape === 'square',
-          rounded: shape === 'rounded',
+          rounded: props.rounded,
         },
       ]"
       tabindex="0"
       @keydown="keyHandler"
       @click="disabled == false && toggleDropdown()"
     >
-      <VIcon v-if="props.icon !== false" :icon="icon" :size="size" />
+      <VIcon
+        v-if="props.icon !== false"
+        :icon="props.icon"
+        :size="props.size"
+      />
 
       <input
-        :id="id"
+        :id="props.id"
         type="text"
         class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
-        :class="[$sizeToClass(size)]"
-        :placeholder="placeholder"
-        :value="modelValue"
-        :required="required"
-        :disabled="disabled"
-        :aria-labelledby="props.label !== false ? `${id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${id}-helper` : null"
+        :class="[$sizeToClass(props.size)]"
+        :placeholder="props.placeholder"
+        :value="props.modelValue"
+        :required="props.required"
+        :disabled="props.disabled"
+        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
+        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
         @keydown.prevent
       />
 
       <div class="relative flex items-center">
         <span
-          v-if="modelValue.length > 0"
+          v-if="props.modelValue.length > 0"
           class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
-          :class="[classRemoveButton, $sizeToClass(size)]"
+          :class="[classRemoveButton, $sizeToClass(props.size)]"
           @click.stop.prevent="reset"
         >
           clear
         </span>
       </div>
 
-      <VIcon icon="calendar_month" :size="size" side="right" />
+      <VIcon icon="calendar_month" :size="props.size" side="right" />
     </div>
 
     <VDropdown
       ref="dropdown"
-      :size="size"
-      :shape="shape"
-      :selected-date="modelValue"
+      :size="props.size"
+      :rounded="props.rounded"
+      :selected-date="props.modelValue"
       :show="isDropdownOpen"
-      :date-picker="datePicker"
-      :time-picker="timePicker"
-      :color="color"
+      :date-picker="props.datePicker"
+      :time-picker="props.timePicker"
+      :color="props.color"
       @select="handleSelect($event)"
       @close-dropdown="closeDropdown"
       @reset="reset"

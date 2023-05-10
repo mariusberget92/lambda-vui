@@ -95,18 +95,14 @@ const props = defineProps({
   },
 
   /**
-   * The shape of the button.
+   * Whether the button is rounded.
    *
-   * @type {String}
-   * @default rounded
-   * @options square, rounded, pill
+   * @type {Boolean}
+   * @default true
    */
-  shape: {
-    type: String,
-    default: 'rounded',
-    validator: (val) => {
-      return ['square', 'rounded', 'pill'].includes(val)
-    },
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 
   /**
@@ -271,41 +267,39 @@ const classButton = computed(() => {
 
 <template>
   <button
-    :type="type"
+    :type="props.type"
     class="flex items-center justify-center border p-2 transition-all duration-300 ease-in-out"
     :class="[
       classButton,
       {
-        rounded: shape == 'rounded',
-        'rounded-none': shape == 'square',
-        'rounded-full': shape == 'pill',
-        'opacity-50': processing || disabled,
+        rounded: props.rounded,
+        'opacity-50': props.processing || props.disabled,
         'aspect-square': props.icon !== false && !props.text,
-        'dark:border-transparent': !outline,
-        'bg-transparent': outline,
-        'pointer-events-none': disabled || processing,
+        'dark:border-transparent': !props.outline,
+        'bg-transparent': props.outline,
+        'pointer-events-none': props.disabled || props.processing,
         'text-white': !props.outline,
       },
     ]"
-    :disabled="processing || disabled"
+    :disabled="props.processing || props.disabled"
   >
     <span
-      v-if="props.icon !== false && !processing"
-      :class="$sizeToClass(size)"
+      v-if="props.icon !== false && !props.processing"
+      :class="$sizeToClass(props.size)"
       class="material-symbols-rounded"
-      >{{ icon }}</span
+      >{{ props.icon }}</span
     >
     <span
-      v-if="processing"
-      :class="$sizeToClass(size)"
+      v-if="props.processing"
+      :class="$sizeToClass(props.size)"
       class="material-symbols-rounded animate-spin"
       >refresh</span
     >
     <span
       v-if="props.text !== false"
-      :class="$sizeToClass(size)"
+      :class="$sizeToClass(props.size)"
       class="font-medium"
-      >{{ text }}</span
+      >{{ props.text }}</span
     >
   </button>
 </template>

@@ -313,17 +313,17 @@ const getButtonClasses = () => {
 <template>
   <component
     :is="tag"
-    :href="href"
+    :href="props.href"
     :class="[
       getButtonClasses(),
       getLinkClasses(),
-      $sizeToClass(size),
+      $sizeToClass(props.size),
       {
         'aspect-square h-full justify-center':
-          button && props.icon !== false && !props.text,
+          props.button && props.icon !== false && !props.text,
         'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
-          button,
-        'cursor-pointer transition-colors': !button,
+          props.button,
+        'cursor-pointer transition-colors': !props.button,
       },
     ]"
   >
@@ -334,10 +334,12 @@ const getButtonClasses = () => {
       <span
         v-if="props.icon !== false"
         class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
-        :class="$sizeToClass(size)"
-        >{{ icon }}</span
+        :class="$sizeToClass(props.size)"
+        >{{ props.icon }}</span
       >
-      <span v-if="props.text !== false" class="items-center">{{ text }}</span>
+      <span v-if="props.text !== false" class="items-center">{{
+        props.text
+      }}</span>
     </div>
   </component>
 </template>

@@ -10,7 +10,7 @@ import VSelect from '../../V-Select.vue'
  */
 const emit = defineEmits(['updateHour', 'updateMinute', 'setNow'])
 
-defineProps({
+const props = defineProps({
   /**
    * The color of the datepicker buttons.
    *
@@ -39,6 +39,17 @@ defineProps({
     validator: (val) => {
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
     },
+  },
+
+  /**
+   * Whether the input is rounded.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  rounded: {
+    type: Boolean,
+    default: true,
   },
 })
 
@@ -86,7 +97,7 @@ const minutes = computed(() => {
   <div class="w-full flex-col">
     <span
       class="font-bold text-nord-dark-300 dark:text-nord-light-300"
-      :class="$sizeToClass(size)"
+      :class="$sizeToClass(props.size)"
       >Time</span
     >
 
@@ -94,25 +105,28 @@ const minutes = computed(() => {
       <VSelect
         v-model="selectedHourRef"
         :options="hours"
-        :size="size"
+        :rounded="props.rounded"
+        :size="props.size"
         :clear-button="false"
-        :color="color"
+        :color="props.color"
         @select="emit('updateHour', selectedHourRef)"
       />
 
       <VSelect
         v-model="selectedMinuteRef"
         :options="minutes"
-        :size="size"
+        :rounded="props.rounded"
+        :size="props.size"
         :clear-button="false"
-        :color="color"
+        :color="props.color"
         @change="emit('updateMinute', selectedMinuteRef)"
       />
 
       <VButton
         outline
-        :color="color"
-        :size="size"
+        :rounded="props.rounded"
+        :color="props.color"
+        :size="props.size"
         text="Now"
         @click.prevent="emit('setNow')"
       />
