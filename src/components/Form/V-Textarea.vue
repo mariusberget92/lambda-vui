@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 
 /**
@@ -165,53 +165,17 @@ const props = defineProps({
     },
   },
 })
-
-/**
- * CSS Border color classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classBorderColor = computed(() => {
-  return {
-    red: [
-      'focus-within:shadow-nord-red-100/25',
-      'focus-within:border-nord-red-300',
-      'focus-within:dark:border-nord-red-300',
-      'focus-within:dark:shadow-nord-red-100/25',
-    ],
-    blue: [
-      'focus-within:shadow-nord-blue-100/25',
-      'focus-within:border-nord-blue-300',
-      'focus-within:dark:border-nord-blue-300',
-      'focus-within:dark:shadow-nord-blue-100/25',
-    ],
-    green: [
-      'focus-within:shadow-nord-green-100/25',
-      'focus-within:border-nord-green-300',
-      'focus-within:dark:border-nord-green-300',
-      'focus-within:dark:shadow-nord-green-100/25',
-    ],
-    mauve: [
-      'focus-within:shadow-nord-mauve-100/25',
-      'focus-within:border-nord-mauve-300',
-      'focus-within:dark:border-nord-mauve-300',
-      'focus-within:dark:shadow-nord-mauve-100/25',
-    ],
-    orange: [
-      'focus-within:shadow-nord-orange-100/25',
-      'focus-within:border-nord-orange-300',
-      'focus-within:dark:border-nord-orange-300',
-      'focus-within:dark:shadow-nord-orange-100/25',
-    ],
-  }[props.color].join(' ')
-})
 </script>
 
 <template>
-  <div class="flex w-full flex-col" :class="{ 'opacity-50': props.disabled }">
+  <div
+    class="flex w-full flex-col"
+    :class="{
+      'opacity-50': props.disabled,
+    }"
+  >
     <VLabel
-      v-if="props.label !== false"
+      v-if="props.label"
       :id="props.id"
       :label="props.label"
       :required="props.required"
@@ -220,19 +184,22 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out focus-within:shadow-lg dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      class="flex border-l-0 bg-nord-light-400 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
-        classBorderColor,
         {
-          '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
-            props.error !== false,
           rounded: props.rounded,
+          '!border-l-4 border-l-nord-red-300': props.error,
+          'focus-within:border-nord-red-300': props.color === 'red',
+          'focus-within:border-nord-blue-300': props.color === 'blue',
+          'focus-within:border-nord-green-300': props.color === 'green',
+          'focus-within:border-nord-mauve-300': props.color === 'mauve',
+          'focus-within:border-nord-orange-300': props.color === 'orange',
         },
       ]"
     >
       <textarea
         :id="props.id"
-        class="w-full bg-transparent p-2"
+        class="w-full bg-transparent px-3 py-2"
         :class="[
           $sizeToClass(props.size),
           {
@@ -246,10 +213,18 @@ const classBorderColor = computed(() => {
         :required="props.required"
         :disabled="props.disabled"
         :value="props.modelValue"
-        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
+        :aria-labelledby="props.label ? `${props.id}-label` : null"
+        :aria-describedby="props.helper ? `${props.id}-helper` : null"
         @input="$emit('update:modelValue', $event.target.value)"
       ></textarea>
     </div>
   </div>
 </template>
+
+<style scoped>
+textarea:focus + div {
+  width: 10px; /* adjust the width of the triangle border */
+  height: 10px; /* adjust the height of the triangle border */
+  border-width: 0 2px 2px 0; /* adjust the thickness and direction of the triangle border */
+}
+</style>

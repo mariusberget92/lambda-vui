@@ -445,7 +445,7 @@ const closeDropdown = () => {
     :class="[
       classDropdownWidth,
       {
-        'scale-90 opacity-0': !props.show,
+        'scale-75 opacity-0': !props.show,
         'scale-100 opacity-100': props.show,
       },
     ]"
@@ -459,7 +459,7 @@ const closeDropdown = () => {
           rounded: props.rounded,
         },
       ]"
-      class="absolute mt-1 overflow-visible border border-nord-light-100 bg-white p-2 shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
+      class="absolute mt-1 w-full overflow-visible bg-white p-2 shadow shadow-3xl dark:bg-nord-dark-200"
     >
       <div
         v-if="props.datePicker"
@@ -470,7 +470,6 @@ const closeDropdown = () => {
           :rounded="props.rounded"
           :selected-month="selectedMonth"
           :selected-year="selectedYear"
-          @set-today="setToday"
           @next-month="nextMonth"
           @previous-month="previousMonth"
           @update-month="selectedMonth = $event"
@@ -481,6 +480,7 @@ const closeDropdown = () => {
           :rounded="props.rounded"
           :selected-day="selectedDay"
           @select-day="selectDate($event)"
+          @set-today="setToday"
         />
       </div>
 

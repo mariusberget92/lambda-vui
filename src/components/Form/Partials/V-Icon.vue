@@ -52,12 +52,12 @@ const props = defineProps({
 
 <template>
   <span
-    class="material-symbols-rounded justify-centerbg-transparent flex items-center text-nord-dark-300 dark:text-nord-light-300"
+    class="material-symbols-rounded flex items-center justify-center text-nord-dark-300 dark:text-nord-light-300"
     :class="[
       $sizeToClass(props.size),
       {
-        'pl-2': props.side == 'left',
-        'pr-2': props.side == 'right',
+        'pl-3': props.side == 'left',
+        'pr-3': props.side == 'right',
       },
     ]"
   >

@@ -53,7 +53,6 @@ const searchQuery = ref('')
 <template>
   <VInput
     v-model="searchQuery"
-    class="-mt-1"
     placeholder="Search for items"
     :size="props.size"
     icon="search"

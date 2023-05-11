@@ -95,11 +95,6 @@ const minutes = computed(() => {
 
 <template>
   <div class="w-full flex-col">
-    <span
-      class="font-bold text-nord-dark-300 dark:text-nord-light-300"
-      :class="$sizeToClass(props.size)"
-      >Time</span
-    >
 
     <div class="flex space-x-2">
       <VSelect

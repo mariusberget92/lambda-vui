@@ -2,6 +2,7 @@
 import { defineProps, defineEmits, computed } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VIcon from './Partials/V-Icon.vue'
+import VInputResetButton from './Partials/V-InputResetButton.vue'
 
 /**
  * Define the component emits.
@@ -20,7 +21,7 @@ const props = defineProps({
    *
    * @type {String}
    * @required
-   * @default lambda-input-<random>
+   * @default lambda-file-<random>
    */
   id: {
     type: String,
@@ -222,6 +223,24 @@ const props = defineProps({
 })
 
 /**
+ * Keydown handler.
+ * 
+ * @param {KeyboardEvent} event
+ * @returns {void}
+ */
+const keyHandler = (event) => {
+  if (event.key === 'Enter') {
+    openLegacyFileSelect()
+  }
+
+  if (event.key === 'Tab') {
+    return
+  }
+
+  event.preventDefault()
+}
+
+/**
  * The input value to be shown as we cannot show files.
  *
  * @type {import ('vue').ComputedRef<string>}
@@ -253,6 +272,11 @@ const openLegacyFileSelect = () => {
   input.click()
 }
 
+/**
+ * Reset the input.
+ *
+ * @returns {void}
+ */
 const reset = () => {
   emit('update:modelValue', false)
 }
@@ -320,70 +344,12 @@ const validateFiles = (files) => {
 const getFileExtension = (fileName) => {
   return fileName.split('.').pop()
 }
-
-/**
- * CSS remove button classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classRemoveButton = computed(() => {
-  return {
-    xs: ['w-4'],
-    sm: ['w-5'],
-    base: ['w-6'],
-    lg: ['w-7'],
-    xl: ['w-8'],
-    '2xl': ['w-9'],
-  }[props.size].join(' ')
-})
-
-/**
- * CSS Border color classes.
- *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
- */
-const classBorderColor = computed(() => {
-  return {
-    red: [
-      'focus-within:shadow-nord-red-100/25',
-      'focus-within:border-nord-red-300',
-      'focus-within:dark:border-nord-red-300',
-      'focus-within:dark:shadow-nord-red-100/25',
-    ],
-    blue: [
-      'focus-within:shadow-nord-blue-100/25',
-      'focus-within:border-nord-blue-300',
-      'focus-within:dark:border-nord-blue-300',
-      'focus-within:dark:shadow-nord-blue-100/25',
-    ],
-    green: [
-      'focus-within:shadow-nord-green-100/25',
-      'focus-within:border-nord-green-300',
-      'focus-within:dark:border-nord-green-300',
-      'focus-within:dark:shadow-nord-green-100/25',
-    ],
-    mauve: [
-      'focus-within:shadow-nord-mauve-100/25',
-      'focus-within:border-nord-mauve-300',
-      'focus-within:dark:border-nord-mauve-300',
-      'focus-within:dark:shadow-nord-mauve-100/25',
-    ],
-    orange: [
-      'focus-within:shadow-nord-orange-100/25',
-      'focus-within:border-nord-orange-300',
-      'focus-within:dark:border-nord-orange-300',
-      'focus-within:dark:shadow-nord-orange-100/25',
-    ],
-  }[props.color].join(' ')
-})
 </script>
 
 <template>
   <div class="flex w-full flex-col" :class="{ 'opacity-50': props.disabled }">
     <VLabel
-      v-if="props.label !== false"
+      v-if="props.label"
       :id="props.id"
       :label="props.label"
       :required="props.required"
@@ -392,22 +358,25 @@ const classBorderColor = computed(() => {
     />
 
     <div
-      class="flex cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out focus-within:shadow-lg dark:border-nord-light-100/25 focus-within:dark:shadow-lg"
+      class="flex border-l-0 bg-nord-light-400 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
-        classBorderColor,
         {
-          '!border-nord-red-300 shadow-lg !shadow-nord-red-100/25 dark:shadow-lg dark:!shadow-nord-red-100/25':
-            props.error !== false,
           rounded: props.rounded,
+          '!border-l-4 border-l-nord-red-300': props.error,
+          'focus-within:border-nord-red-300': props.color === 'red',
+          'focus-within:border-nord-blue-300': props.color === 'blue',
+          'focus-within:border-nord-green-300': props.color === 'green',
+          'focus-within:border-nord-mauve-300': props.color === 'mauve',
+          'focus-within:border-nord-orange-300': props.color === 'orange',
         },
       ]"
       @click="!props.disabled && openLegacyFileSelect()"
     >
       <VIcon
-        v-if="props.icon !== false"
+        v-if="props.icon"
         :icon="props.icon"
         :size="props.size"
-        class="pointer-events-none"
+        class="cursor-pointer"
       />
 
       <input
@@ -419,35 +388,35 @@ const classBorderColor = computed(() => {
       />
 
       <input
-        :id="id"
+        :id="props.id"
         type="text"
-        class="w-full cursor-pointer bg-transparent p-2 caret-transparent"
-        :class="[$sizeToClass(props.size)]"
+        class="w-full cursor-pointer bg-transparent caret-transparent"
+        :class="[$sizeToClass(props.size), {
+          'px-2 py-2': props.icon,
+          'px-3 py-2': !props.icon,
+        }]"
         :placeholder="props.placeholder"
         :required="props.required"
         :disabled="props.disabled"
         :value="inputValue"
-        :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
-        :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
-        @keydown.prevent
+        :aria-labelledby="props.label ? `${props.id}-label` : null"
+        :aria-describedby="props.helper ? `${props.id}-helper` : null"
+        @keydown="keyHandler"
       />
 
-      <div v-if="props.clearButton" class="relative flex items-center">
-        <span
-          v-if="modelValue.length > 0 || inputValue.length > 0"
-          class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-300 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
-          :class="[classRemoveButton, $sizeToClass(size)]"
-          @click.stop.prevent="reset"
-        >
-          clear
-        </span>
-      </div>
+      <template v-if="props.clearButton">
+        <VInputResetButton
+          :size="props.size"
+          :model-value="props.modelValue"
+          @reset="reset"
+        />
+      </template>
 
       <VIcon
         icon="upload"
         :size="props.size"
         side="right"
-        class="pointer-events-none"
+        class="cursor-pointer"
       />
     </div>
   </div>

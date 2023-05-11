@@ -1,8 +1,18 @@
 <script setup>
 import { computed, defineEmits, defineProps, inject, ref } from 'vue'
 
+/**
+ * Component emits.
+ *
+ * @type {Object}
+ */
 const emit = defineEmits(['selectDay'])
 
+/**
+ * Component props.
+ *
+ * @type {Object}
+ */
 const props = defineProps({
   /**
    * The color of the datepicker buttons.

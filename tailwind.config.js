@@ -7,14 +7,16 @@ module.exports = {
   ],
   theme: {
     extend: {
-      "textShadow": {
+      textShadow: {
         "sm": '0 1px 2px var(--tw-shadow-color)',
         "DEFAULT": '0 2px 4px var(--tw-shadow-color)',
         "lg": '0 8px 16px var(--tw-shadow-color)',
       },
-      "boxShadow": {
-        "no-direction": '0 0 5px var(--tw-shadow-color)',
+
+      boxShadow: {
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
+
       colors: {
         "nord-dark": {
           100: "#2E3440",

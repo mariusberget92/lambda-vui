@@ -178,6 +178,12 @@ const allOptionsSelected = computed(() => {
   return props.options.every((option) => isSelected.value(option))
 })
 
+/**
+ * Get the checkbox size.
+ *
+ * @type {import('vue').ComputedRef<String>}
+ * @returns {String}
+ */
 const checkboxSize = computed(() => {
   return {
     xs: 'xs',
@@ -194,7 +200,7 @@ const checkboxSize = computed(() => {
   <div
     class="relative z-20 w-full transform transition-all duration-300 ease-in-out"
     :class="{
-      'scale-75 opacity-0 ': !props.show,
+      'scale-75 opacity-0': !props.show,
       'scale-100 opacity-100': props.show,
     }"
   >
@@ -204,12 +210,13 @@ const checkboxSize = computed(() => {
         block: props.show,
         rounded: props.rounded,
       }"
-      class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden border border-nord-light-100 bg-white shadow-xl dark:border-nord-light-100/25 dark:bg-nord-dark-300"
+      class="absolute mt-1 w-full overflow-y-auto overflow-x-hidden bg-white shadow shadow-3xl dark:bg-nord-dark-200"
     >
       <perfect-scrollbar>
         <div
           v-if="props.multiple || props.search"
-          class="flex flex-col space-y-3 p-2 pt-3"
+          class="flex flex-col"
+          :class="{ 'space-y-3 p-2': props.search }"
         >
           <VSearch
             v-if="props.search"
@@ -221,7 +228,7 @@ const checkboxSize = computed(() => {
 
         <div
           v-if="props.multiple"
-          class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
+          class="flex px-2 hover:bg-nord-light-500/50 dark:hover:bg-nord-dark-100/50"
           :class="{
             'first:rounded-t last:rounded-b': props.rounded,
           }"
@@ -231,7 +238,7 @@ const checkboxSize = computed(() => {
             :size="checkboxSize"
             color="green"
             :rounded="props.rounded"
-            class="pl-2"
+            class="!space-x-0 pl-2"
             @change="emit('toggleAll')"
           />
 
@@ -247,9 +254,17 @@ const checkboxSize = computed(() => {
           </button>
         </div>
 
+        <span
+          v-if="filteredOptions.length == 0"
+          class="flex items-center justify-center p-2 text-nord-dark-300/75 dark:text-nord-light-300/75"
+          :class="$sizeToClass(props.size)"
+        >
+          No options found
+        </span>
+
         <template v-for="(option, index) in filteredOptions" :key="index">
           <div
-            class="flex hover:bg-nord-light-500 dark:hover:bg-nord-dark-200"
+            class="flex px-2 hover:bg-nord-light-500/50 dark:hover:bg-nord-dark-100/50"
             :class="{
               'first:rounded-t last:rounded-b': props.rounded,
             }"
@@ -257,7 +272,7 @@ const checkboxSize = computed(() => {
             <VCheckbox
               v-if="props.multiple"
               :checked="isSelected(option)"
-              class="pl-2"
+              class="!space-x-0 pl-2"
               :rounded="props.rounded"
               :size="checkboxSize"
               @input="emit('select', option)"
@@ -291,6 +306,6 @@ const checkboxSize = computed(() => {
 
 <style scoped>
 .ps {
-  max-height:300px;
+  max-height:350px;
 }
 </style>

@@ -8,7 +8,7 @@ const emit = defineEmits([
   'updateYear',
   'previousMonth',
   'nextMonth',
-  'setToday',
+  'setToday'
 ])
 
 const props = defineProps({
@@ -95,27 +95,10 @@ const years = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <span
-      class="font-bold text-nord-dark-300 dark:text-nord-light-300"
-      :class="$sizeToClass(props.size)"
-      >Date</span
-    >
-
-    <div class="flex items-center justify-between space-x-2">
-      <VButton
-        class="flex-none"
-        :size="props.size"
-        icon="chevron_left"
-        outline
-        :rounded="props.rounded"
-        :color="props.color"
-        @click.prevent="emit('previousMonth')"
-      />
-
+  <div class="flex flex-col space-y-2">
+    <div class="jusify-even flex items-center space-x-2">
       <VSelect
         v-model="selectedMonthRef"
-        class="grow"
         :options="months"
         :size="props.size"
         :rounded="props.rounded"
@@ -124,19 +107,8 @@ const years = computed(() => {
         @select="emit('updateMonth', selectedMonthRef)"
       />
 
-      <VButton
-        class="flex-none"
-        :size="props.size"
-        text="Today"
-        outline
-        :rounded="props.rounded"
-        :color="props.color"
-        @click.prevent="emit('setToday')"
-      />
-
       <VSelect
         v-model="selectedYearRef"
-        class="shrink"
         :options="years"
         :size="props.size"
         :rounded="props.rounded"
@@ -144,9 +116,29 @@ const years = computed(() => {
         :clear-button="false"
         @select="emit('updateYear', selectedYearRef)"
       />
+    </div>
+
+    <div class="flex items-center justify-center space-x-2">
+      <VButton
+        :size="props.size"
+        icon="chevron_left"
+        outline
+        :rounded="props.rounded"
+        :color="props.color"
+        @click.prevent="emit('previousMonth')"
+      />
 
       <VButton
-        class="flex-none"
+        :size="props.size"
+        text="Today"
+        class="grow"
+        outline
+        :rounded="props.rounded"
+        :color="props.color"
+        @click.prevent="emit('setToday')"
+      />
+
+      <VButton
         :size="props.size"
         icon="chevron_right"
         outline

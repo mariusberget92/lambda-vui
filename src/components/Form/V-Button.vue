@@ -127,34 +127,34 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['space-x-2'],
-      icon: ['h-[34px]'],
-      both: ['space-x-2'],
+      text: ['space-x-1.5 !h-[32px]'],
+      icon: ['h-[32px]'],
+      both: ['space-x-1.5 !h-[32px]'],
     },
     sm: {
-      text: ['space-x-2'],
-      icon: ['h-[38px]'],
-      both: ['space-x-2'],
+      text: ['space-x-1.5 !h-[36px]'],
+      icon: ['h-[36px]'],
+      both: ['space-x-1.5 !h-[36px]'],
     },
     base: {
-      text: ['space-x-2.5'],
-      icon: ['h-[42px]'],
-      both: ['space-x-2.5'],
+      text: ['space-x-2 h-[40px]'],
+      icon: ['h-[40px]'],
+      both: ['space-x-2 h-[40px]'],
     },
     lg: {
-      text: ['space-x-2.5'],
-      icon: ['h-[46px]'],
-      both: ['space-x-2.5'],
+      text: ['space-x-2 h-[44px]'],
+      icon: ['h-[44px]'],
+      both: ['space-x-2 h-[44px]'],
     },
     xl: {
-      text: ['space-x-3'],
-      icon: ['h-[46px]'],
-      both: ['space-x-3'],
+      text: ['space-x-2.5 h-[44px]'],
+      icon: ['h-[44px]'],
+      both: ['space-x-2.5 h-[44px]'],
     },
     '2xl': {
-      text: ['space-x-3'],
-      icon: ['h-[50px]'],
-      both: ['space-x-3'],
+      text: ['space-x-2.5 h-[48px]'],
+      icon: ['h-[48px]'],
+      both: ['space-x-2.5 h-[48px]'],
     },
   }
 
@@ -167,93 +167,53 @@ const classButton = computed(() => {
   }
 
   const colorClasses = {
-    red: [
-      'bg-nord-red-300',
-      'border-nord-red-100',
-      'hover:bg-nord-red-100',
-      'hover:shadow-lg hover:shadow-nord-red-100/25',
-      'dark:shadow-lg',
-    ],
-    green: [
-      'bg-nord-green-300',
-      'border-nord-green-100',
-      'hover:bg-nord-green-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-green-100/25',
-    ],
-    blue: [
-      'bg-nord-blue-300',
-      'border-nord-blue-100',
-      'hover:bg-nord-blue-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-blue-100/25',
-    ],
-    orange: [
-      'bg-nord-orange-300',
-      'border-nord-orange-100',
-      'hover:bg-nord-orange-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-orange-100/25',
-    ],
-    mauve: [
-      'bg-nord-mauve-300',
-      'border-nord-mauve-100',
-      'hover:bg-nord-mauve-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-mauve-100/25',
-    ],
+    red: ['bg-nord-red-300', 'hover:bg-nord-red-100', 'focus:bg-nord-red-100'],
+    green: ['bg-nord-green-300', 'hover:bg-nord-green-100', 'focus:bg-nord-green-100'],
+    blue: ['bg-nord-blue-300', 'hover:bg-nord-blue-100', 'focus:bg-nord-blue-100'],
+    orange: ['bg-nord-orange-300', 'hover:bg-nord-orange-100', 'focus:bg-nord-orange-100'],
+    mauve: ['bg-nord-mauve-300', 'hover:bg-nord-mauve-100', 'focus:bg-nord-mauve-100'],
   }
 
   const outlinedColorClasses = {
     red: [
+      'text-nord-red-300',
       'border-nord-red-300',
       'hover:border-nord-red-100',
-      'dark:border-nord-red-300',
-      'dark:hover:border-nord-red-100',
-      'text-nord-red-300',
       'hover:text-nord-red-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-red-100/25',
+      'focus:border-nord-red-100',
+      'focus:text-nord-red-100',
     ],
     green: [
+      'text-nord-green-300',
       'border-nord-green-300',
       'hover:border-nord-green-100',
-      'dark:border-nord-green-300',
-      'dark:hover:border-nord-green-100',
-      'text-nord-green-300',
       'hover:text-nord-green-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-green-100/25',
+      'focus:border-nord-green-100',
+      'focus:text-nord-green-100',
     ],
     blue: [
+      'text-nord-blue-300',
       'border-nord-blue-300',
       'hover:border-nord-blue-100',
-      'dark:border-nord-blue-300',
-      'dark:hover:border-nord-blue-100',
-      'text-nord-blue-300',
       'hover:text-nord-blue-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-blue-100/25',
+      'focus:border-nord-blue-100',
+      'focus:text-nord-blue-100',
     ],
     orange: [
+      'text-nord-orange-300',
       'border-nord-orange-300',
       'hover:border-nord-orange-100',
-      'dark:border-nord-orange-300',
-      'dark:hover:border-nord-orange-100',
-      'text-nord-orange-300',
       'hover:text-nord-orange-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-orange-100/25',
+      'focus:border-nord-orange-100',
+      'focus:text-nord-orange-100',
     ],
     mauve: [
+      'text-nord-mauve-300',
       'border-nord-mauve-300',
       'hover:border-nord-mauve-100',
-      'dark:border-nord-mauve-300',
-      'dark:hover:border-nord-mauve-100',
-      'text-nord-mauve-300',
       'hover:text-nord-mauve-100',
-      'dark:shadow-lg',
-      'dark:shadow-nord-mauve-100/25',
+      'focus:border-nord-mauve-100',
+      'focus:text-nord-mauve-100',
     ],
   }
 
@@ -268,37 +228,36 @@ const classButton = computed(() => {
 <template>
   <button
     :type="props.type"
-    class="flex items-center justify-center border p-2 transition-all duration-300 ease-in-out"
+    class="flex items-center justify-center border p-2 px-4 transition-all duration-100 ease-in-out"
     :class="[
       classButton,
       {
         rounded: props.rounded,
-        'opacity-50': props.processing || props.disabled,
-        'aspect-square': props.icon !== false && !props.text,
-        'dark:border-transparent': !props.outline,
+        'pointer-events-none opacity-50': props.processing || props.disabled,
+        'aspect-square': props.icon && !props.text,
         'bg-transparent': props.outline,
-        'pointer-events-none': props.disabled || props.processing,
         'text-white': !props.outline,
+        'border-transparent': !props.outline,
       },
     ]"
     :disabled="props.processing || props.disabled"
   >
     <span
-      v-if="props.icon !== false && !props.processing"
+      v-if="props.icon && !props.processing"
       :class="$sizeToClass(props.size)"
-      class="material-symbols-rounded"
+      class="material-symbols-rounded leadin-none"
       >{{ props.icon }}</span
     >
     <span
       v-if="props.processing"
       :class="$sizeToClass(props.size)"
-      class="material-symbols-rounded animate-spin"
+      class="material-symbols-rounded animate-spin leading-none"
       >refresh</span
     >
     <span
-      v-if="props.text !== false"
+      v-if="props.text"
       :class="$sizeToClass(props.size)"
-      class="font-medium"
+      class="font-medium leading-none"
       >{{ props.text }}</span
     >
   </button>

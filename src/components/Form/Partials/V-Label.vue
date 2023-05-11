@@ -114,37 +114,39 @@ const idHelper = computed(() => {
 </script>
 
 <template>
-  <label
-    :id="idLabel"
-    :for="props.id"
-    class="font-semibold leading-none text-nord-dark-300 dark:text-nord-light-300"
-    :class="[
-      $sizeToClass(props.size),
-      {
-        'mb-0.5': !props.compact,
-      },
-    ]"
-  >
-    {{ props.label }}
+  <div class="flex flex-col">
+    <label
+      :id="idLabel"
+      :for="props.id"
+      class="font-semibold leading-none text-nord-dark-300 dark:text-nord-light-300"
+      :class="[
+        $sizeToClass(props.size),
+        {
+          'mb-0.5': !props.compact,
+        },
+      ]"
+    >
+      {{ props.label }}
+
+      <span
+        v-if="props.required"
+        class="leading-none text-nord-red-300"
+        :class="$sizeToClass(props.size)"
+        >*</span
+      >
+    </label>
 
     <span
-      v-if="props.required"
-      class="leading-none text-nord-red-300"
-      :class="$sizeToClass(props.size)"
-      >*</span
+      v-if="props.helper"
+      :id="idHelper"
+      class="leading-none text-nord-dark-300/75 dark:text-nord-light-300/75"
+      :class="[
+        classHelperSize,
+        {
+          'mb-1': !props.compact,
+        },
+      ]"
+      >{{ props.helper }}</span
     >
-  </label>
-
-  <span
-    v-if="props.helper !== false"
-    :id="idHelper"
-    class="leading-none text-nord-dark-300/75 dark:text-nord-light-300/75"
-    :class="[
-      classHelperSize,
-      {
-        'mb-1': !props.compact,
-      },
-    ]"
-    >{{ props.helper }}</span
-  >
+  </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 
 /**
@@ -142,102 +142,49 @@ const props = defineProps({
     default: false,
   },
 })
-
-/**
- * The classes of the checkbox.
- *
- * @type {import('vue').ComputedRef<String>}
- */
-const classCheckbox = computed(() => {
-  let classes = []
-
-  const sizeClasses = {
-    xs: ['w-4', 'h-4'],
-    sm: ['w-5', 'h-5'],
-    base: ['w-6', 'h-6'],
-    lg: ['w-7', 'h-7'],
-    xl: ['w-8', 'h-8'],
-    '2xl': ['w-9', 'h-9'],
-  }
-
-  const colorClasses = {
-    red: [
-      'text-nord-red-300',
-      'checked:!border-nord-red-100',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-red-100/25',
-    ],
-    green: [
-      'text-nord-green-300',
-      'checked:!border-nord-green-100',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-green-100/25',
-    ],
-    blue: [
-      'text-nord-blue-300',
-      'checked:!border-nord-blue-100',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-blue-100/25',
-    ],
-    orange: [
-      'text-nord-orange-300',
-      'checked:!border-nord-orange-100',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-orange-100/25',
-    ],
-    mauve: [
-      'text-nord-mauve-300',
-      'checked:!border-nord-mauve-100',
-      'checked:dark:!border-transparent',
-      'checked:dark:shadow-lg',
-      'checked:dark:shadow-nord-mauve-100/25',
-    ],
-  }
-
-  classes.push(...sizeClasses[props.size])
-  classes.push(...colorClasses[props.color])
-
-  return classes.join(' ')
-})
 </script>
 
 <template>
   <div
-    class="flex items-center space-x-2"
-    :class="{ 'opacity-50': props.disabled }"
+    class="flex items-center"
+    :class="{ 'opacity-50': props.disabled, 'space-x-2': props.label }"
   >
     <input
       :id="props.id"
       type="checkbox"
-      class="cursor-pointer border border-nord-light-100 bg-transparent transition-all duration-300 ease-in-out dark:border-nord-light-100/25"
+      class="flex cursor-pointer bg-nord-light-400 transition-all duration-100 ease-in-out dark:bg-nord-dark-100"
       :class="[
-        classCheckbox,
         {
           rounded: props.rounded,
+          'text-nord-red-300': props.color === 'red',
+          'text-nord-green-300': props.color === 'green',
+          'text-nord-blue-300': props.color === 'blue',
+          'text-nord-orange-300': props.color === 'orange',
+          'text-nord-mauve-300': props.color === 'mauve',
+          'h-4 w-4': props.size === 'xs',
+          'h-5 w-5': props.size === 'sm',
+          'h-6 w-6': props.size === 'base',
+          'h-7 w-7': props.size === 'lg',
+          'h-8 w-8': props.size === 'xl',
+          'h-9 w-9': props.size === '2xl',
         },
       ]"
       :disabled="props.disabled"
       :checked="props.modelValue || props.checked"
       :required="props.required"
-      :aria-labelledby="props.label !== false ? `${props.id}-label` : null"
-      :aria-describedby="props.helper !== false ? `${props.id}-helper` : null"
+      :aria-labelledby="props.label ? `${props.id}-label` : null"
+      :aria-describedby="props.helper ? `${props.id}-helper` : null"
       @change="$emit('update:modelValue', $event.target.checked)"
     />
 
-    <div class="flex flex-col">
-      <VLabel
-        v-if="props.label !== false"
-        :id="props.id"
-        compact
-        :label="props.label"
-        :required="props.required"
-        :helper="props.helper"
-        :size="props.size"
-      />
-    </div>
+    <VLabel
+      v-if="props.label"
+      :id="props.id"
+      compact
+      :label="props.label"
+      :required="props.required"
+      :helper="props.helper"
+      :size="props.size"
+    />
   </div>
 </template>
