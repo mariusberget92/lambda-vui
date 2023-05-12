@@ -342,10 +342,13 @@ const keyHandler = (event) => {
         :id="props.id"
         type="text"
         class="w-full cursor-pointer bg-transparent caret-transparent"
-        :class="[$sizeToClass(props.size), {
-          'px-2 py-2': props.icon,
-          'px-3 py-2': !props.icon,
-        }]"
+        :class="[
+          $sizeToClass(props.size),
+          {
+            'px-2 py-2': props.icon,
+            'px-3 py-2': !props.icon,
+          },
+        ]"
         :placeholder="props.placeholder"
         :value="props.modelValue"
         :required="props.required"

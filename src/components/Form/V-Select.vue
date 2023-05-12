@@ -444,7 +444,7 @@ const toggleDropdown = () => {
           'border-nord-mauve-300': props.color === 'mauve' && isDropdownOpen,
           'border-nord-orange-300': props.color === 'orange' && isDropdownOpen,
         },
-      ]"      
+      ]"
       tabindex="0"
       @keydown="keyHandler"
       @click="!props.disabled && toggleDropdown()"
@@ -460,10 +460,13 @@ const toggleDropdown = () => {
         :id="props.id"
         type="text"
         class="w-full cursor-pointer bg-transparent caret-transparent"
-        :class="[$sizeToClass(props.size), {            
-          'px-2 py-2': props.icon,
-          'px-3 py-2': !props.icon,
-        }]"
+        :class="[
+          $sizeToClass(props.size),
+          {
+            'px-2 py-2': props.icon,
+            'px-3 py-2': !props.icon,
+          },
+        ]"
         :placeholder="props.placeholder"
         :value="inputValue"
         :required="props.required"

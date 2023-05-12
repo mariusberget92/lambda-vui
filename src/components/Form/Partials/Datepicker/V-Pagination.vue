@@ -8,7 +8,7 @@ const emit = defineEmits([
   'updateYear',
   'previousMonth',
   'nextMonth',
-  'setToday'
+  'setToday',
 ])
 
 const props = defineProps({

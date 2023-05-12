@@ -225,6 +225,27 @@ const file = ref(false)
             required
           />
         </div>
+
+        <div class="felx flex-col space-y-4">
+          <VButton
+            size="sm"
+            text="Fire a random toast"
+            @click="
+              $toast({
+                type: ['success', 'error', 'info', 'warning'][
+                  Math.floor(
+                    Math.random() *
+                      ['success', 'error', 'info', 'warning'].length
+                  )
+                ],
+                message: 'It works!',
+                duration: [2000, 3000, 4000, 5000][
+                  Math.floor(Math.random() * [2000, 3000, 4000, 5000].length)
+                ],
+              })
+            "
+          />
+        </div>
       </div>
     </div>
   </div>

@@ -95,7 +95,6 @@ const minutes = computed(() => {
 
 <template>
   <div class="w-full flex-col">
-
     <div class="flex space-x-2">
       <VSelect
         v-model="selectedHourRef"
