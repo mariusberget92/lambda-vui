@@ -12,13 +12,27 @@ const props = defineProps({
    *
    * @type {String}
    * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @options xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl, 8xl, 9xl
    */
   size: {
     type: String,
     default: 'base',
     validator: (value) => {
-      return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(value)
+      return [
+        'xs',
+        'sm',
+        'base',
+        'lg',
+        'xl',
+        '2xl',
+        '3xl',
+        '4xl',
+        '5xl',
+        '6xl',
+        '7xl',
+        '8xl',
+        '9xl',
+      ].includes(value)
     },
   },
 

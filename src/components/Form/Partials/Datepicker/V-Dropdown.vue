@@ -474,13 +474,13 @@ const closeDropdown = () => {
           @previous-month="previousMonth"
           @update-month="selectedMonth = $event"
           @update-year="selectedYear = $event"
+          @set-today="setToday"
         />
 
         <VDatePicker
           :rounded="props.rounded"
           :selected-day="selectedDay"
           @select-day="selectDate($event)"
-          @set-today="setToday"
         />
       </div>
 
