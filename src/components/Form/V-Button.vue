@@ -3,7 +3,7 @@ import { defineProps, computed, defineEmits } from 'vue'
 
 /**
  * Define the component emits.
- * 
+ *
  * @type {Object}
  */
 const emit = defineEmits(['click'])
@@ -249,7 +249,7 @@ const classButton = computed(() => {
 
 /**
  * Blur the button on click.
- * 
+ *
  * @param {Event} event
  * @returns {void}
  */
@@ -274,7 +274,7 @@ const blurOnClick = (event) => {
       },
     ]"
     :disabled="props.processing || props.disabled"
-    @click="[emit('click', $event), blurOnClick($event)]"
+    @click=";[emit('click', $event), blurOnClick($event)]"
   >
     <span
       v-if="props.icon && !props.processing"
@@ -285,13 +285,13 @@ const blurOnClick = (event) => {
     <span
       v-if="props.processing"
       :class="$sizeToClass(props.size)"
-      class="material-symbols-rounded animate-spin leading-none pointer-events-none"
+      class="material-symbols-rounded pointer-events-none animate-spin leading-none"
       >refresh</span
     >
     <span
       v-if="props.text"
       :class="$sizeToClass(props.size)"
-      class="font-medium leading-none pointer-events-none"
+      class="pointer-events-none font-medium leading-none"
       >{{ props.text }}</span
     >
   </button>

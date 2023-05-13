@@ -66,6 +66,14 @@ module.exports = {
           500: "#d89c89"
         },
 
+        "nord-yellow": {
+          100: "#bdaa6a",
+          200: "#CEB575",
+          300: "#DDBF80",
+          400: "#E5C98A",
+          500: "#ebd393"
+        },
+
         "nord-mauve": {
           100: "#95758f",
           200: "#A4819D",

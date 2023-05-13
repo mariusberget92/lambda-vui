@@ -11,7 +11,7 @@ There is currently no documentation for this library, but it will be added in th
 <br />
 
 ## Components
-<span>✅</span> Implemented<span style="margin-right:20px"></span>
+<span>✅</span> Implemented<br>
 <span>❌</span> Not implemented
 
 

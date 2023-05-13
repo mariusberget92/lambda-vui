@@ -9,6 +9,7 @@ import VSelect from './components/Form/V-Select.vue'
 import VFile from './components/Form/V-File.vue'
 import VCheckbox from './components/Form/V-Checkbox.vue'
 import VDateTimePicker from './components/Form/V-DateTimePicker.vue'
+import VRating from './components/Form/V-Rating.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -26,6 +27,12 @@ const time = ref('')
 const datetime = ref('')
 // eslint-disable-next-line no-unused-vars
 const file = ref(false)
+// eslint-disable-next-line no-unused-vars
+const rating1 = ref(1)
+// eslint-disable-next-line no-unused-vars
+const rating2 = ref(3)
+// eslint-disable-next-line no-unused-vars
+const rating3 = ref(5)
 </script>
 
 <template>
@@ -261,6 +268,26 @@ const file = ref(false)
             @click="
               $toast({ type: 'warning', message: 'This is a warning toast' })
             "
+          />
+        </div>
+
+        <VHeading heading="h1" size="2xl">Rating</VHeading>
+
+        <div class="flex flex-col space-y-4">
+          <VRating v-model="rating1" :max="3" size="2xl" color="blue" />
+          <VRating
+            v-model="rating2"
+            icon="dark_mode"
+            :max="5"
+            size="2xl"
+            color="green"
+          />
+          <VRating
+            v-model="rating3"
+            icon="light_mode"
+            :max="10"
+            size="2xl"
+            color="yellow"
           />
         </div>
       </div>
