@@ -275,13 +275,12 @@ const rating3 = ref(5)
         <VHeading heading="h1" size="2xl">Rating</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VRating v-model="rating1" :max="3" size="2xl" color="blue" />
+          <VRating v-model="rating1" :max="3" color="blue" />
 
           <VRating
             v-model="rating2"
             icon="dark_mode"
             :max="5"
-            size="2xl"
             color="green"
           />
 
@@ -289,7 +288,6 @@ const rating3 = ref(5)
             v-model="rating3"
             icon="light_mode"
             :max="10"
-            size="2xl"
             color="yellow"
           />
         </div>

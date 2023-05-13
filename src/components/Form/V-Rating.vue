@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, ref } from 'vue'
+import { defineProps, defineEmits, computed, ref } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 
 /**
@@ -172,6 +172,23 @@ const updateRating = (event, rating) => {
  * @type {Number}
  */
 const hoverRating = ref(props.modelValue)
+
+/**
+ * Rating icon size.
+ * 
+ * @type {String}
+ * @return {String}
+ */
+const ratingIconSize = computed(() => {
+  return {
+    xs: 'lg',
+    sm: 'xl',
+    base: '2xl',
+    lg: '3xl',
+    xl: '4xl',
+    '2xl': '5xl',
+  }[props.size]
+})
 </script>
 
 <template>
@@ -194,10 +211,9 @@ const hoverRating = ref(props.modelValue)
       <span
         v-for="i in props.max"
         :key="i"
-        :size="props.size"
         class="material-symbols-rounded cursor-pointer transition-all duration-100 ease-in-out"
         :class="[
-          $sizeToClass(props.size),
+          $sizeToClass(ratingIconSize),
           {
             'text-nord-yellow-300 dark:text-nord-yellow-300':
               hoverRating >= i && props.color === 'yellow',
