@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, computed, ref } from 'vue'
 import VLabel from './Partials/V-Label.vue'
+import VInputResetButton from './Partials/V-InputResetButton.vue'
 
 /**
  * Define the component emits.
@@ -149,6 +150,28 @@ const props = defineProps({
     type: String,
     default: 'star',
   },
+
+  /**
+   * Whether the rating has a clear button.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  clearButton: {
+    type: Boolean,
+    default: true,
+  },
+
+  /**
+   * Whether the rating is rounded.
+   *
+   * @type {Boolean}
+   * @default true
+   */
+  rounded: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 /**
@@ -175,7 +198,7 @@ const hoverRating = ref(props.modelValue)
 
 /**
  * Rating icon size.
- * 
+ *
  * @type {String}
  * @return {String}
  */
@@ -189,6 +212,16 @@ const ratingIconSize = computed(() => {
     '2xl': '5xl',
   }[props.size]
 })
+
+/**
+ * Reset the rating.
+ *
+ * @return {void}
+ */
+const reset = () => {
+  hoverRating.value = 0
+  emit('update:modelValue', 0)
+}
 </script>
 
 <template>
@@ -207,35 +240,64 @@ const ratingIconSize = computed(() => {
       :size="props.size"
     />
 
-    <div class="flex">
-      <span
-        v-for="i in props.max"
-        :key="i"
-        class="material-symbols-rounded cursor-pointer transition-all duration-100 ease-in-out"
-        :class="[
-          $sizeToClass(ratingIconSize),
-          {
-            'text-nord-yellow-300 dark:text-nord-yellow-300':
-              hoverRating >= i && props.color === 'yellow',
-            'text-nord-red-300 dark:text-nord-red-300':
-              hoverRating >= i && props.color === 'red',
-            'text-nord-green-300 dark:text-nord-green-300':
-              hoverRating >= i && props.color === 'green',
-            'text-nord-blue-300 dark:text-nord-blue-300':
-              hoverRating >= i && props.color === 'blue',
-            'text-nord-orange-300 dark:text-nord-orange-300':
-              hoverRating >= i && props.color === 'orange',
-            'text-nord-mauve-300 dark:text-nord-mauve-300':
-              hoverRating >= i && props.color === 'mauve',
-            'text-nord-light-200 dark:text-nord-dark-100': hoverRating < i,
-          },
-        ]"
-        @mouseenter="hoverRating = i"
-        @mouseleave="hoverRating = props.modelValue"
-        @click="updateRating($event, i)"
+    <div
+      class="flex w-max border-l-0 bg-nord-light-400 px-3 py-1 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      :class="[
+        {
+          rounded: props.rounded,
+          '!border-l-4 border-l-nord-red-300': props.error,
+          'focus-within:border-nord-red-300': props.color === 'red',
+          'focus-within:border-nord-blue-300': props.color === 'blue',
+          'focus-within:border-nord-green-300': props.color === 'green',
+          'focus-within:border-nord-mauve-300': props.color === 'mauve',
+          'focus-within:border-nord-orange-300': props.color === 'orange',
+          'focus-within:border-nord-yellow-300': props.color === 'yellow',
+        },
+      ]"
+    >
+      <div
+        class="flex transform transition-all duration-100 ease-in-out"
+        :class="{
+          'pr-9': props.clearButton && props.modelValue > 0,
+        }"
       >
-        {{ props.icon }}
-      </span>
+        <span
+          v-for="i in props.max"
+          :key="i"
+          class="material-symbols-rounded cursor-pointer transition-all duration-100 ease-in-out"
+          :class="[
+            $sizeToClass(ratingIconSize),
+            {
+              'text-nord-yellow-300 dark:text-nord-yellow-300':
+                hoverRating >= i && props.color === 'yellow',
+              'text-nord-red-300 dark:text-nord-red-300':
+                hoverRating >= i && props.color === 'red',
+              'text-nord-green-300 dark:text-nord-green-300':
+                hoverRating >= i && props.color === 'green',
+              'text-nord-blue-300 dark:text-nord-blue-300':
+                hoverRating >= i && props.color === 'blue',
+              'text-nord-orange-300 dark:text-nord-orange-300':
+                hoverRating >= i && props.color === 'orange',
+              'text-nord-mauve-300 dark:text-nord-mauve-300':
+                hoverRating >= i && props.color === 'mauve',
+              'text-nord-light-100 dark:text-nord-dark-400': hoverRating < i,
+            },
+          ]"
+          @mouseenter="hoverRating = i"
+          @mouseleave="hoverRating = props.modelValue"
+          @click="updateRating($event, i)"
+        >
+          {{ props.icon }}
+        </span>
+      </div>
+
+      <template v-if="props.clearButton">
+        <VInputResetButton
+          :size="props.size"
+          :model-value="props.modelValue"
+          @reset="reset"
+        />
+      </template>
     </div>
   </div>
 </template>

@@ -277,12 +277,7 @@ const rating3 = ref(5)
         <div class="flex flex-col space-y-4 pb-10">
           <VRating v-model="rating1" :max="3" color="blue" />
 
-          <VRating
-            v-model="rating2"
-            icon="dark_mode"
-            :max="5"
-            color="green"
-          />
+          <VRating v-model="rating2" icon="dark_mode" :max="5" color="green" />
 
           <VRating
             v-model="rating3"

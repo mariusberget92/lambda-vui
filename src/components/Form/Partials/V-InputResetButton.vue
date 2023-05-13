@@ -44,7 +44,11 @@ const props = defineProps({
 <template>
   <div class="relative flex items-center">
     <span
-      v-if="props.modelValue.length > 0"
+      v-if="
+        props.modelValue.length > 0 ||
+        props.modelValue === true ||
+        props.modelValue > 0
+      "
       class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-100 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
       :class="[
         $sizeToClass(props.size),
