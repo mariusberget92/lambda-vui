@@ -39,11 +39,11 @@ const rating3 = ref(5)
   <VDarkModeToggle />
 
   <div id="app" class="flex p-10">
-    <div class="flex space-x-4">
+    <div class="flex space-x-8">
       <div class="flex w-[300px] flex-col space-y-4">
         <VHeading heading="h1" size="2xl">Input</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VInput
             v-model="string"
             placeholder="Placeholder"
@@ -63,7 +63,7 @@ const rating3 = ref(5)
 
         <VHeading heading="h1" size="2xl">Textarea</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VTextarea
             v-model="text"
             placeholder="Placeholder"
@@ -81,7 +81,7 @@ const rating3 = ref(5)
 
         <VHeading heading="h1" size="2xl">File input</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VFile v-model="file" placeholder="Placeholder" size="sm" required />
 
           <VFile
@@ -94,7 +94,7 @@ const rating3 = ref(5)
 
         <VHeading heading="h1" size="2xl">Checkbox</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex space-x-4 pb-10">
           <VCheckbox
             v-model="boolean"
             size="sm"
@@ -105,7 +105,7 @@ const rating3 = ref(5)
 
           <VCheckbox
             v-model="boolean"
-            size="base"
+            size="sm"
             required
             label="Checkbox"
             helper="Helper text"
@@ -115,29 +115,9 @@ const rating3 = ref(5)
       </div>
 
       <div class="flex w-[300px] flex-col space-y-4">
-        <VHeading heading="h1" size="2xl">Buttons</VHeading>
-
-        <div class="flex flex-col space-y-4">
-          <div class="flex space-x-2">
-            <VButton text="Save" size="sm" color="blue" />
-            <VButton text="Save" icon="save" size="sm" color="blue" />
-            <VButton size="sm" color="blue" icon="save" />
-            <VButton size="sm" color="blue" icon="save" disabled />
-            <VButton size="sm" color="blue" icon="save" processing />
-          </div>
-
-          <div class="flex space-x-2">
-            <VButton text="Save" size="sm" color="blue" outline />
-            <VButton text="Save" icon="save" size="sm" color="blue" outline />
-            <VButton size="sm" color="blue" icon="save" outline />
-            <VButton size="sm" color="blue" icon="save" disabled outline />
-            <VButton size="sm" color="blue" icon="save" processing outline />
-          </div>
-        </div>
-
         <VHeading heading="h1" size="2xl">Select</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VSelect
             v-model="string"
             placeholder="Placeholder"
@@ -171,7 +151,7 @@ const rating3 = ref(5)
 
         <VHeading heading="h1" size="2xl">Select (multiple)</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VSelect
             v-model="array"
             placeholder="Placeholder"
@@ -203,12 +183,10 @@ const rating3 = ref(5)
             required
           />
         </div>
-      </div>
 
-      <div class="flex w-[300px] flex-col space-y-4">
         <VHeading heading="h1" size="2xl">DateTimePicker</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VDateTimePicker
             v-model="date"
             placeholder="Placeholder"
@@ -233,10 +211,32 @@ const rating3 = ref(5)
             required
           />
         </div>
+      </div>
+
+      <div class="flex w-[300px] flex-col space-y-4">
+        <VHeading heading="h1" size="2xl">Buttons</VHeading>
+
+        <div class="flex flex-col space-y-4 pb-10">
+          <div class="flex space-x-2">
+            <VButton text="Save" size="sm" color="blue" />
+            <VButton text="Save" icon="save" size="sm" color="blue" />
+            <VButton size="sm" color="blue" icon="save" />
+            <VButton size="sm" color="blue" icon="save" disabled />
+            <VButton size="sm" color="blue" icon="save" processing />
+          </div>
+
+          <div class="flex space-x-2">
+            <VButton text="Save" size="sm" color="blue" outline />
+            <VButton text="Save" icon="save" size="sm" color="blue" outline />
+            <VButton size="sm" color="blue" icon="save" outline />
+            <VButton size="sm" color="blue" icon="save" disabled outline />
+            <VButton size="sm" color="blue" icon="save" processing outline />
+          </div>
+        </div>
 
         <VHeading heading="h1" size="2xl">Toast</VHeading>
 
-        <div class="flex space-x-2">
+        <div class="flex space-x-2 pb-10">
           <VButton
             size="sm"
             color="green"
@@ -274,8 +274,9 @@ const rating3 = ref(5)
 
         <VHeading heading="h1" size="2xl">Rating</VHeading>
 
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4 pb-10">
           <VRating v-model="rating1" :max="3" size="2xl" color="blue" />
+
           <VRating
             v-model="rating2"
             icon="dark_mode"
@@ -283,6 +284,7 @@ const rating3 = ref(5)
             size="2xl"
             color="green"
           />
+
           <VRating
             v-model="rating3"
             icon="light_mode"

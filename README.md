@@ -29,7 +29,7 @@ There is currently no documentation for this library, but it will be added in th
 <span>❌</span> Range component<br>
 <span>❌</span> Color component<br>
 <span>❌</span> Tags component<br>
-<span>❌</span> Rating component<br>
+<span>✅</span> Rating component<br>
 
 ## Typography components
 <span>✅</span> Heading component<br>

@@ -195,7 +195,7 @@ const hoverRating = ref(props.modelValue)
         v-for="i in props.max"
         :key="i"
         :size="props.size"
-        class="material-symbols-rounded cursor-pointer transition-colors duration-100"
+        class="material-symbols-rounded cursor-pointer transition-all duration-100 ease-in-out"
         :class="[
           $sizeToClass(props.size),
           {
@@ -211,7 +211,7 @@ const hoverRating = ref(props.modelValue)
               hoverRating >= i && props.color === 'orange',
             'text-nord-mauve-300 dark:text-nord-mauve-300':
               hoverRating >= i && props.color === 'mauve',
-            'text-nord-light-400 dark:text-nord-dark-100': hoverRating < i,
+            'text-nord-light-200 dark:text-nord-dark-100': hoverRating < i,
           },
         ]"
         @mouseenter="hoverRating = i"
