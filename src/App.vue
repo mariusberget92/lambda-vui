@@ -78,7 +78,7 @@ const file = ref(false)
           <VFile v-model="file" placeholder="Placeholder" size="sm" required />
 
           <VFile
-            v-model="text"
+            v-model="file"
             placeholder="Placeholder"
             size="base"
             required
