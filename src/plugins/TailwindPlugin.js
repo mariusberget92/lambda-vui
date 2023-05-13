@@ -1,6 +1,5 @@
 export default {
   install: (app) => {
-    // To use for text
     app.config.globalProperties.$sizeToClass = (size) => {
       const sizes = {
         xs: ['text-xs'],

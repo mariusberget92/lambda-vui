@@ -229,5 +229,4 @@ textarea::-webkit-resizer {
 .dark textarea::-webkit-resizer { 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(92,101,120)"/></svg>');
 }
-
 </style>
