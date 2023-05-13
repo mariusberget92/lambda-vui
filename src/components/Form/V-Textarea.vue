@@ -222,42 +222,12 @@ const props = defineProps({
 </template>
 
 <style scoped>
-.dark .rounded > textarea::-webkit-resizer { 
-  background-color: transparent;
-  box-sizing:border-box;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid #5c6578;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #5c6578;
-  border-radius: 0 0 5px 0;
-}
-.rounded > textarea::-webkit-resizer { 
-  background-color: transparent;
-  box-sizing:border-box;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid #c4cad4;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #c4cad4;
-  border-radius: 0 0 5px 0;
+textarea::-webkit-resizer { 
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(196,202,212)"/></svg>');
 }
 
-.dark textarea::-webkit-resizer {
-  background-color: transparent;
-  box-sizing:border-box;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid #5c6578;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #5c6578;
-  border-radius: 0 0 0 0;
+.dark textarea::-webkit-resizer { 
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(92,101,120)"/></svg>');
 }
 
-textarea::-webkit-resizer {
-  background-color: transparent;
-  box-sizing:border-box;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid #c4cad4;
-  border-left: 2px solid transparent;
-  border-right: 2px solid #c4cad4;
-  border-radius: 0 0 0 0;
-}
 </style>
