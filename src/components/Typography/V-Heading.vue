@@ -64,36 +64,11 @@ const classColor = computed(() => {
   let classes = []
 
   const colorClasses = {
-    red: [
-      'text-nord-red-300',
-      'dark:text-nord-red-300',
-      'dark:text-shadow',
-      'dark:shadow-nord-red-100/25',
-    ],
-    green: [
-      'text-nord-green-300',
-      'dark:text-nord-green-300',
-      'dark:text-shadow',
-      'dark:shadow-nord-green-100/25',
-    ],
-    blue: [
-      'text-nord-blue-300',
-      'dark:text-nord-blue-300',
-      'dark:text-shadow',
-      'dark:shadow-nord-blue-100/25',
-    ],
-    orange: [
-      'text-nord-orange-300',
-      'dark:text-nord-orange-300',
-      'dark:text-shadow',
-      'dark:shadow-nord-orange-100/25',
-    ],
-    mauve: [
-      'text-nord-mauve-300',
-      'dark:text-nord-mauve-300',
-      'dark:text-shadow',
-      'dark:shadow-nord-mauve-100/25',
-    ],
+    red: ['text-nord-red-300', 'dark:text-nord-red-300'],
+    green: ['text-nord-green-300', 'dark:text-nord-green-300'],
+    blue: ['text-nord-blue-300', 'dark:text-nord-blue-300'],
+    orange: ['text-nord-orange-300', 'dark:text-nord-orange-300'],
+    mauve: ['text-nord-mauve-300', 'dark:text-nord-mauve-300'],
     default: ['text-nord-dark-300', 'dark:text-nord-light-300'],
   }
 

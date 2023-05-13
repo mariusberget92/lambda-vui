@@ -27,7 +27,7 @@ export default {
     toastContainer.className =
       'fixed flex flex-col space-y-2 ' + position[mergedOptions.position]
     document.body.appendChild(toastContainer)
-  
+
     // Now we need a $toast method
     // The method takes inn a message and a type and a optional duration.
     app.config.globalProperties.$toast = (data) => {

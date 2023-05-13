@@ -175,34 +175,25 @@ const classButton = computed(() => {
   }
 
   const colorClasses = {
-    red: [
-      'bg-nord-red-300',
-      'border-nord-red-100',
-      'dark:shadow-xl dark:shadow-nord-red-100/25',
-      'hover:bg-nord-red-100',
-    ],
+    red: ['bg-nord-red-300', 'border-nord-red-100', 'hover:bg-nord-red-100'],
     green: [
       'bg-nord-green-300',
       'border-nord-green-100',
-      'dark:shadow-xl dark:shadow-nord-green-100/25',
       'hover:bg-nord-green-100',
     ],
     blue: [
       'bg-nord-blue-300',
       'border-nord-blue-100',
-      'dark:shadow-xl dark:shadow-nord-blue-100/25',
       'hover:bg-nord-blue-100',
     ],
     orange: [
       'bg-nord-orange-300',
       'border-nord-orange-100',
-      'dark:shadow-xl dark:shadow-nord-orange-100/25',
       'hover:bg-nord-orange-100',
     ],
     mauve: [
       'bg-nord-mauve-300',
       'border-nord-mauve-100',
-      'dark:shadow-xl dark:shadow-nord-mauve-100/25',
       'hover:bg-nord-mauve-100',
     ],
   }
@@ -229,8 +220,6 @@ const classLink = computed(() => {
       'dark:text-nord-red-300',
       'dark:hover:text-nord-red-100',
       'dark:focus:text-nord-red-100',
-      'dark:text-shadow',
-      'dark:shadow-nord-red-100/25',
     ],
     green: [
       'text-nord-green-300',
@@ -239,8 +228,6 @@ const classLink = computed(() => {
       'dark:text-nord-green-300',
       'dark:hover:text-nord-green-100',
       'dark:focus:text-nord-green-100',
-      'dark:text-shadow',
-      'dark:shadow-nord-green-100/25',
     ],
     blue: [
       'text-nord-blue-300',
@@ -249,8 +236,6 @@ const classLink = computed(() => {
       'dark:text-nord-blue-300',
       'dark:hover:text-nord-blue-100',
       'dark:focus:text-nord-blue-100',
-      'dark:text-shadow',
-      'dark:shadow-nord-blue-100/25',
     ],
     orange: [
       'text-nord-orange-300',
@@ -259,8 +244,6 @@ const classLink = computed(() => {
       'dark:text-nord-orange-300',
       'dark:hover:text-nord-orange-100',
       'dark:focus:text-nord-orange-100',
-      'dark:text-shadow',
-      'dark:shadow-nord-orange-100/25',
     ],
     mauve: [
       'text-nord-mauve-300',
@@ -269,8 +252,6 @@ const classLink = computed(() => {
       'dark:text-nord-mauve-300',
       'dark:hover:text-nord-mauve-100',
       'dark:focus:text-nord-mauve-100',
-      'dark:text-shadow',
-      'dark:shadow-nord-mauve-100/25',
     ],
     default: [
       'text-nord-dark-300',
@@ -320,7 +301,7 @@ const getButtonClasses = () => {
       $sizeToClass(props.size),
       {
         'aspect-square h-full justify-center':
-          props.button && props.icon !== false && !props.text,
+          props.button && props.icon && !props.text,
         'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
           props.button,
         'cursor-pointer transition-colors': !props.button,
@@ -329,17 +310,15 @@ const getButtonClasses = () => {
   >
     <div
       class="flex items-center"
-      :class="{ 'space-x-1': props.icon !== false && props.text !== false }"
+      :class="{ 'space-x-1': props.icon && props.text }"
     >
       <span
-        v-if="props.icon !== false"
+        v-if="props.icon"
         class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
         :class="$sizeToClass(props.size)"
         >{{ props.icon }}</span
       >
-      <span v-if="props.text !== false" class="items-center">{{
-        props.text
-      }}</span>
+      <span v-if="props.text" class="items-center">{{ props.text }}</span>
     </div>
   </component>
 </template>

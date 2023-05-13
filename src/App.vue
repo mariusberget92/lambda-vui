@@ -226,23 +226,40 @@ const file = ref(false)
           />
         </div>
 
-        <div class="felx flex-col space-y-4">
+        <VHeading heading="h1" size="2xl">Toast</VHeading>
+
+        <div class="flex space-x-2">
           <VButton
             size="sm"
-            text="Fire a random toast"
+            color="green"
+            icon="check_circle"
             @click="
-              $toast({
-                type: ['success', 'error', 'info', 'warning'][
-                  Math.floor(
-                    Math.random() *
-                      ['success', 'error', 'info', 'warning'].length
-                  )
-                ],
-                message: 'It works!',
-                duration: [2000, 3000, 4000, 5000][
-                  Math.floor(Math.random() * [2000, 3000, 4000, 5000].length)
-                ],
-              })
+              $toast({ type: 'success', message: 'This is a success toast' })
+            "
+          />
+
+          <VButton
+            size="sm"
+            color="red"
+            icon="error"
+            @click="
+              $toast({ type: 'error', message: 'This is an error toast' })
+            "
+          />
+
+          <VButton
+            size="sm"
+            color="blue"
+            icon="info"
+            @click="$toast({ type: 'info', message: 'This is an info toast' })"
+          />
+
+          <VButton
+            size="sm"
+            color="orange"
+            icon="warning"
+            @click="
+              $toast({ type: 'warning', message: 'This is a warning toast' })
             "
           />
         </div>

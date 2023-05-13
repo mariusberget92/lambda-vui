@@ -168,22 +168,10 @@ const classButton = computed(() => {
 
   const colorClasses = {
     red: ['bg-nord-red-300', 'hover:bg-nord-red-100'],
-    green: [
-      'bg-nord-green-300',
-      'hover:bg-nord-green-100',
-    ],
-    blue: [
-      'bg-nord-blue-300',
-      'hover:bg-nord-blue-100',
-    ],
-    orange: [
-      'bg-nord-orange-300',
-      'hover:bg-nord-orange-100',
-    ],
-    mauve: [
-      'bg-nord-mauve-300',
-      'hover:bg-nord-mauve-100',
-    ],
+    green: ['bg-nord-green-300', 'hover:bg-nord-green-100'],
+    blue: ['bg-nord-blue-300', 'hover:bg-nord-blue-100'],
+    orange: ['bg-nord-orange-300', 'hover:bg-nord-orange-100'],
+    mauve: ['bg-nord-mauve-300', 'hover:bg-nord-mauve-100'],
   }
 
   const outlinedColorClasses = {
