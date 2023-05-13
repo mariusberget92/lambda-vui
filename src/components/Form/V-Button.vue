@@ -1,5 +1,12 @@
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineEmits } from 'vue'
+
+/**
+ * Define the component emits.
+ * 
+ * @type {Object}
+ */
+const emit = defineEmits(['click'])
 
 /**
  * Component props.
@@ -167,11 +174,27 @@ const classButton = computed(() => {
   }
 
   const colorClasses = {
-    red: ['bg-nord-red-300', 'hover:bg-nord-red-100'],
-    green: ['bg-nord-green-300', 'hover:bg-nord-green-100'],
-    blue: ['bg-nord-blue-300', 'hover:bg-nord-blue-100'],
-    orange: ['bg-nord-orange-300', 'hover:bg-nord-orange-100'],
-    mauve: ['bg-nord-mauve-300', 'hover:bg-nord-mauve-100'],
+    red: ['bg-nord-red-300', 'hover:bg-nord-red-100', 'focus:bg-nord-red-100'],
+    green: [
+      'bg-nord-green-300',
+      'hover:bg-nord-green-100',
+      'focus:bg-nord-green-100',
+    ],
+    blue: [
+      'bg-nord-blue-300',
+      'hover:bg-nord-blue-100',
+      'focus:bg-nord-blue-100',
+    ],
+    orange: [
+      'bg-nord-orange-300',
+      'hover:bg-nord-orange-100',
+      'focus:bg-nord-orange-100',
+    ],
+    mauve: [
+      'bg-nord-mauve-300',
+      'hover:bg-nord-mauve-100',
+      'focus:bg-nord-mauve-100',
+    ],
   }
 
   const outlinedColorClasses = {
@@ -180,30 +203,40 @@ const classButton = computed(() => {
       'border-nord-red-300',
       'hover:border-nord-red-100',
       'hover:text-nord-red-100',
+      'focus:border-nord-red-100',
+      'focus:text-nord-red-100',
     ],
     green: [
       'text-nord-green-300',
       'border-nord-green-300',
       'hover:border-nord-green-100',
       'hover:text-nord-green-100',
+      'focus:border-nord-green-100',
+      'focus:text-nord-green-100',
     ],
     blue: [
       'text-nord-blue-300',
       'border-nord-blue-300',
       'hover:border-nord-blue-100',
       'hover:text-nord-blue-100',
+      'focus:border-nord-blue-100',
+      'focus:text-nord-blue-100',
     ],
     orange: [
       'text-nord-orange-300',
       'border-nord-orange-300',
       'hover:border-nord-orange-100',
       'hover:text-nord-orange-100',
+      'focus:border-nord-orange-100',
+      'focus:text-nord-orange-100',
     ],
     mauve: [
       'text-nord-mauve-300',
       'border-nord-mauve-300',
       'hover:border-nord-mauve-100',
       'hover:text-nord-mauve-100',
+      'focus:border-nord-mauve-100',
+      'focus:text-nord-mauve-100',
     ],
   }
 
@@ -213,6 +246,16 @@ const classButton = computed(() => {
 
   return classes.join(' ')
 })
+
+/**
+ * Blur the button on click.
+ * 
+ * @param {Event} event
+ * @returns {void}
+ */
+const blurOnClick = (event) => {
+  event.target.blur()
+}
 </script>
 
 <template>
@@ -231,23 +274,24 @@ const classButton = computed(() => {
       },
     ]"
     :disabled="props.processing || props.disabled"
+    @click="[emit('click'), blurOnClick($event)]"
   >
     <span
       v-if="props.icon && !props.processing"
       :class="$sizeToClass(props.size)"
-      class="material-symbols-rounded leadin-none"
+      class="material-symbols-rounded leadin-none pointer-events-none"
       >{{ props.icon }}</span
     >
     <span
       v-if="props.processing"
       :class="$sizeToClass(props.size)"
-      class="material-symbols-rounded animate-spin leading-none"
+      class="material-symbols-rounded animate-spin leading-none pointer-events-none"
       >refresh</span
     >
     <span
       v-if="props.text"
       :class="$sizeToClass(props.size)"
-      class="font-medium leading-none"
+      class="font-medium leading-none pointer-events-none"
       >{{ props.text }}</span
     >
   </button>
