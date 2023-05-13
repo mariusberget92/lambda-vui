@@ -199,7 +199,7 @@ const props = defineProps({
     >
       <textarea
         :id="props.id"
-        class="h-full w-full bg-transparent px-3 py-2"
+        class="w-full bg-transparent px-3 py-2"
         :class="[
           $sizeToClass(props.size),
           {
@@ -222,10 +222,19 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.rounded textarea::-webkit-resizer { 
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(196,202,212)"/></svg>');
+  border-radius:5px;
+}
+
 textarea::-webkit-resizer { 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(196,202,212)"/></svg>');
 }
 
+.dark .rounded textarea::-webkit-resizer { 
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(92,101,120)"/></svg>');
+  border-radius:5px;
+}
 .dark textarea::-webkit-resizer { 
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><circle cx="16" cy="16" r="7" fill="rgb(92,101,120)"/></svg>');
 }
