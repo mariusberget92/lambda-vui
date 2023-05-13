@@ -156,6 +156,7 @@ const rating3 = ref(5)
             v-model="string"
             search
             placeholder="Placeholder"
+            color="green"
             size="sm"
             :options="[
               'Example 1',

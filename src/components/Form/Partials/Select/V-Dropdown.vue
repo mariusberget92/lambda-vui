@@ -131,6 +131,21 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * The color of the select.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+    },
+  },
 })
 
 /**
@@ -222,6 +237,7 @@ const checkboxSize = computed(() => {
             v-if="props.search"
             :size="props.size"
             :rounded="props.rounded"
+            :color="props.color"
             @on-search="emit('onSearch', $event)"
           />
         </div>
@@ -274,6 +290,7 @@ const checkboxSize = computed(() => {
               :checked="isSelected(option)"
               class="!space-x-0 pl-2"
               :rounded="props.rounded"
+              :color="props.color"
               :size="checkboxSize"
               @input="emit('select', option)"
             />

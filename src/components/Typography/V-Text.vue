@@ -27,15 +27,21 @@ const props = defineProps({
    *
    * @type {String}
    * @default default
-   * @options red, green, blue, orange, mauve, default
+   * @options red, green, blue, orange, mauve, yellow, default
    */
   color: {
     type: String,
     default: 'default',
     validator: (value) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve', 'default'].includes(
-        value
-      )
+      return [
+        'red',
+        'green',
+        'blue',
+        'orange',
+        'mauve',
+        'yellow',
+        'default',
+      ].includes(value)
     },
   },
 })
@@ -54,6 +60,7 @@ const classColor = computed(() => {
     blue: ['text-nord-blue-300', 'dark:text-nord-blue-300'],
     orange: ['text-nord-orange-300', 'dark:text-nord-orange-300'],
     mauve: ['text-nord-mauve-300', 'dark:text-nord-mauve-300'],
+    yellow: ['text-nord-yellow-300', 'dark:text-nord-yellow-300'],
     default: ['text-nord-dark-300', 'dark:text-nord-light-300'],
   }
 

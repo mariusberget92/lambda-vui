@@ -17,13 +17,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, mauve
+   * @options red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 

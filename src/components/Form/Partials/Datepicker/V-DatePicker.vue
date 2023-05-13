@@ -19,13 +19,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, mauve
+   * @options red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -139,6 +139,7 @@ const classSelectedColor = computed(() => {
     blue: ['bg-nord-blue-300', 'border-nord-blue-100'],
     orange: ['bg-nord-orange-300', 'border-nord-orange-100'],
     mauve: ['bg-nord-mauve-300', 'border-nord-mauve-100'],
+    yellow: ['bg-nord-yellow-300', 'border-nord-yellow-100'],
   }
   return colorClasses[props.color].join(' ')
 })
@@ -156,6 +157,7 @@ const classNormalColor = computed(() => {
     blue: ['hover:bg-nord-blue-300/50'],
     orange: ['hover:bg-nord-orange-300/50'],
     mauve: ['hover:bg-nord-mauve-300/50'],
+    yellow: ['hover:bg-nord-yellow-300/50'],
   }
 
   return colorClasses[props.color].join(' ')

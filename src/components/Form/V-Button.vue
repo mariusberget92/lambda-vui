@@ -58,13 +58,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, mauve
+   * @options red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -195,6 +195,11 @@ const classButton = computed(() => {
       'hover:bg-nord-mauve-100',
       'focus:bg-nord-mauve-100',
     ],
+    yellow: [
+      'bg-nord-yellow-300',
+      'hover:bg-nord-yellow-100',
+      'focus:bg-nord-yellow-100',
+    ],
   }
 
   const outlinedColorClasses = {
@@ -237,6 +242,14 @@ const classButton = computed(() => {
       'hover:text-nord-mauve-100',
       'focus:border-nord-mauve-100',
       'focus:text-nord-mauve-100',
+    ],
+    yellow: [
+      'text-nord-yellow-300',
+      'border-nord-yellow-300',
+      'hover:border-nord-yellow-100',
+      'hover:text-nord-yellow-100',
+      'focus:border-nord-yellow-100',
+      'focus:text-nord-yellow-100',
     ],
   }
 

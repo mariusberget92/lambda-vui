@@ -197,7 +197,7 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -325,6 +325,7 @@ const keyHandler = (event) => {
           'border-nord-green-300': props.color === 'green' && isDropdownOpen,
           'border-nord-mauve-300': props.color === 'mauve' && isDropdownOpen,
           'border-nord-orange-300': props.color === 'orange' && isDropdownOpen,
+          'border-nord-yellow-300': props.color === 'yellow' && isDropdownOpen,
         },
       ]"
       tabindex="0"

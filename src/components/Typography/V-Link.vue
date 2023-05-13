@@ -82,13 +82,15 @@ const props = defineProps({
    *
    * @type {String}
    * @default 'blue'
-   * @options ['blue', 'red', 'green', 'orange', 'mauve', 'default']
+   * @options ['blue', 'red', 'green', 'orange', 'yellow', 'mauve', 'default']
    */
   color: {
     type: String,
     default: 'blue',
     validator: (value) =>
-      ['blue', 'red', 'green', 'orange', 'mauve', 'default'].includes(value),
+      ['blue', 'red', 'green', 'orange', 'yellow', 'mauve', 'default'].includes(
+        value
+      ),
   },
 
   /**
@@ -196,6 +198,11 @@ const classButton = computed(() => {
       'border-nord-mauve-100',
       'hover:bg-nord-mauve-100',
     ],
+    yellow: [
+      'bg-nord-yellow-300',
+      'border-nord-yellow-100',
+      'hover:bg-nord-yellow-100',
+    ],
   }
 
   classes.push(...colorClasses[props.color])
@@ -252,6 +259,14 @@ const classLink = computed(() => {
       'dark:text-nord-mauve-300',
       'dark:hover:text-nord-mauve-100',
       'dark:focus:text-nord-mauve-100',
+    ],
+    yellow: [
+      'text-nord-yellow-300',
+      'hover:text-nord-yellow-100',
+      'focus:text-nord-yellow-100',
+      'dark:text-nord-yellow-300',
+      'dark:hover:text-nord-yellow-100',
+      'dark:focus:text-nord-yellow-100',
     ],
     default: [
       'text-nord-dark-300',

@@ -40,6 +40,21 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+
+  /**
+   * The color of the select.
+   *
+   * @type {String}
+   * @default blue
+   * @options red, green, blue, orange, yellow, mauve
+   */
+  color: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
+    },
+  },
 })
 
 /**
@@ -56,6 +71,7 @@ const searchQuery = ref('')
     placeholder="Search for items"
     :size="props.size"
     icon="search"
+    :color="props.color"
     :rounded="props.rounded"
     @input="emit('onSearch', searchQuery)"
   />

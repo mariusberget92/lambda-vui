@@ -98,13 +98,13 @@ const props = defineProps({
    *
    * @type {String}
    * @default blue
-   * @options red, green, blue, orange, mauve
+   * @options red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -161,6 +161,7 @@ const props = defineProps({
           'text-nord-blue-300': props.color === 'blue',
           'text-nord-orange-300': props.color === 'orange',
           'text-nord-mauve-300': props.color === 'mauve',
+          'text-nord-yellow-300': props.color === 'yellow',
           'h-4 w-4': props.size === 'xs',
           'h-5 w-5': props.size === 'sm',
           'h-6 w-6': props.size === 'base',

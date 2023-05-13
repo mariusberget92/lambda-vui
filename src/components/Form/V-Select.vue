@@ -112,7 +112,7 @@ const props = defineProps({
   },
 
   /**
-   * The color of the datepicker buttons.
+   * The color of the select.
    *
    * @type {String}
    * @default blue
@@ -122,7 +122,7 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -443,6 +443,7 @@ const toggleDropdown = () => {
           'border-nord-green-300': props.color === 'green' && isDropdownOpen,
           'border-nord-mauve-300': props.color === 'mauve' && isDropdownOpen,
           'border-nord-orange-300': props.color === 'orange' && isDropdownOpen,
+          'border-nord-yellow-300': props.color === 'yellow' && isDropdownOpen,
         },
       ]"
       tabindex="0"
@@ -503,6 +504,7 @@ const toggleDropdown = () => {
       :rounded="props.rounded"
       :search="props.search"
       :show="isDropdownOpen"
+      :color="props.color"
       :multiple="props.multiple"
       @select=";[handleSelect($event), emit('select', $event)]"
       @toggle-all="handleToggleAll"

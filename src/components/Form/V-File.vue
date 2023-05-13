@@ -159,7 +159,7 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'mauve'].includes(val)
+      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
 
@@ -368,6 +368,7 @@ const getFileExtension = (fileName) => {
           'focus-within:border-nord-green-300': props.color === 'green',
           'focus-within:border-nord-mauve-300': props.color === 'mauve',
           'focus-within:border-nord-orange-300': props.color === 'orange',
+          'focus-within:border-nord-yellow-300': props.color === 'yellow',
         },
       ]"
       @click="!props.disabled && openLegacyFileSelect()"
