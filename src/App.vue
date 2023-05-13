@@ -69,6 +69,7 @@ const file = ref(false)
             placeholder="Placeholder"
             size="base"
             required
+            :rounded="false"
           />
         </div>
 

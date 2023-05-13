@@ -199,7 +199,7 @@ const props = defineProps({
     >
       <textarea
         :id="props.id"
-        class="w-full bg-transparent px-3 py-2"
+        class="h-full w-full bg-transparent px-3 py-2"
         :class="[
           $sizeToClass(props.size),
           {
@@ -222,9 +222,42 @@ const props = defineProps({
 </template>
 
 <style scoped>
-textarea:focus + div {
-  width: 10px; /* adjust the width of the triangle border */
-  height: 10px; /* adjust the height of the triangle border */
-  border-width: 0 2px 2px 0; /* adjust the thickness and direction of the triangle border */
+.dark .rounded > textarea::-webkit-resizer { 
+  background-color: transparent;
+  box-sizing:border-box;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid #5c6578;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #5c6578;
+  border-radius: 0 0 5px 0;
+}
+.rounded > textarea::-webkit-resizer { 
+  background-color: transparent;
+  box-sizing:border-box;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid #c4cad4;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #c4cad4;
+  border-radius: 0 0 5px 0;
+}
+
+.dark textarea::-webkit-resizer {
+  background-color: transparent;
+  box-sizing:border-box;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid #5c6578;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #5c6578;
+  border-radius: 0 0 0 0;
+}
+
+textarea::-webkit-resizer {
+  background-color: transparent;
+  box-sizing:border-box;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid #c4cad4;
+  border-left: 2px solid transparent;
+  border-right: 2px solid #c4cad4;
+  border-radius: 0 0 0 0;
 }
 </style>
