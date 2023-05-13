@@ -10,6 +10,9 @@ There is currently no documentation for this library, but it will be added in th
 <hr />
 <br />
 
+## Showcase GIF
+![Showcase GIF](https://github.com/mariusberget92/lambda-vui/blob/main/showcase.gif)
+
 ## Components
 <span>✅</span> Implemented<br>
 <span>❌</span> Not implemented
