@@ -8,7 +8,6 @@ It's intended to be used with [Laravel](https://github.com/laravel/laravel), [In
 
 There is currently no documentation for this library, but it will be added in the future.
 <hr />
-<br />
 
 ## Showcase GIF
 ![Showcase GIF](https://github.com/mariusberget92/lambda-vui/blob/main/showcase.gif)
