@@ -35,3 +35,6 @@ There is currently no documentation for this library, but it will be added in th
 <span>✅</span> Heading component<br>
 <span>✅</span> Text/paragraph component<br>
 <span>✅</span> Link component<br>
+
+## Bugs / Todo
+❌ Fix DateTimePicker component to be initialized with a empty value (currently it's initialized with the current date and time but can be resat to empty with the clear button)
