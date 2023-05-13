@@ -11,27 +11,27 @@ There is currently no documentation for this library, but it will be added in th
 <br />
 
 ## Components
-<span style="color:#A3BE8C!important">✔</span> Implemented<span style="margin-right:20px"></span>
-<span style="color:#BF616A!important">✖</span> Not implemented
+<span>✅</span> Implemented<span style="margin-right:20px"></span>
+<span>❌</span> Not implemented
 
 
 ## Form components
-<span style="color:#A3BE8C!important">✔</span> Input component<br>
-<span style="color:#A3BE8C!important">✔</span> Select component<br>
-<span style="color:#A3BE8C!important">✔</span> Textarea component<br>
-<span style="color:#A3BE8C!important">✔</span> Checkbox component<br>
-<span style="color:#A3BE8C!important">✔</span> File component<br>
-<span style="color:#A3BE8C!important">✔</span> Date & Time component<br>
-<span style="color:#A3BE8C!important">✔</span> Button component<br>
-<span style="color:#BF616A!important">✖</span> Dropzone upload component<br>
-<span style="color:#BF616A!important">✖</span> Radio component<br>
-<span style="color:#BF616A!important">✖</span> Switch component<br>
-<span style="color:#BF616A!important">✖</span> Range component<br>
-<span style="color:#BF616A!important">✖</span> Color component<br>
-<span style="color:#BF616A!important">✖</span> Tags component<br>
-<span style="color:#BF616A!important">✖</span> Rating component<br>
+<span>✅</span> Input component<br>
+<span>✅</span> Select component<br>
+<span>✅</span> Textarea component<br>
+<span>✅</span> Checkbox component<br>
+<span>✅</span> File component<br>
+<span>✅</span> Date & Time component<br>
+<span>✅</span> Button component<br>
+<span>❌</span> Dropzone upload component<br>
+<span>❌</span> Radio component<br>
+<span>❌</span> Switch component<br>
+<span>❌</span> Range component<br>
+<span>❌</span> Color component<br>
+<span>❌</span> Tags component<br>
+<span>❌</span> Rating component<br>
 
 ## Typography components
-<span style="color:#A3BE8C!important">✔</span> Heading component<br>
-<span style="color:#A3BE8C!important">✔</span> Text/paragraph component<br>
-<span style="color:#A3BE8C!important">✔</span> Link component<br>
+<span>✅</span> Heading component<br>
+<span>✅</span> Text/paragraph component<br>
+<span>✅</span> Link component<br>
