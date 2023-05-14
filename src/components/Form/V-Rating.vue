@@ -2,6 +2,7 @@
 import { defineProps, defineEmits, computed, ref } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VInputResetButton from './Partials/V-InputResetButton.vue'
+import VIcon from './Partials/V-Icon.vue'
 
 /**
  * Define the component emits.
@@ -152,17 +153,6 @@ const props = defineProps({
   },
 
   /**
-   * The icon of the rating.
-   *
-   * @type {String|Boolean}
-   * @default false
-   */
-   icon: {
-    type: [String, Boolean],
-    default: false,
-  },
-
-  /**
    * Whether the rating has a clear button.
    *
    * @type {Boolean}
@@ -182,6 +172,17 @@ const props = defineProps({
   rounded: {
     type: Boolean,
     default: true,
+  },
+
+  /**
+   * The icon of the rating input.
+   *
+   * @type {String|Boolean}
+   * @default false
+   */
+  icon: {
+    type: [String, Boolean],
+    default: false,
   },
 })
 
@@ -252,10 +253,11 @@ const reset = () => {
     />
 
     <div
-      class="flex w-max border-l-0 bg-nord-light-400 py-1 px-2 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      class="flex w-max border-l-0 bg-nord-light-400 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,
+          'pr-1': props.clearButton && props.modelValue > 0,
           '!border-l-4 border-l-nord-red-300': props.error,
           'focus-within:border-nord-red-300': props.color === 'red',
           'focus-within:border-nord-blue-300': props.color === 'blue',
@@ -267,16 +269,24 @@ const reset = () => {
       ]"
     >
       <div
-        class="flex transform transition-all duration-100 ease-in-out"
+        class="flex transform py-1 transition-all duration-100 ease-in-out"
         :class="{
-          'pr-9': props.clearButton && props.modelValue > 0,
+          '!pr-9': props.clearButton && props.modelValue > 0,
+          'px-2': !props.icon,
+          'pr-2': props.icon,
         }"
       >
+        <VIcon
+          v-if="props.icon"
+          :icon="props.icon"
+          :size="props.size"
+          class="pr-2"
+        />
 
         <span
           v-for="i in props.max"
           :key="i"
-          class="material-symbols-rounded cursor-pointer transition-all duration-100 ease-in-out"
+          class="material-symbols-rounded relative cursor-pointer transition-all duration-100 ease-in-out"
           :class="[
             $sizeToClass(ratingIconSize),
             {

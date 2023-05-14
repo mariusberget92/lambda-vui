@@ -127,7 +127,7 @@ onMounted(() => {
           :class="{
             'text-nord-green-300': props.type === 'success',
             'text-nord-red-300': props.type === 'error',
-            'text-nord-orange-300': props.type === 'warning',
+            'text-nord-yellow-300': props.type === 'warning',
             'text-nord-blue-300': props.type === 'info',
           }"
           >{{ icon }}</span
@@ -150,7 +150,7 @@ onMounted(() => {
       :class="{
         'bg-nord-green-300': props.type === 'success',
         'bg-nord-red-300': props.type === 'error',
-        'bg-nord-orange-300': props.type === 'warning',
+        'bg-nord-yellow-300': props.type === 'warning',
         'bg-nord-blue-300': props.type === 'info',
       }"
       :style="{

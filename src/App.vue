@@ -214,6 +214,15 @@ const rating3 = ref(5)
       </div>
 
       <div class="flex w-[300px] flex-col space-y-4">
+        <VHeading heading="h1" size="2xl">Rating</VHeading>
+
+        <div class="flex flex-col space-y-4 pb-10">
+          <VRating v-model="rating1" size="sm" />
+          <VRating v-model="rating1" size="sm" icon="group" />
+          <VRating v-model="rating1" size="base" />
+          <VRating v-model="rating1" size="base" icon="group" />
+        </div>
+
         <VHeading heading="h1" size="2xl">Buttons</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
@@ -264,26 +273,11 @@ const rating3 = ref(5)
 
           <VButton
             size="sm"
-            color="orange"
+            color="yellow"
             icon="warning"
             @click="
               $toast({ type: 'warning', message: 'This is a warning toast' })
             "
-          />
-        </div>
-
-        <VHeading heading="h1" size="2xl">Rating</VHeading>
-
-        <div class="flex flex-col space-y-4 pb-10">
-          <VRating v-model="rating1" :max="3" color="blue" />
-
-          <VRating v-model="rating2" rating-icon="dark_mode" :max="5" color="green" />
-
-          <VRating
-            v-model="rating3"
-            rating-icon="light_mode"
-            :max="10"
-            color="yellow"
           />
         </div>
       </div>
