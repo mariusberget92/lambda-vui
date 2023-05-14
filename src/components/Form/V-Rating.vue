@@ -216,12 +216,12 @@ const hoverRating = ref(props.modelValue)
  */
 const ratingIconSize = computed(() => {
   return {
-    xs: 'lg',
-    sm: 'xl',
-    base: '2xl',
-    lg: '3xl',
-    xl: '4xl',
-    '2xl': '5xl',
+    xs: 'base',
+    sm: 'lg',
+    base: 'xl',
+    lg: '2xl',
+    xl: '3xl',
+    '2xl': '4xl',
   }[props.size]
 })
 
@@ -272,7 +272,7 @@ const reset = () => {
         class="flex transform py-1 transition-all duration-100 ease-in-out"
         :class="{
           '!pr-9': props.clearButton && props.modelValue > 0,
-          'px-2': !props.icon,
+          'px-2.5': !props.icon,
           'pr-2': props.icon,
         }"
       >
@@ -302,7 +302,7 @@ const reset = () => {
                 hoverRating >= i && props.color === 'orange',
               'text-nord-mauve-300 dark:text-nord-mauve-300':
                 hoverRating >= i && props.color === 'mauve',
-              'text-nord-light-100 dark:text-nord-dark-400': hoverRating < i,
+              'text-nord-dark-300/60 dark:text-nord-light-300/60': hoverRating < i,
             },
           ]"
           @mouseenter="hoverRating = i"

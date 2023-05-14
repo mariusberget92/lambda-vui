@@ -218,9 +218,7 @@ const rating3 = ref(5)
 
         <div class="flex flex-col space-y-4 pb-10">
           <VRating v-model="rating1" size="sm" />
-          <VRating v-model="rating1" size="sm" icon="group" />
-          <VRating v-model="rating1" size="base" />
-          <VRating v-model="rating1" size="base" icon="group" />
+          <VRating v-model="rating2" size="sm" color="blue" rating-icon="dark_mode" />
         </div>
 
         <VHeading heading="h1" size="2xl">Buttons</VHeading>
