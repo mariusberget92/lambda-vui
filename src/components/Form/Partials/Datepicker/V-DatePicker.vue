@@ -175,7 +175,7 @@ const daysInMonth = computed(() => {
 </script>
 
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center px-1">
     <div
       class="grid grid-cols-7 grid-rows-1 content-center justify-items-center gap-x-4 gap-y-2 font-bold text-nord-dark-300 dark:text-nord-light-300"
       :class="[$sizeToClass(props.size)]"

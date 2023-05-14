@@ -146,9 +146,20 @@ const props = defineProps({
    * @type {String}
    * @default star
    */
-  icon: {
+  ratingIcon: {
     type: String,
     default: 'star',
+  },
+
+  /**
+   * The icon of the rating.
+   *
+   * @type {String|Boolean}
+   * @default false
+   */
+   icon: {
+    type: [String, Boolean],
+    default: false,
   },
 
   /**
@@ -241,7 +252,7 @@ const reset = () => {
     />
 
     <div
-      class="flex w-max border-l-0 bg-nord-light-400 px-3 py-1 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      class="flex w-max border-l-0 bg-nord-light-400 py-1 px-2 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,
@@ -261,6 +272,7 @@ const reset = () => {
           'pr-9': props.clearButton && props.modelValue > 0,
         }"
       >
+
         <span
           v-for="i in props.max"
           :key="i"
@@ -287,7 +299,7 @@ const reset = () => {
           @mouseleave="hoverRating = props.modelValue"
           @click="updateRating($event, i)"
         >
-          {{ props.icon }}
+          {{ props.ratingIcon }}
         </span>
       </div>
 
