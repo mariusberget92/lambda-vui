@@ -6,7 +6,7 @@ import VButton from './V-Button.vue'
 /**
  * Define the component emits.
  */
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'error'])
 
 /**
  * Component props.
@@ -231,6 +231,13 @@ const keyHandler = (event) => {
 const addTag = (tag) => {
   if (tagAlreadyExists(tag.trim())) {
     resetTagInput()
+    emit('error', 'Tag already exists')
+    return
+  }
+
+  if (props.max !== 0 && tags.value.length >= props.max) {
+    resetTagInput()
+    emit('error', 'Maximum amount of tags reached')
     return
   }
 
