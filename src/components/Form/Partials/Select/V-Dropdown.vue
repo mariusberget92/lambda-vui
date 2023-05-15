@@ -150,11 +150,11 @@ const props = defineProps({
   /**
    * The maximum number of options that can be selected.
    * If the value is 0, there is no limit.
-   * 
+   *
    * @type {Number}
    * @default 0
    */
-   max: {
+  max: {
     type: Number,
     default: 0,
   },
@@ -207,11 +207,11 @@ const allOptionsSelected = computed(() => {
 
 // Function to check if an option is disabled based on the max prop and the selectedOptions
 const isOptionDisabled = computed(() => {
-  const numSelected = props.selectedOptions.length;
+  const numSelected = props.selectedOptions.length
   return (option) => {
-    return numSelected >= props.max && !isSelected.value(option);
-  };
-});
+    return numSelected >= props.max && !isSelected.value(option)
+  }
+})
 
 /**
  * Get the checkbox size.

@@ -11,7 +11,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue', 'select', 'error'])
+const emit = defineEmits(['update:modelValue', 'select'])
 
 /**
  * Click outside handler.
@@ -253,7 +253,7 @@ const props = defineProps({
   /**
    * The maximum number of options that can be selected.
    * If the value is 0, there is no limit.
-   * 
+   *
    * @type {Number}
    * @default 0
    */
@@ -354,7 +354,6 @@ const handleSelect = (option) => {
   // If the select is multiple, add or remove the value from the modelValue
   // before emittind the whole array.
   if (props.multiple) {
-
     const modelValue = props.modelValue.includes(value)
       ? props.modelValue.filter((val) => val !== value)
       : [...props.modelValue, value]
