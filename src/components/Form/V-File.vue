@@ -309,7 +309,11 @@ const handleFileSelect = (event) => {
 
   // Display a warning if some files were filtered out
   if (filteredFiles.length !== files.length) {
-    emit('error', `Some files are not allowed and are filtered out. Allowed extensions are ${props.extensions.join(', ')}`
+    emit(
+      'error',
+      `Some files are not allowed and are filtered out. Allowed extensions are ${props.extensions.join(
+        ', '
+      )}`
     )
   }
 

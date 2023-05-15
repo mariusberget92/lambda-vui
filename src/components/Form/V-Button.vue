@@ -290,7 +290,7 @@ const blurOnClick = (event) => {
       classButton,
       {
         rounded: props.rounded,
-        'border-dashed border-2': props.outline && props.dashed,
+        'border-2 border-dashed': props.outline && props.dashed,
         'pointer-events-none opacity-50': props.processing || props.disabled,
         'aspect-square': props.icon && !props.text,
         'bg-transparent': props.outline,

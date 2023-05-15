@@ -232,7 +232,7 @@ const tags = ref([])
         <VHeading heading="h1" size="2xl">Tags</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VTags v-model="tags" size="sm" />
+          <VTags v-model="tags" size="sm" placeholder="Add tags" />
         </div>
 
         <VHeading heading="h1" size="2xl">Buttons</VHeading>

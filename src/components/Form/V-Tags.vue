@@ -1,12 +1,12 @@
 <script setup>
-import { defineProps, defineEmits} from 'vue'
+import { defineProps, defineEmits, ref, onMounted } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VButton from './V-Button.vue'
 
 /**
  * Define the component emits.
  */
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
 
 /**
  * Component props.
@@ -150,7 +150,125 @@ const props = defineProps({
       return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
+
+  /**
+   * The maximum amount of tags.
+   * 0 means no limit.
+   *
+   * @type {Number}
+   * @default 5
+   */
+  max: {
+    type: Number,
+    default: 5,
+  },
 })
+
+onMounted(() => {
+  tagInputRef.value.focus()
+})
+
+/**
+ * The tags model.
+ *
+ * @type {Array}
+ */
+const tags = ref(props.modelValue)
+
+/**
+ * The tag input ref.
+ *
+ * @type {Object}
+ */
+const tagInputRef = ref(null)
+
+/**
+ * Whether the new tag button should be shown.
+ *
+ * @type {Boolean}
+ */
+const showNewTagButton = ref(true)
+
+/**
+ * Toggle the new tag button.
+ *
+ * @return {void}
+ */
+const toggleTagButton = () => {
+  showNewTagButton.value = !showNewTagButton.value
+}
+
+/**
+ * Key handler.
+ *
+ * @param  {Event} event
+ * @return {void}
+ */
+const keyHandler = (event) => {
+  if (event.key === 'Enter' || event.key === 'Tab') {
+    event.preventDefault()
+    addTag(tagInputRef.value.innerHTML)
+  }
+
+  if (event.key === 'Escape') {
+    event.preventDefault()
+    resetTagInput()
+    toggleTagButton()
+  }
+
+  if (event.key === 'Backspace' && tagInputRef.value.innerHTML === '') {
+    tags.value.pop()
+    emit('update:modelValue', tags.value)
+  }
+}
+
+/**
+ * Add a new tag.
+ *
+ * @param  {String} tag
+ * @return {void}
+ */
+const addTag = (tag) => {
+  if (tagAlreadyExists(tag.trim())) {
+    resetTagInput()
+    return
+  }
+
+  tags.value.push(tag)
+  resetTagInput()
+  emit('update:modelValue', tags.value)
+}
+
+/**
+ * Remove a tag.
+ *
+ * @param  {String} tag
+ * @return {void}
+ */
+// eslint-disable-next-line no-unused-vars
+const removeTag = (tag) => {
+  tags.value = tags.value.filter((t) => t !== tag)
+  emit('update:modelValue', tags.value)
+}
+
+/**
+ * Whether a tag already exists.
+ *
+ * @param  {String} tag
+ * @return {Boolean}
+ */
+const tagAlreadyExists = (tag) => {
+  return tags.value.includes(tag)
+}
+
+/**
+ * Reset the tag input.
+ *
+ * @return {void}
+ */
+const resetTagInput = () => {
+  tagInputRef.value.innerHTML = ''
+}
 </script>
 
 <template>
@@ -164,16 +282,86 @@ const props = defineProps({
       :size="props.size"
     />
 
-    <div class="flex flex-wrap items-center">
-      <div v-if="props.modelValue.length > 0">
-        <div v-for="(value, index) in props.modelValue" :key="index">
-          {{ value }}
-        </div>
+    <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+      <div
+        v-for="(value, index) in props.modelValue"
+        :key="index"
+        class="flex items-center gap-x-2 border-l-4 bg-nord-light-400 px-2 py-2 text-nord-dark-300 dark:bg-nord-dark-100 dark:text-nord-light-300"
+        :class="[
+          $sizeToClass(props.size),
+          {
+            rounded: props.rounded,
+            'border-nord-red-300 dark:border-nord-red-300':
+              props.color === 'red',
+            'border-nord-green-300 dark:border-nord-green-300':
+              props.color === 'green',
+            'border-nord-blue-300 dark:border-nord-blue-300':
+              props.color === 'blue',
+            'border-nord-orange-300 dark:border-nord-orange-300':
+              props.color === 'orange',
+            'border-nord-yellow-300 dark:border-nord-yellow-300':
+              props.color === 'yellow',
+            'border-nord-mauve-300 dark:border-nord-mauve-300':
+              props.color === 'mauve',
+          },
+        ]"
+      >
+        {{ value }}
+
+        <span
+          class="material-symbols-rounded flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-100 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
+          :class="[
+            $sizeToClass(props.size),
+            {
+              'w-4': props.size === 'xs',
+              'w-5': props.size === 'sm',
+              'w-6': props.size === 'base',
+              'w-7': props.size === 'lg',
+              'w-8': props.size === 'xl',
+              'w-9': props.size === '2xl',
+            },
+          ]"
+          @click="removeTag(value)"
+        >
+          close
+        </span>
       </div>
 
-      
-      	<VButton :size="size" icon="add_circle" outline dashed />
-	
+      <span
+        ref="tagInputRef"
+        class="flex h-auto w-8 grow overflow-hidden border-l-4 bg-nord-light-400 px-2 py-2 text-nord-dark-300 outline-none dark:bg-nord-dark-100 dark:text-nord-light-300"
+        :class="[
+          $sizeToClass(props.size),
+          {
+            rounded: props.rounded,
+            'border-nord-red-300 dark:border-nord-red-300':
+              props.color === 'red',
+            'border-nord-green-300 dark:border-nord-green-300':
+              props.color === 'green',
+            'border-nord-blue-300 dark:border-nord-blue-300':
+              props.color === 'blue',
+            'border-nord-orange-300 dark:border-nord-orange-300':
+              props.color === 'orange',
+            'border-nord-yellow-300 dark:border-nord-yellow-300':
+              props.color === 'yellow',
+            'border-nord-mauve-300 dark:border-nord-mauve-300':
+              props.color === 'mauve',
+            hidden: showNewTagButton,
+          },
+        ]"
+        role="textbox"
+        contenteditable
+        @keydown="keyHandler"
+      ></span>
+
+      <VButton
+        v-if="showNewTagButton"
+        :size="size"
+        icon="add_circle"
+        :rounded="props.rounded"
+        :text="props.placeholder"
+        @click="toggleTagButton"
+      />
     </div>
   </div>
 </template>
