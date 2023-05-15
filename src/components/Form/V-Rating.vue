@@ -302,7 +302,8 @@ const reset = () => {
                 hoverRating >= i && props.color === 'orange',
               'text-nord-mauve-300 dark:text-nord-mauve-300':
                 hoverRating >= i && props.color === 'mauve',
-              'text-nord-dark-300/60 dark:text-nord-light-300/60': hoverRating < i,
+              'text-nord-dark-300/60 dark:text-nord-light-300/60':
+                hoverRating < i,
             },
           ]"
           @mouseenter="hoverRating = i"

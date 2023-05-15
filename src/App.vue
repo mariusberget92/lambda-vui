@@ -10,6 +10,7 @@ import VFile from './components/Form/V-File.vue'
 import VCheckbox from './components/Form/V-Checkbox.vue'
 import VDateTimePicker from './components/Form/V-DateTimePicker.vue'
 import VRating from './components/Form/V-Rating.vue'
+import VTags from './components/Form/V-Tags.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -33,6 +34,8 @@ const rating1 = ref(1)
 const rating2 = ref(3)
 // eslint-disable-next-line no-unused-vars
 const rating3 = ref(5)
+// eslint-disable-next-line no-unused-vars
+const tags = ref([])
 </script>
 
 <template>
@@ -218,7 +221,18 @@ const rating3 = ref(5)
 
         <div class="flex flex-col space-y-4 pb-10">
           <VRating v-model="rating1" size="sm" />
-          <VRating v-model="rating2" size="sm" color="blue" rating-icon="dark_mode" />
+          <VRating
+            v-model="rating2"
+            size="sm"
+            color="blue"
+            rating-icon="dark_mode"
+          />
+        </div>
+
+        <VHeading heading="h1" size="2xl">Tags</VHeading>
+
+        <div class="flex flex-col space-y-4 pb-10">
+          <VTags v-model="tags" size="sm" />
         </div>
 
         <VHeading heading="h1" size="2xl">Buttons</VHeading>

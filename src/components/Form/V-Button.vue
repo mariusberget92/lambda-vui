@@ -122,6 +122,17 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * Whether the button border is dashed.
+   *
+   * @type {Boolean}
+   * @default false
+   */
+  dashed: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 /**
@@ -279,6 +290,7 @@ const blurOnClick = (event) => {
       classButton,
       {
         rounded: props.rounded,
+        'border-dashed border-2': props.outline && props.dashed,
         'pointer-events-none opacity-50': props.processing || props.disabled,
         'aspect-square': props.icon && !props.text,
         'bg-transparent': props.outline,
