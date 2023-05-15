@@ -7,7 +7,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
 /**
  * Define the component emits.
  */
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'error'])
 
 /**
  * Component props.
@@ -297,22 +297,19 @@ const handleFileSelect = (event) => {
 
   // Check if multiple files are allowed but only one was selected
   if (!props.multiple && filteredFiles.length > 1) {
-    alert(`You can only select one file.`)
+    emit('error', 'You can only select one file.')
     return
   }
 
   // Check if the number of files exceeds the maximum
   if (filteredFiles.length > props.maxFiles) {
-    alert(`You can only select up to ${props.maxFiles} files.`)
+    emit('error', `You can only select up to ${props.maxFiles} files.`)
     return
   }
 
   // Display a warning if some files were filtered out
   if (filteredFiles.length !== files.length) {
-    alert(
-      `Some files are not allowed. Allowed extensions are ${props.extensions.join(
-        ', '
-      )}`
+    emit('error', `Some files are not allowed and are filtered out. Allowed extensions are ${props.extensions.join(', ')}`
     )
   }
 
