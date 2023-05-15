@@ -11,7 +11,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue', 'select'])
+const emit = defineEmits(['update:modelValue', 'select', 'error'])
 
 /**
  * Click outside handler.
@@ -249,6 +249,18 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+
+  /**
+   * The maximum number of options that can be selected.
+   * If the value is 0, there is no limit.
+   * 
+   * @type {Number}
+   * @default 0
+   */
+  max: {
+    type: Number,
+    default: 0,
+  },
 })
 
 /**
@@ -342,6 +354,7 @@ const handleSelect = (option) => {
   // If the select is multiple, add or remove the value from the modelValue
   // before emittind the whole array.
   if (props.multiple) {
+
     const modelValue = props.modelValue.includes(value)
       ? props.modelValue.filter((val) => val !== value)
       : [...props.modelValue, value]
@@ -506,6 +519,7 @@ const toggleDropdown = () => {
       :show="isDropdownOpen"
       :color="props.color"
       :multiple="props.multiple"
+      :max="props.max"
       @select=";[handleSelect($event), emit('select', $event)]"
       @toggle-all="handleToggleAll"
       @on-search="handleSearchQuery"

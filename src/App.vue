@@ -176,6 +176,7 @@ const tags = ref([])
             multiple
             placeholder="Placeholder"
             size="sm"
+            :max="2"
             :options="[
               'Example 1',
               'Example 2',

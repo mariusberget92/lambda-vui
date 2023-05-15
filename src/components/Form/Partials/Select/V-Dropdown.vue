@@ -146,6 +146,18 @@ const props = defineProps({
       return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
     },
   },
+
+  /**
+   * The maximum number of options that can be selected.
+   * If the value is 0, there is no limit.
+   * 
+   * @type {Number}
+   * @default 0
+   */
+   max: {
+    type: Number,
+    default: 0,
+  },
 })
 
 /**
@@ -192,6 +204,14 @@ const isSelected = computed(() => {
 const allOptionsSelected = computed(() => {
   return props.options.every((option) => isSelected.value(option))
 })
+
+// Function to check if an option is disabled based on the max prop and the selectedOptions
+const isOptionDisabled = computed(() => {
+  const numSelected = props.selectedOptions.length;
+  return (option) => {
+    return numSelected >= props.max && !isSelected.value(option);
+  };
+});
 
 /**
  * Get the checkbox size.
@@ -243,7 +263,7 @@ const checkboxSize = computed(() => {
         </div>
 
         <div
-          v-if="props.multiple"
+          v-if="props.multiple && props.max === 0"
           class="flex px-2 hover:bg-nord-light-500/50 dark:hover:bg-nord-dark-100/50"
           :class="{
             'first:rounded-t last:rounded-b': props.rounded,
@@ -292,13 +312,15 @@ const checkboxSize = computed(() => {
               :rounded="props.rounded"
               :color="props.color"
               :size="checkboxSize"
-              @input="emit('select', option)"
+              :disabled="isOptionDisabled(option)"
+              @click="emit('select', option)"
             />
 
             <button
               type="button"
               class="flex w-full cursor-pointer flex-col p-1.5 text-nord-dark-300 dark:text-nord-light-300"
               :class="$sizeToClass(props.size)"
+              :disabled="isOptionDisabled(option)"
               @click="emit('select', option)"
             >
               <span
