@@ -190,6 +190,7 @@ const classSwitchSize = computed(() => {
     />
 
     <div
+			:id="props.id"
       class="relative cursor-pointer rounded-full bg-nord-light-400 p-1 dark:bg-nord-dark-100 transition-colors duration-300 ease-in-out" :class="[classSwitchSize['switch']]"
       @click="toggleSwitch()"
     >
