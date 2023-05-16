@@ -229,6 +229,10 @@ const keyHandler = (event) => {
  * @return {void}
  */
 const addTag = (tag) => {
+  if (tag.length === 0) {
+    return
+  }
+
   if (tagAlreadyExists(tag.trim())) {
     resetTagInput()
     emit('error', 'Tag already exists')
