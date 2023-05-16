@@ -27,7 +27,7 @@ There is currently no documentation for this library, but it will be added in th
 <span>✅</span> Button component<br>
 <span>❌</span> Dropzone upload component<br>
 <span>❌</span> Radio component<br>
-<span>❌</span> Switch component<br>
+<span>✅</span> Switch component<br>
 <span>❌</span> Range component<br>
 <span>❌</span> Color component<br>
 <span>✅</span> Tags component<br>
