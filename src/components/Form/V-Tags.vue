@@ -207,7 +207,7 @@ const toggleTagButton = () => {
 const keyHandler = (event) => {
   if (event.key === 'Enter' || event.key === 'Tab') {
     event.preventDefault()
-    addTag(tagInputRef.value.innerHTML)
+    addTag(tagInputRef.value.innerText)
   }
 
   if (event.key === 'Escape') {
@@ -216,7 +216,7 @@ const keyHandler = (event) => {
     toggleTagButton()
   }
 
-  if (event.key === 'Backspace' && tagInputRef.value.innerHTML === '') {
+  if (event.key === 'Backspace' && tagInputRef.value.innerText === '') {
     tags.value.pop()
     emit('update:modelValue', tags.value)
   }
