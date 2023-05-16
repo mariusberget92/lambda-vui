@@ -11,6 +11,7 @@ import VCheckbox from './components/Form/V-Checkbox.vue'
 import VDateTimePicker from './components/Form/V-DateTimePicker.vue'
 import VRating from './components/Form/V-Rating.vue'
 import VTags from './components/Form/V-Tags.vue'
+import VSwitch from './components/Form/V-Switch.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -33,9 +34,16 @@ const rating1 = ref(1)
 // eslint-disable-next-line no-unused-vars
 const rating2 = ref(3)
 // eslint-disable-next-line no-unused-vars
-const rating3 = ref(5)
-// eslint-disable-next-line no-unused-vars
 const tags = ref([])
+// eslint-disable-next-line no-unused-vars
+const switch1 = ref(true)
+// eslint-disable-next-line no-unused-vars
+const switch2 = ref(false)
+// eslint-disable-next-line no-unused-vars
+const switch3 = ref(true)
+// eslint-disable-next-line no-unused-vars
+const switch4 = ref(false)
+
 </script>
 
 <template>
@@ -114,6 +122,17 @@ const tags = ref([])
             helper="Helper text"
             color="green"
           />
+        </div>
+
+        <VHeading heading="h1" size="2xl">Switch</VHeading>
+        <div class="flex flex-col space-y-2 pb-10">
+          <VSwitch v-model="switch1" size="xs" />
+          <VSwitch v-model="switch2" size="sm" color="red" />
+          <VSwitch v-model="switch3" size="base" color="green" />
+          <VSwitch v-model="switch4" size="lg" color="mauve" />
+          <VSwitch v-model="switch4" size="xl" color="orange" />
+          <VSwitch v-model="switch4" size="2xl" color="yellow" />
+
         </div>
       </div>
 

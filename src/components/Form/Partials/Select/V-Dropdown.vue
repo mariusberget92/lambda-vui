@@ -207,7 +207,7 @@ const allOptionsSelected = computed(() => {
 
 /**
  * Check if a option is disabled.
- * 
+ *
  * @type {import('vue').ComputedRef<Function>}
  * @param {String|Object} option
  * @returns {Boolean}
@@ -329,7 +329,7 @@ const checkboxSize = computed(() => {
               type="button"
               class="flex w-full cursor-pointer flex-col p-1.5 text-nord-dark-300 dark:text-nord-light-300"
               :class="$sizeToClass(props.size)"
-              :disabled="(props.multiple) ? isOptionDisabled(option) : false"
+              :disabled="props.multiple ? isOptionDisabled(option) : false"
               @click="emit('select', option)"
             >
               <span
