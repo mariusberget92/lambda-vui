@@ -205,7 +205,13 @@ const allOptionsSelected = computed(() => {
   return props.options.every((option) => isSelected.value(option))
 })
 
-// Function to check if an option is disabled based on the max prop and the selectedOptions
+/**
+ * Check if a option is disabled.
+ * 
+ * @type {import('vue').ComputedRef<Function>}
+ * @param {String|Object} option
+ * @returns {Boolean}
+ */
 const isOptionDisabled = computed(() => {
   const numSelected = props.selectedOptions.length
   if (props.max === 0) {
