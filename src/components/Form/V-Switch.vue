@@ -147,32 +147,32 @@ const classSwitchSize = computed(() => {
 		'xs' : {
 			bullet: ['h-3'],
 			switch: ['h-5', 'w-12'],
-			translate: ['translate-x-7']
+			translate: ['translate-x-7', 'scale-100']
 		},
 		'sm' : {
 			bullet: ['h-4'],
 			switch: ['h-6', 'w-14'],
-			translate: ['translate-x-8']
+			translate: ['translate-x-8', 'scale-100']
 		},
 		'base' : {
 			bullet: ['h-6'],
 			switch: ['h-8', 'w-16'],
-			translate: ['translate-x-8']
+			translate: ['translate-x-8', 'scale-100']
 		},
 		'lg' : {
 			bullet: ['h-8'],
 			switch: ['h-10', 'w-20'],
-			translate: ['translate-x-10']
+			translate: ['translate-x-10', 'scale-100']
 		},
 		'xl' : {
 			bullet: ['h-10'],
 			switch: ['h-12', 'w-24'],
-			translate: ['translate-x-12']
+			translate: ['translate-x-12', 'scale-100']
 		},
 		'2xl' : {
 			bullet: ['h-12'],
 			switch: ['h-14', 'w-28'],
-			translate: ['translate-x-14']
+			translate: ['translate-x-14', 'scale-100']
 		},
 	}[props.size]
 })
@@ -190,12 +190,13 @@ const classSwitchSize = computed(() => {
     />
 
     <div
-      class="relative cursor-pointer rounded-full bg-nord-light-400 p-1 dark:bg-nord-dark-100 transition-colors duration-100 ease-in-out" :class="[classSwitchSize['switch']]"
+      class="relative cursor-pointer rounded-full bg-nord-light-400 p-1 dark:bg-nord-dark-100 transition-colors duration-300 ease-in-out" :class="[classSwitchSize['switch']]"
       @click="toggleSwitch()"
     >
       <p
-        class="absolute aspect-square transform rounded-full bg-nord-dark-300/50 transition duration-100 ease-in-out dark:bg-nord-light-300/50"
-        :class="[classSwitchSize['bullet'], isOn && classSwitchSize['translate'], { 
+        class="absolute aspect-square transform rounded-full bg-nord-dark-300/50 transition-all duration-300 ease-in-out dark:bg-nord-light-300/50"
+        :class="[classSwitchSize['bullet'], isOn && classSwitchSize['translate'], {
+					'scale-75': !isOn, 
 					'!bg-nord-red-300': props.color === 'red' && isOn,
 					'!bg-nord-green-300': props.color === 'green' && isOn,
 					'!bg-nord-blue-300': props.color === 'blue' && isOn,
