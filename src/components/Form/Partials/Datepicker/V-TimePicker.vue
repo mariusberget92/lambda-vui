@@ -113,7 +113,7 @@ const minutes = computed(() => {
         :size="props.size"
         :clear-button="false"
         :color="props.color"
-        @change="emit('updateMinute', selectedMinuteRef)"
+        @select="emit('updateMinute', selectedMinuteRef)"
       />
 
       <VButton

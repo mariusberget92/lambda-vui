@@ -208,6 +208,9 @@ const allOptionsSelected = computed(() => {
 // Function to check if an option is disabled based on the max prop and the selectedOptions
 const isOptionDisabled = computed(() => {
   const numSelected = props.selectedOptions.length
+  if (props.max === 0) {
+    return () => false
+  }
   return (option) => {
     return numSelected >= props.max && !isSelected.value(option)
   }
@@ -320,7 +323,7 @@ const checkboxSize = computed(() => {
               type="button"
               class="flex w-full cursor-pointer flex-col p-1.5 text-nord-dark-300 dark:text-nord-light-300"
               :class="$sizeToClass(props.size)"
-              :disabled="isOptionDisabled(option)"
+              :disabled="(props.multiple) ? isOptionDisabled(option) : false"
               @click="emit('select', option)"
             >
               <span
