@@ -93,21 +93,6 @@ const props = defineProps({
   },
 
   /**
-   * The color of the switch.
-   *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
-   */
-  color: {
-    type: String,
-    default: 'blue',
-    validator: (val) => {
-      return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
-    },
-  },
-
-  /**
    * Whether the switch is disabled.
    *
    * @type {Boolean}
@@ -116,6 +101,45 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false,
+  },
+
+  /**
+   * Whether the switch has icons (check/close).
+   * 
+   * @type {Boolean}
+   * @default false
+   */
+  icons: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * The color of the switch when it's on.
+   * 
+   * @type {String}
+   * @default blue
+   */
+  onColor: {
+    type: String,
+    default: 'blue',
+    validator: (val) => {
+      return ['green', 'red', 'blue', 'mauve', 'orange', 'yellow', 'default'].includes(val)
+    },
+  },
+
+  /**
+   * The color of the switch when it's off.
+   * 
+   * @type {String}
+   * @default default
+   */
+  offColor: {
+    type: String,
+    default: 'default',
+    validator: (val) => {
+      return ['green', 'red', 'blue', 'mauve', 'orange', 'yellow', 'default'].includes(val)
+    },
   },
 })
 
@@ -138,48 +162,86 @@ const toggleSwitch = () => {
 
 /**
  * The switch size classes.
- * 
+ *
  * @type {Object}
  * @return {Object}
  */
 const classSwitchSize = computed(() => {
-	return {
-		'xs' : {
-			bullet: ['h-3'],
-			switch: ['h-5', 'w-12'],
-			translate: ['translate-x-7', 'scale-100']
-		},
-		'sm' : {
-			bullet: ['h-4'],
-			switch: ['h-6', 'w-14'],
-			translate: ['translate-x-8', 'scale-100']
-		},
-		'base' : {
-			bullet: ['h-6'],
-			switch: ['h-8', 'w-16'],
-			translate: ['translate-x-8', 'scale-100']
-		},
-		'lg' : {
-			bullet: ['h-8'],
-			switch: ['h-10', 'w-20'],
-			translate: ['translate-x-10', 'scale-100']
-		},
-		'xl' : {
-			bullet: ['h-10'],
-			switch: ['h-12', 'w-24'],
-			translate: ['translate-x-12', 'scale-100']
-		},
-		'2xl' : {
-			bullet: ['h-12'],
-			switch: ['h-14', 'w-28'],
-			translate: ['translate-x-14', 'scale-100']
-		},
-	}[props.size]
+  return {
+    xs: {
+      bullet: ['h-4'],
+      switch: ['h-6', 'w-14', 'p-1'],
+      translate: ['translate-x-8'],
+      translateText: ['translate-x-8'],
+    },
+    sm: {
+      bullet: ['h-6'],
+      switch: ['h-8', 'w-18', 'p-1'],
+      translate: ['translate-x-10'],
+      translateText: ['translate-x-11'],
+    },
+    base: {
+      bullet: ['h-8'],
+      switch: ['h-10', 'w-22', 'p-1'],
+      translate: ['translate-x-12'],
+      translateText: ['translate-x-14'],
+    },
+    lg: {
+      bullet: ['h-10'],
+      switch: ['h-12', 'w-26', 'p-1'],
+      translate: ['translate-x-14'],
+      translateText: ['translate-x-17']
+    },
+    xl: {
+      bullet: ['h-12'],
+      switch: ['h-14', 'w-30', 'p-1'],
+      translate: ['translate-x-16'],
+      translateText: ['translate-x-20'],
+    },
+    '2xl': {
+      bullet: ['h-14'],
+      switch: ['h-16', 'w-34', 'p-1'],
+      translate: ['translate-x-18'],
+      translateText: ['translate-x-23'],
+    },
+  }[props.size]
+})
+
+/**
+ * Color classes for the switch.
+ * 
+ * @type {Object}
+ * @return {String}
+ */
+const classColor = computed(() => {
+  return {
+    on: {
+      green: ['bg-nord-green-500 dark:bg-nord-green-500'],
+      red: ['bg-nord-red-500 dark:bg-nord-red-500'],
+      blue: ['bg-nord-blue-500 dark:bg-nord-blue-500'],
+      mauve: ['bg-nord-mauve-500 dark:bg-nord-mauve-500'],
+      orange: ['bg-nord-orange-500 dark:bg-nord-orange-500'],
+      yellow: ['bg-nord-yellow-500 dark:bg-nord-yellow-500'],
+      default: ['bg-nord-light-400 dark:bg-nord-dark-100'],
+    }[props.onColor],
+    off: {
+      green: ['bg-nord-green-300 dark:bg-nord-green-300'],
+      red: ['bg-nord-red-300 dark:bg-nord-red-300'],
+      blue: ['bg-nord-blue-300 dark:bg-nord-blue-300'],
+      mauve: ['bg-nord-mauve-300 dark:bg-nord-mauve-300'],
+      orange: ['bg-nord-orange-300 dark:bg-nord-orange-300'],
+      yellow: ['bg-nord-yellow-300 dark:bg-nord-yellow-300'],
+      default: ['bg-nord-light-400 dark:bg-nord-dark-100'],
+    }[props.offColor],
+  }
 })
 </script>
 
 <template>
-  <div class="flex flex-col" :class="{ 'opacity-50 pointer-events-none': props.disabled }">
+  <div
+    class="flex flex-col"
+    :class="{ 'pointer-events-none opacity-50': props.disabled }"
+  >
     <VLabel
       v-if="props.label"
       :id="props.id"
@@ -190,22 +252,26 @@ const classSwitchSize = computed(() => {
     />
 
     <div
-			:id="props.id"
-      class="relative cursor-pointer rounded-full bg-nord-light-400 p-1 dark:bg-nord-dark-100 transition-colors duration-300 ease-in-out" :class="[classSwitchSize['switch']]"
+      :id="props.id"
+      class="relative flex items-center cursor-pointer rounded-full transition-colors duration-300 ease-in-out"
+      :class="[classSwitchSize['switch'], (isOn) ? classColor['on'] : classColor['off']]"
       @click="toggleSwitch()"
     >
       <p
-        class="absolute aspect-square transform rounded-full bg-nord-dark-300/50 transition-all duration-300 ease-in-out dark:bg-nord-light-300/50"
-        :class="[classSwitchSize['bullet'], isOn && classSwitchSize['translate'], {
-					'scale-75': !isOn, 
-					'!bg-nord-red-300': props.color === 'red' && isOn,
-					'!bg-nord-green-300': props.color === 'green' && isOn,
-					'!bg-nord-blue-300': props.color === 'blue' && isOn,
-					'!bg-nord-orange-300': props.color === 'orange' && isOn,
-					'!bg-nord-yellow-300': props.color === 'yellow' && isOn,
-					'!bg-nord-mauve-300': props.color === 'mauve' && isOn,
-				}]"
+        class="absolute aspect-square transform rounded-full transition-all duration-300 ease-in-out bg-white"
+        :class="[
+          classSwitchSize['bullet'],
+          isOn && classSwitchSize['translate'],
+        ]"
       ></p>
+      <span
+        v-if="props.icons"
+        class="material-symbols-rounded absolute transform transition-all duration-300 ease-in-out font-bold text-white"
+        :class="[$sizeToClass(props.size), (!isOn) && classSwitchSize['translateText'], {
+          'translate-x-2': isOn,
+        }]"
+        >{{ isOn ? 'check' : 'close' }}</span
+      >
     </div>
   </div>
 </template>

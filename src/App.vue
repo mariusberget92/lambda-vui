@@ -36,14 +36,13 @@ const rating2 = ref(3)
 // eslint-disable-next-line no-unused-vars
 const tags = ref([])
 // eslint-disable-next-line no-unused-vars
-const switch1 = ref(true)
+const switch1 = ref(false)
 // eslint-disable-next-line no-unused-vars
 const switch2 = ref(false)
 // eslint-disable-next-line no-unused-vars
-const switch3 = ref(true)
+const switch3 = ref(false)
 // eslint-disable-next-line no-unused-vars
 const switch4 = ref(false)
-
 </script>
 
 <template>
@@ -126,13 +125,17 @@ const switch4 = ref(false)
 
         <VHeading heading="h1" size="2xl">Switch</VHeading>
         <div class="flex flex-col space-y-2 pb-10">
-          <VSwitch v-model="switch1" size="xs" />
-          <VSwitch v-model="switch2" size="sm" color="red" />
-          <VSwitch v-model="switch3" size="base" color="green" />
-          <VSwitch v-model="switch4" size="lg" color="mauve" />
-          <VSwitch v-model="switch4" size="xl" color="orange" />
-          <VSwitch v-model="switch4" size="2xl" color="yellow" />
-
+          <VSwitch v-model="switch1" size="xs" :icons="true" />
+          <VSwitch v-model="switch2" size="sm" />
+          <VSwitch
+            v-model="switch3"
+            size="base"
+            :icons="true"
+            on-color="green"
+          />
+          <VSwitch v-model="switch4" size="lg" />
+          <VSwitch v-model="switch4" size="xl" :icons="true" off-color="red" />
+          <VSwitch v-model="switch4" size="2xl" />
         </div>
       </div>
 
