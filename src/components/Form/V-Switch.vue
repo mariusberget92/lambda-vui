@@ -141,6 +141,20 @@ const props = defineProps({
       return ['green', 'red', 'blue', 'mauve', 'orange', 'yellow', 'default'].includes(val)
     },
   },
+
+  /**
+   * Shape of the switch.
+   * 
+   * @type {String}
+   * @default pill
+   */
+  shape: {
+    type: String,
+    default: 'pill',
+    validator: (val) => {
+      return ['pill', 'rounded', 'square'].includes(val)
+    },
+  },
 })
 
 /**
@@ -253,15 +267,24 @@ const classColor = computed(() => {
 
     <div
       :id="props.id"
-      class="relative flex items-center cursor-pointer rounded-full transition-colors duration-300 ease-in-out"
-      :class="[classSwitchSize['switch'], (isOn) ? classColor['on'] : classColor['off']]"
+      class="relative flex items-center cursor-pointer transition-colors duration-300 ease-in-out"
+      :class="[classSwitchSize['switch'], (isOn) ? classColor['on'] : classColor['off'], {
+        'rounded': props.shape === 'rounded',
+        'rounded-full': props.shape === 'pill',
+        'rounded-none': props.shape === 'square',
+      }]"
       @click="toggleSwitch()"
     >
       <p
-        class="absolute aspect-square transform rounded-full transition-all duration-300 ease-in-out bg-white"
+        class="absolute aspect-square transform transition-all duration-300 ease-in-out bg-white"
         :class="[
           classSwitchSize['bullet'],
           isOn && classSwitchSize['translate'],
+          {
+            'rounded': props.shape === 'rounded',
+            'rounded-full': props.shape === 'pill',
+            'rounded-none': props.shape === 'square',
+          }
         ]"
       ></p>
       <span
