@@ -5,7 +5,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
 import VIcon from './Partials/V-Icon.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  */
 const emit = defineEmits(['update:modelValue', 'click'])
 

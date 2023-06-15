@@ -3,6 +3,11 @@ import { computed, defineEmits, defineProps, inject, ref } from 'vue'
 import VButton from '../../V-Button.vue'
 import VSelect from '../../V-Select.vue'
 
+/**
+ * Component emits.
+ * 
+ * @type {Object}
+ */
 const emit = defineEmits([
   'updateMonth',
   'updateYear',
@@ -11,9 +16,14 @@ const emit = defineEmits([
   'setToday',
 ])
 
+/**
+ * Component props.
+ * 
+ * @type {Object}
+ */
 const props = defineProps({
   /**
-   * The color of the datepicker buttons.
+   * The color of the datepicker.
    *
    * @type {String}
    * @default blue
@@ -28,7 +38,7 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Datepicker size.
    *
    * @type {String}
    * @default base
@@ -43,7 +53,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
+   * Whether the datepicker is rounded.
    *
    * @type {Boolean}
    * @default true
@@ -54,8 +64,19 @@ const props = defineProps({
   },
 })
 
+/**
+ * Selected year and month injections from parent component.
+ * 
+ * @type {import('vue').Ref}
+ */
 const selectedYear = inject('selectedYear')
 const selectedMonth = inject('selectedMonth')
+
+/**
+ * Selected year and month refs.
+ * 
+ * @type {import('vue').Ref}
+ */
 const selectedYearRef = ref(selectedYear)
 const selectedMonthRef = ref(selectedMonth)
 

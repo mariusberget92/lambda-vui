@@ -7,7 +7,7 @@ import VDropdown from './Partials/Select/V-Dropdown.vue'
 import VInputResetButton from './Partials/V-InputResetButton.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  *
  * @type {Object}
  */

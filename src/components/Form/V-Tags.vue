@@ -4,7 +4,7 @@ import VLabel from './Partials/V-Label.vue'
 import VButton from './V-Button.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  */
 const emit = defineEmits(['update:modelValue', 'error'])
 
@@ -256,7 +256,6 @@ const addTag = (tag) => {
  * @param  {String} tag
  * @return {void}
  */
-// eslint-disable-next-line no-unused-vars
 const removeTag = (tag) => {
   tags.value = tags.value.filter((t) => t !== tag)
   emit('update:modelValue', tags.value)
@@ -362,6 +361,7 @@ const resetTagInput = () => {
         ]"
         role="textbox"
         contenteditable
+        @blur="showNewTagButton = true"
         @keydown="keyHandler"
       ></span>
 

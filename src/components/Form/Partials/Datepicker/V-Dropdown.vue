@@ -14,7 +14,7 @@ import VDatePicker from './V-DatePicker.vue'
 import VTimePicker from './V-TimePicker.vue'
 
 /**
- * Emits events.
+ * Component emits.
  *
  * @type {Object}
  */
@@ -49,7 +49,7 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Datepicker size.
    *
    * @type {String}
    * @default base
@@ -64,7 +64,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
+   * Whether the datepicker is rounded.
    *
    * @type {Boolean}
    * @default true
@@ -97,7 +97,7 @@ const props = defineProps({
   },
 
   /**
-   * The color of the datepicker buttons.
+   * The color of the datepicker.
    *
    * @type {String}
    * @default blue
@@ -113,7 +113,7 @@ const props = defineProps({
 })
 
 /**
- * Selected day, month, year, hour and minute.
+ * Selected day, month, year, hour and minute refs.
  *
  * @type {import('vue').Ref<number>}
  */
@@ -123,6 +123,11 @@ const selectedYear = ref(0)
 const selectedHour = ref(0)
 const selectedMinute = ref(0)
 
+/**
+ * Provide selected date refs.
+ *
+ * @returns {void}
+ */
 provide('selectedDay', selectedDay)
 provide('selectedMonth', selectedMonth)
 provide('selectedYear', selectedYear)
@@ -171,7 +176,7 @@ const daysInMonth = computed(() => {
 })
 
 /**
- * CSS for dropdown width.
+ * Dropdown width css classes.
  *
  * @type {import ('vue').ComputedRef<string>}
  * @returns {string}
@@ -188,7 +193,8 @@ const classDropdownWidth = computed(() => {
 })
 
 /**
- * Selects the passed day. Month and year change themselves when the user does so.
+ * Selects the given day. 
+ * Month and year change themselves when the user does so.
  * @param {Number} day - The day to select.
  * @returns {void}
  */
@@ -209,7 +215,7 @@ const setToday = () => {
 }
 
 /**
- * Set the selected hour/minute to now
+ * Set the selected hour/minute to now.
  *
  * @returns {void}
  */

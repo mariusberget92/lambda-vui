@@ -3,7 +3,7 @@ import { defineEmits, defineProps, ref, computed } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  *
  * @type {Object}
  */

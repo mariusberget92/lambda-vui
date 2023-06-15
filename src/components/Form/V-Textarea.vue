@@ -3,7 +3,7 @@ import { defineProps, defineEmits } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  */
 defineEmits(['update:modelValue'])
 

@@ -2,7 +2,7 @@
 import { defineProps, computed, defineEmits } from 'vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  *
  * @type {Object}
  */

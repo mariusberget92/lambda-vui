@@ -10,9 +10,14 @@ import VSelect from '../../V-Select.vue'
  */
 const emit = defineEmits(['updateHour', 'updateMinute', 'setNow'])
 
+/**
+ * Component props.
+ *
+ * @type {Object}
+ */
 const props = defineProps({
   /**
-   * The color of the datepicker buttons.
+   * The color of the datepicker.
    *
    * @type {String}
    * @default blue
@@ -27,7 +32,7 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Datepicker size.
    *
    * @type {String}
    * @default base
@@ -42,7 +47,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
+   * Whether the datepicker is rounded.
    *
    * @type {Boolean}
    * @default true
@@ -54,13 +59,18 @@ const props = defineProps({
 })
 
 /**
- * Selected hour and minute.
+ * Selected hour and minute injected from parent component.
  *
  * @type {import('vue').Ref<number>}
  */
 const selectedHour = inject('selectedHour')
 const selectedMinute = inject('selectedMinute')
 
+/**
+ * Selected hour and minute refs.
+ *
+ * @type {import('vue').Ref<number>}
+ */
 const selectedHourRef = ref(selectedHour)
 const selectedMinuteRef = ref(selectedMinute)
 

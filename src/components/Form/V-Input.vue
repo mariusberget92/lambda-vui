@@ -4,7 +4,7 @@ import VLabel from './Partials/V-Label.vue'
 import VIcon from './Partials/V-Icon.vue'
 
 /**
- * Define the component emits.
+ * Component emits.
  */
 defineEmits(['update:modelValue'])
 

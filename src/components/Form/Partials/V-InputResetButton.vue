@@ -3,6 +3,8 @@ import { defineEmits, defineProps } from 'vue'
 
 /**
  * Component emits.
+ * 
+ * @type {Object}
  */
 const emit = defineEmits(['reset'])
 

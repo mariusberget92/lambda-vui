@@ -15,7 +15,7 @@ const emit = defineEmits(['selectDay'])
  */
 const props = defineProps({
   /**
-   * The color of the datepicker buttons.
+   * The color of the datepicker.
    *
    * @type {String}
    * @default blue
@@ -30,7 +30,7 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Datepicker size.
    *
    * @type {String}
    * @default base
@@ -64,14 +64,19 @@ const props = defineProps({
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 /**
- * Selected day, month and year.
- *
- * @type {import('vue').Ref<number>}
+ * Selected day, month and year injections from the parent component.
+ * 
+ * @type {import('vue').Inject}
  */
 const selectedDay = inject('selectedDay')
 const selectedMonth = inject('selectedMonth')
 const selectedYear = inject('selectedYear')
 
+/**
+ * Selected day, month and year refs.
+ *
+ * @type {import('vue').Ref<number>}
+ */
 const selectedDayRef = ref(selectedDay)
 const selectedMonthRef = ref(selectedMonth)
 const selectedYearRef = ref(selectedYear)
@@ -108,7 +113,7 @@ const isSelected = computed(() => {
 })
 
 /**
- * A computed property that returns the class name for the first day of the selected month and year.
+ * The class name for the first day of the selected month and year.
  * @returns {String} - The class name for the first day of the month.
  */
 const classRowStart = computed(() => {
