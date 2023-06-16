@@ -140,7 +140,7 @@ onMounted(() => {
         </p>
       </div>
 
-      <p class="text-nord-dark-300 dark:text-nord-light-300">
+      <p class="text-nord-dark-300 dark:text-nord-light-300 text-sm">
         {{ props.message }}
       </p>
     </div>

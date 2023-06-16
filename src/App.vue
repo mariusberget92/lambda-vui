@@ -92,7 +92,7 @@ const switch4 = ref(false)
         <VHeading heading="h1" size="2xl">File input</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VFile v-model="file" placeholder="Placeholder" size="sm" required />
+          <VFile v-model="file" placeholder="Placeholder" size="sm" required @error="(e) => $toast({ type: 'error', message: e})" />
 
           <VFile
             v-model="file"

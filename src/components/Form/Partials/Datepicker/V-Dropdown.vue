@@ -8,6 +8,7 @@ import {
   inject,
   watch,
   provide,
+  nextTick
 } from 'vue'
 import VPagination from './V-Pagination.vue'
 import VDatePicker from './V-DatePicker.vue'
@@ -209,9 +210,18 @@ const selectDate = (day) => {
  */
 const setToday = () => {
   const today = new Date()
-  selectedDay.value = today.getDate()
-  selectedMonth.value = today.getMonth() + 1
-  selectedYear.value = today.getFullYear()
+
+  // We need to fake a change in the selected date to trigger the watcher.
+  // We also need to wait for the next tick to do so.
+  selectedDay.value = 0
+  selectedMonth.value = 0
+  selectedYear.value = 0
+
+  nextTick(() => {
+    selectedDay.value = today.getDate()
+    selectedMonth.value = today.getMonth() + 1
+    selectedYear.value = today.getFullYear()
+  })
 }
 
 /**
@@ -221,8 +231,16 @@ const setToday = () => {
  */
 const setNow = () => {
   const timeNow = new Date()
-  selectedHour.value = timeNow.getHours().toString().padStart(2, '0')
-  selectedMinute.value = timeNow.getMinutes().toString().padStart(2, '0')
+
+  // We need to fake a change in the selected time to trigger the watcher.
+  // We also need to wait for the next tick to do so.
+  selectedHour.value = 0
+  selectedMinute.value = 0
+
+  nextTick(() => {
+    selectedHour.value = timeNow.getHours().toString().padStart(2, '0')
+    selectedMinute.value = timeNow.getMinutes().toString().padStart(2, '0')
+  })
 }
 
 /**
