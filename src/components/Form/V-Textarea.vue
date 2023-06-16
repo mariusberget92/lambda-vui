@@ -4,6 +4,8 @@ import VLabel from './Partials/V-Label.vue'
 
 /**
  * Component emits.
+ *
+ * @type {Object}
  */
 defineEmits(['update:modelValue'])
 

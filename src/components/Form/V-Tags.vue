@@ -5,6 +5,8 @@ import VButton from './V-Button.vue'
 
 /**
  * Component emits.
+ * 
+ * @type {Object}
  */
 const emit = defineEmits(['update:modelValue', 'error'])
 

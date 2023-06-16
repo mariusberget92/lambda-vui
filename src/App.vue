@@ -125,8 +125,8 @@ const switch4 = ref(false)
 
         <VHeading heading="h1" size="2xl">Switch</VHeading>
         <div class="flex flex-col space-y-2 pb-10">
-          <VSwitch v-model="switch1" size="xs" :icons="true" shape="square" />
-          <VSwitch v-model="switch2" size="sm" shape="square" />
+          <VSwitch v-model="switch1" size="xs" :icons="true" />
+          <VSwitch v-model="switch2" size="sm" />
           <VSwitch
             v-model="switch3"
             size="base"
@@ -134,15 +134,9 @@ const switch4 = ref(false)
             :icons="true"
             on-color="default"
           />
-          <VSwitch v-model="switch4" size="lg" shape="square" />
-          <VSwitch
-            v-model="switch4"
-            size="xl"
-            shape="square"
-            :icons="true"
-            off-color="red"
-          />
-          <VSwitch v-model="switch4" size="2xl" shape="square" />
+          <VSwitch v-model="switch4" size="lg" />
+          <VSwitch v-model="switch4" size="xl" :icons="true" off-color="red" />
+          <VSwitch v-model="switch4" size="2xl" />
         </div>
       </div>
 

@@ -252,7 +252,9 @@ const classColor = computed(() => {
       mauve: ['bg-nord-mauve-500 dark:bg-nord-mauve-500 text-white'],
       orange: ['bg-nord-orange-500 dark:bg-nord-orange-500 text-white'],
       yellow: ['bg-nord-yellow-500 dark:bg-nord-yellow-500 text-white'],
-      default: ['bg-nord-light-400 dark:bg-nord-dark-100 text-nord-dark-300 dark:text-nord-light-300'],
+      default: [
+        'bg-nord-light-400 dark:bg-nord-dark-100 text-nord-light-100 dark:text-nord-dark-500',
+      ],
     }[props.onColor],
     off: {
       green: ['bg-nord-green-300 dark:bg-nord-green-300 text-white'],
@@ -261,7 +263,9 @@ const classColor = computed(() => {
       mauve: ['bg-nord-mauve-300 dark:bg-nord-mauve-300 text-white'],
       orange: ['bg-nord-orange-300 dark:bg-nord-orange-300 text-white'],
       yellow: ['bg-nord-yellow-300 dark:bg-nord-yellow-300 text-white'],
-      default: ['bg-nord-light-400 dark:bg-nord-dark-100 text-nord-dark-300 dark:text-nord-light-300'],
+      default: [
+        'bg-nord-light-400 dark:bg-nord-dark-100 text-nord-light-100 dark:text-nord-dark-500',
+      ],
     }[props.offColor],
   }
 })

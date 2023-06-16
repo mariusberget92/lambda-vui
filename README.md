@@ -44,6 +44,6 @@ There is currently no documentation for this library, but it will be added in th
 <span>❌</span> Card component<br>
 
 ## Bugs / Todo
-📝 Fix DateTimePicker component to be initialized with a empty value (currently it's initialized with the current date and time but can be resat to empty with the clear button). Just using the reset method will not work (month and year will display as 00-00 in the input)<br>
-📝 Make tags component also take a options prop (like the select component) so that it can be used as a select component with predefined options only or a mix between predefined and user defined tags.<br>
-📝 Fix colors for switch component.
+❌ Fix DateTimePicker component to be initialized with a empty value (currently it's initialized with the current date and time but can be resat to empty with the clear button). Just using the reset method will not work (month and year will display as 00-00 in the input)<br>
+❌ Make tags component also take a options prop (like the select component) so that it can be used as a select component with predefined options only or a mix between predefined and user defined tags.<br>
+✅ Fix colors for switch component.
