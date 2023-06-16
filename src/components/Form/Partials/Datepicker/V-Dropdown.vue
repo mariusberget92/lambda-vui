@@ -193,7 +193,7 @@ const classDropdownWidth = computed(() => {
 })
 
 /**
- * Selects the given day. 
+ * Selects the given day.
  * Month and year change themselves when the user does so.
  * @param {Number} day - The day to select.
  * @returns {void}

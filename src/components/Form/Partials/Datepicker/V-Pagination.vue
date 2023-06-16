@@ -5,7 +5,7 @@ import VSelect from '../../V-Select.vue'
 
 /**
  * Component emits.
- * 
+ *
  * @type {Object}
  */
 const emit = defineEmits([
@@ -18,7 +18,7 @@ const emit = defineEmits([
 
 /**
  * Component props.
- * 
+ *
  * @type {Object}
  */
 const props = defineProps({
@@ -66,7 +66,7 @@ const props = defineProps({
 
 /**
  * Selected year and month injections from parent component.
- * 
+ *
  * @type {import('vue').Ref}
  */
 const selectedYear = inject('selectedYear')
@@ -74,7 +74,7 @@ const selectedMonth = inject('selectedMonth')
 
 /**
  * Selected year and month refs.
- * 
+ *
  * @type {import('vue').Ref}
  */
 const selectedYearRef = ref(selectedYear)

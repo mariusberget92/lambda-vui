@@ -65,7 +65,7 @@ const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 /**
  * Selected day, month and year injections from the parent component.
- * 
+ *
  * @type {import('vue').Inject}
  */
 const selectedDay = inject('selectedDay')

@@ -105,7 +105,7 @@ const props = defineProps({
 
   /**
    * Whether the switch has icons (check/close).
-   * 
+   *
    * @type {Boolean}
    * @default false
    */
@@ -116,7 +116,7 @@ const props = defineProps({
 
   /**
    * The color of the switch when it's on.
-   * 
+   *
    * @type {String}
    * @default blue
    */
@@ -124,13 +124,21 @@ const props = defineProps({
     type: String,
     default: 'blue',
     validator: (val) => {
-      return ['green', 'red', 'blue', 'mauve', 'orange', 'yellow', 'default'].includes(val)
+      return [
+        'green',
+        'red',
+        'blue',
+        'mauve',
+        'orange',
+        'yellow',
+        'default',
+      ].includes(val)
     },
   },
 
   /**
    * The color of the switch when it's off.
-   * 
+   *
    * @type {String}
    * @default default
    */
@@ -138,13 +146,21 @@ const props = defineProps({
     type: String,
     default: 'default',
     validator: (val) => {
-      return ['green', 'red', 'blue', 'mauve', 'orange', 'yellow', 'default'].includes(val)
+      return [
+        'green',
+        'red',
+        'blue',
+        'mauve',
+        'orange',
+        'yellow',
+        'default',
+      ].includes(val)
     },
   },
 
   /**
    * Shape of the switch.
-   * 
+   *
    * @type {String}
    * @default pill
    */
@@ -204,7 +220,7 @@ const classSwitchSize = computed(() => {
       bullet: ['h-10'],
       switch: ['h-12', 'w-26', 'p-1'],
       translate: ['translate-x-14'],
-      translateText: ['translate-x-17']
+      translateText: ['translate-x-17'],
     },
     xl: {
       bullet: ['h-12'],
@@ -223,29 +239,29 @@ const classSwitchSize = computed(() => {
 
 /**
  * Color classes for the switch.
- * 
+ *
  * @type {Object}
  * @return {String}
  */
 const classColor = computed(() => {
   return {
     on: {
-      green: ['bg-nord-green-500 dark:bg-nord-green-500'],
-      red: ['bg-nord-red-500 dark:bg-nord-red-500'],
-      blue: ['bg-nord-blue-500 dark:bg-nord-blue-500'],
-      mauve: ['bg-nord-mauve-500 dark:bg-nord-mauve-500'],
-      orange: ['bg-nord-orange-500 dark:bg-nord-orange-500'],
-      yellow: ['bg-nord-yellow-500 dark:bg-nord-yellow-500'],
-      default: ['bg-nord-light-400 dark:bg-nord-dark-100'],
+      green: ['bg-nord-green-500 dark:bg-nord-green-500 text-white'],
+      red: ['bg-nord-red-500 dark:bg-nord-red-500 text-white'],
+      blue: ['bg-nord-blue-500 dark:bg-nord-blue-500 text-white'],
+      mauve: ['bg-nord-mauve-500 dark:bg-nord-mauve-500 text-white'],
+      orange: ['bg-nord-orange-500 dark:bg-nord-orange-500 text-white'],
+      yellow: ['bg-nord-yellow-500 dark:bg-nord-yellow-500 text-white'],
+      default: ['bg-nord-light-400 dark:bg-nord-dark-100 text-nord-dark-300 dark:text-nord-light-300'],
     }[props.onColor],
     off: {
-      green: ['bg-nord-green-300 dark:bg-nord-green-300'],
-      red: ['bg-nord-red-300 dark:bg-nord-red-300'],
-      blue: ['bg-nord-blue-300 dark:bg-nord-blue-300'],
-      mauve: ['bg-nord-mauve-300 dark:bg-nord-mauve-300'],
-      orange: ['bg-nord-orange-300 dark:bg-nord-orange-300'],
-      yellow: ['bg-nord-yellow-300 dark:bg-nord-yellow-300'],
-      default: ['bg-nord-light-400 dark:bg-nord-dark-100'],
+      green: ['bg-nord-green-300 dark:bg-nord-green-300 text-white'],
+      red: ['bg-nord-red-300 dark:bg-nord-red-300 text-white'],
+      blue: ['bg-nord-blue-300 dark:bg-nord-blue-300 text-white'],
+      mauve: ['bg-nord-mauve-300 dark:bg-nord-mauve-300 text-white'],
+      orange: ['bg-nord-orange-300 dark:bg-nord-orange-300 text-white'],
+      yellow: ['bg-nord-yellow-300 dark:bg-nord-yellow-300 text-white'],
+      default: ['bg-nord-light-400 dark:bg-nord-dark-100 text-nord-dark-300 dark:text-nord-light-300'],
     }[props.offColor],
   }
 })
@@ -267,32 +283,40 @@ const classColor = computed(() => {
 
     <div
       :id="props.id"
-      class="relative flex items-center cursor-pointer transition-colors duration-300 ease-in-out"
-      :class="[classSwitchSize['switch'], (isOn) ? classColor['on'] : classColor['off'], {
-        'rounded': props.shape === 'rounded',
-        'rounded-full': props.shape === 'pill',
-        'rounded-none': props.shape === 'square',
-      }]"
+      class="relative flex cursor-pointer items-center transition-colors duration-300 ease-in-out"
+      :class="[
+        classSwitchSize['switch'],
+        isOn ? classColor['on'] : classColor['off'],
+        {
+          rounded: props.shape === 'rounded',
+          'rounded-full': props.shape === 'pill',
+          'rounded-none': props.shape === 'square',
+        },
+      ]"
       @click="toggleSwitch()"
     >
       <p
-        class="absolute aspect-square transform transition-all duration-300 ease-in-out bg-white"
+        class="absolute aspect-square transform bg-white transition-all duration-300 ease-in-out"
         :class="[
           classSwitchSize['bullet'],
           isOn && classSwitchSize['translate'],
           {
-            'rounded': props.shape === 'rounded',
+            rounded: props.shape === 'rounded',
             'rounded-full': props.shape === 'pill',
             'rounded-none': props.shape === 'square',
-          }
+          },
         ]"
       ></p>
       <span
         v-if="props.icons"
-        class="material-symbols-rounded absolute transform transition-all duration-300 ease-in-out font-bold text-white"
-        :class="[$sizeToClass(props.size), (!isOn) && classSwitchSize['translateText'], {
-          'translate-x-2': isOn,
-        }]"
+        class="material-symbols-rounded absolute transform font-bold transition-all duration-300 ease-in-out"
+        :class="[
+          $sizeToClass(props.size),
+          !isOn && classSwitchSize['translateText'],
+          {
+            'translate-x-2': isOn,
+          },
+        ]"
         >{{ isOn ? 'check' : 'close' }}</span
       >
     </div>
