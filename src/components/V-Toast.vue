@@ -115,7 +115,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-[300px] overflow-hidden bg-white shadow-lg dark:bg-nord-dark-300"
+    class="w-[300px] overflow-hidden bg-white shadow-lg dark:bg-nord-dark-300 cursor-pointer"
     :class="{
       rounded: props.rounded,
     }"
@@ -140,7 +140,7 @@ onMounted(() => {
         </p>
       </div>
 
-      <p class="text-nord-dark-300 dark:text-nord-light-300 text-sm">
+      <p class="text-nord-dark-300 dark:text-nord-light-300">
         {{ props.message }}
       </p>
     </div>

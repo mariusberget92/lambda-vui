@@ -47,3 +47,4 @@ There is currently no documentation for this library, but it will be added in th
 ❌ Fix DateTimePicker component to be initialized with a empty value (currently it's initialized with the current date and time but can be resat to empty with the clear button). Just using the reset method will not work (month and year will display as 00-00 in the input)<br>
 ❌ Make tags component also take a options prop (like the select component) so that it can be used as a select component with predefined options only or a mix between predefined and user defined tags.<br>
 ✅ Fix colors for switch component.
+❌ Toast system needs an upgrade. Need to modify it so that toasts can be paused when hovering over them. Also need to add perfect scrollbar to the toast container so that it can be scrolled when there are many toasts. We also need to consider adding a AI time-to-read implementation when regarding the duration of the toasts with a minimum duration.<br>

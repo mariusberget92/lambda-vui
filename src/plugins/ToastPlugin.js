@@ -61,6 +61,18 @@ export default {
       // Mount the toast to the newly created element
       toast.mount(toastElement)
 
+      // Check for click events on the toast.
+      toastElement.addEventListener('click', () => {
+        // Animate the toast out.
+        toastElement.className =
+          'transition-all duration-300 ease-in-out opacity-0 transform scale-75'
+        // Remove the toast element from the DOM.
+        setTimeout(() => {
+          toast.unmount(toastElement)
+          toastElement.remove()
+        }, 300)
+      })
+
       // After the duration has ended, we remove the toast.
       setTimeout(() => {
         toast.unmount(toastElement)
