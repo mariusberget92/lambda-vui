@@ -26,7 +26,7 @@ There is currently no documentation for this library, but it will be added in th
 <span>✅</span> Date & Time component<br>
 <span>✅</span> Button component<br>
 <span>❌</span> Dropzone upload component<br>
-<span>❌</span> Radio component<br>
+<span>✅</span> Radio component<br>
 <span>✅</span> Switch component<br>
 <span>❌</span> Range component<br>
 <span>❌</span> Color component<br>
