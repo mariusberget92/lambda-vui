@@ -237,7 +237,7 @@ const addTag = (tag) => {
 
   if (tagAlreadyExists(tag.trim())) {
     resetTagInput()
-    emit('error', 'Tag already exists')
+    emit('error', 'Tag already added')
     return
   }
 
