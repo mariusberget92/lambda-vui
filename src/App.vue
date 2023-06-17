@@ -12,6 +12,7 @@ import VDateTimePicker from './components/Form/V-DateTimePicker.vue'
 import VRating from './components/Form/V-Rating.vue'
 import VTags from './components/Form/V-Tags.vue'
 import VSwitch from './components/Form/V-Switch.vue'
+import VRadio from './components/Form/V-Radio.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -43,6 +44,8 @@ const switch2 = ref(false)
 const switch3 = ref(false)
 // eslint-disable-next-line no-unused-vars
 const switch4 = ref(false)
+// eslint-disable-next-line no-unused-vars
+const radio = ref('')
 </script>
 
 <template>
@@ -123,7 +126,30 @@ const switch4 = ref(false)
           />
         </div>
 
+        <VHeading heading="h1" size="2xl">Radio</VHeading>
+
+        <div class="flex space-x-4 pb-10">
+          <VRadio
+            v-model="radio"
+            value="1"
+            size="sm"
+            label="Radio"
+            helper="Helper text"
+            required
+          />
+
+          <VRadio
+            v-model="radio"
+            size="sm"
+            value="2"
+            required
+            label="Radio"
+            helper="Helper text"
+            color="green"
+          />
+        </div>
         <VHeading heading="h1" size="2xl">Switch</VHeading>
+
         <div class="flex flex-col space-y-2 pb-10">
           <VSwitch v-model="switch1" size="xs" :icons="true" />
           <VSwitch v-model="switch2" size="sm" />
