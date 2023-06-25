@@ -13,6 +13,8 @@ import VRating from './components/Form/V-Rating.vue'
 import VTags from './components/Form/V-Tags.vue'
 import VSwitch from './components/Form/V-Switch.vue'
 import VRadio from './components/Form/V-Radio.vue'
+import VLink from './components/Typography/V-Link.vue'
+import VText from './components/Typography/V-Text.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -282,7 +284,7 @@ const radio = ref('')
         <VHeading heading="h1" size="2xl">Tags</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VTags v-model="tags" size="sm" placeholder="Add tags" />
+          <VTags v-model="tags" size="sm" placeholder="Add tags" :max="2" @error="(e) => $toast({ type: 'error', message: e})" />
         </div>
 
         <VHeading heading="h1" size="2xl">Buttons</VHeading>
@@ -341,6 +343,41 @@ const radio = ref('')
               $toast({ type: 'warning', message: 'This is a warning toast' })
             "
           />
+        </div>
+      </div>
+
+      <div class="flex w-[300px] flex-col space-y-4">
+
+        <VHeading heading="h1" size="2xl">Headings</VHeading>
+
+        <div class="flex space-x-4 pb-10 items-center">
+          <VHeading heading="h1" size="xl">H1</VHeading>
+          <VHeading heading="h2" size="lg">H2</VHeading>
+          <VHeading heading="h3" size="base">H3</VHeading>
+          <VHeading heading="h4" size="sm">H4</VHeading>
+          <VHeading heading="h5" size="xs">H5</VHeading>
+          <VHeading heading="h6" size="xs">H6</VHeading>
+        </div>
+
+        <VHeading heading="h1" size="2xl">Text</VHeading>
+
+        <div class="flex items-center space-x-4 pb-10">
+          <VText size="2xl">2XL</VText>
+          <VText size="xl">XL</VText>
+          <VText size="lg">LG</VText>
+          <VText size="base">MD</VText>
+          <VText size="sm">SM</VText>
+          <VText size="xs">XS</VText>
+        </div>
+
+        <VHeading heading="h1" size="2xl">Links</VHeading>
+
+        <div class="flex flex-col space-y-4 pb-10">
+          <VLink href="#" size="xs" color="mauve" text="Mauve link" />
+          <VLink href="#" size="sm" color="blue" text="Blue link (with icon)" icon="group" />
+          <VLink href="#" size="base" color="red" text="Next link is only icon" />
+          <VLink href="#" size="lg" color="green" icon="dark_mode" />
+          <VLink href="#" size="xl" color="yellow" icon="light_mode" button />
         </div>
       </div>
     </div>
