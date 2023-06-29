@@ -177,30 +177,25 @@ const classButton = computed(() => {
   }
 
   const colorClasses = {
-    red: ['bg-nord-red-300', 'border-nord-red-100', 'hover:bg-nord-red-100'],
+    red: ['bg-nord-red-300', 'hover:bg-nord-red-100'],
     green: [
       'bg-nord-green-300',
-      'border-nord-green-100',
       'hover:bg-nord-green-100',
     ],
     blue: [
       'bg-nord-blue-300',
-      'border-nord-blue-100',
       'hover:bg-nord-blue-100',
     ],
     orange: [
       'bg-nord-orange-300',
-      'border-nord-orange-100',
       'hover:bg-nord-orange-100',
     ],
     mauve: [
       'bg-nord-mauve-300',
-      'border-nord-mauve-100',
       'hover:bg-nord-mauve-100',
     ],
     yellow: [
       'bg-nord-yellow-300',
-      'border-nord-yellow-100',
       'hover:bg-nord-yellow-100',
     ],
   }
@@ -315,7 +310,7 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(props.size),
       {
-        'flex items-center justify-center border p-2 px-4 transition-all duration-100 ease-in-out aspect-square max-w-max':
+        'flex items-center justify-center p-2 px-4 transition-all duration-100 ease-in-out aspect-square max-w-max':
           props.button && props.icon && !props.text,
         'flex cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-colors disabled:opacity-50 max-w-max':
           props.button,
