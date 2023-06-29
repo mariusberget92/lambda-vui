@@ -378,6 +378,7 @@ const radio = ref('')
           <VLink href="#" size="base" color="red" text="Next link is only icon" />
           <VLink href="#" size="lg" color="green" icon="dark_mode" />
           <VLink href="#" size="xl" color="yellow" icon="light_mode" button />
+          <VLink href="#" size="sm" color="yellow" icon="light_mode" button text="test" />
         </div>
       </div>
     </div>
