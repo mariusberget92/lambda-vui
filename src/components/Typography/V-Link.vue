@@ -136,34 +136,34 @@ const classButton = computed(() => {
 
   const sizeClasses = {
     xs: {
-      text: ['space-x-2'],
-      icon: ['h-[34px]'],
-      both: ['space-x-2'],
+      text: ['space-x-1.5 !h-[32px]'],
+      icon: ['h-[32px]'],
+      both: ['space-x-1.5 !h-[32px]'],
     },
     sm: {
-      text: ['space-x-2'],
-      icon: ['h-[38px]'],
-      both: ['space-x-2'],
+      text: ['space-x-1.5 !h-[36px]'],
+      icon: ['h-[36px]'],
+      both: ['space-x-1.5 !h-[36px]'],
     },
     base: {
-      text: ['space-x-2.5'],
-      icon: ['h-[42px]'],
-      both: ['space-x-2.5'],
+      text: ['space-x-2 h-[40px]'],
+      icon: ['h-[40px]'],
+      both: ['space-x-2 h-[40px]'],
     },
     lg: {
-      text: ['space-x-2.5'],
-      icon: ['h-[46px]'],
-      both: ['space-x-2.5'],
+      text: ['space-x-2 h-[44px]'],
+      icon: ['h-[44px]'],
+      both: ['space-x-2 h-[44px]'],
     },
     xl: {
-      text: ['space-x-3'],
-      icon: ['h-[46px]'],
-      both: ['space-x-3'],
+      text: ['space-x-2.5 h-[44px]'],
+      icon: ['h-[44px]'],
+      both: ['space-x-2.5 h-[44px]'],
     },
     '2xl': {
-      text: ['space-x-3'],
-      icon: ['h-[50px]'],
-      both: ['space-x-3'],
+      text: ['space-x-2.5 h-[48px]'],
+      icon: ['h-[48px]'],
+      both: ['space-x-2.5 h-[48px]'],
     },
   }
 
@@ -315,9 +315,9 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(props.size),
       {
-        'aspect-square h-full justify-center':
+        'flex items-center justify-center border p-2 px-4 transition-all duration-100 ease-in-out aspect-square max-w-max':
           props.button && props.icon && !props.text,
-        'flex cursor-pointer items-center rounded font-medium text-white transition-colors disabled:opacity-50':
+        'flex cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-colors disabled:opacity-50 max-w-max':
           props.button,
         'cursor-pointer transition-colors': !props.button,
       },
@@ -329,7 +329,7 @@ const getButtonClasses = () => {
     >
       <span
         v-if="props.icon"
-        class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors"
+        class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors leading-none"
         :class="$sizeToClass(props.size)"
         >{{ props.icon }}</span
       >
