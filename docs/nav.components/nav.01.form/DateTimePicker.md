@@ -52,10 +52,4 @@ None
 </template>
 ```
 
-If you need to trigger something when a date or time changes instead of using a `v-model` you can use the `@change` emitted event, see example below.
-
-```html
-<template>
-	<VCheckbox size="sm" color="green" label="Terms" helper="You need to accept the terms to continue." @change="alert('The box changed state!')" />
-</template>
-```
+If you need to trigger something when a date or time changes instead of using a `v-model` you can use the `@change` emitted event.
