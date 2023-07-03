@@ -178,26 +178,11 @@ const classButton = computed(() => {
 
   const colorClasses = {
     red: ['bg-nord-red-300', 'hover:bg-nord-red-100'],
-    green: [
-      'bg-nord-green-300',
-      'hover:bg-nord-green-100',
-    ],
-    blue: [
-      'bg-nord-blue-300',
-      'hover:bg-nord-blue-100',
-    ],
-    orange: [
-      'bg-nord-orange-300',
-      'hover:bg-nord-orange-100',
-    ],
-    mauve: [
-      'bg-nord-mauve-300',
-      'hover:bg-nord-mauve-100',
-    ],
-    yellow: [
-      'bg-nord-yellow-300',
-      'hover:bg-nord-yellow-100',
-    ],
+    green: ['bg-nord-green-300', 'hover:bg-nord-green-100'],
+    blue: ['bg-nord-blue-300', 'hover:bg-nord-blue-100'],
+    orange: ['bg-nord-orange-300', 'hover:bg-nord-orange-100'],
+    mauve: ['bg-nord-mauve-300', 'hover:bg-nord-mauve-100'],
+    yellow: ['bg-nord-yellow-300', 'hover:bg-nord-yellow-100'],
   }
 
   classes.push(...colorClasses[props.color])
@@ -310,9 +295,9 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(props.size),
       {
-        'flex items-center justify-center p-2 px-4 transition-all duration-100 ease-in-out aspect-square max-w-max':
+        'flex aspect-square max-w-max items-center justify-center p-2 px-4 transition-all duration-100 ease-in-out':
           props.button && props.icon && !props.text,
-        'flex cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-colors disabled:opacity-50 max-w-max':
+        'flex max-w-max cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-colors disabled:opacity-50':
           props.button,
         'cursor-pointer transition-colors': !props.button,
       },
@@ -324,7 +309,7 @@ const getButtonClasses = () => {
     >
       <span
         v-if="props.icon"
-        class="material-symbols-rounded flex cursor-pointer items-center justify-center transition-colors leading-none"
+        class="material-symbols-rounded flex cursor-pointer items-center justify-center leading-none transition-colors"
         :class="$sizeToClass(props.size)"
         >{{ props.icon }}</span
       >

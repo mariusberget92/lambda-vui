@@ -8,7 +8,7 @@ import {
   inject,
   watch,
   provide,
-  nextTick
+  nextTick,
 } from 'vue'
 import VPagination from './V-Pagination.vue'
 import VDatePicker from './V-DatePicker.vue'

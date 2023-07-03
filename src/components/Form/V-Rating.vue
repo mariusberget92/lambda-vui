@@ -6,7 +6,7 @@ import VIcon from './Partials/V-Icon.vue'
 
 /**
  * Component emits.
- * 
+ *
  * @type {Object}
  */
 const emit = defineEmits(['update:modelValue', 'click'])

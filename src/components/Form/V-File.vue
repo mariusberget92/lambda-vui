@@ -6,7 +6,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
 
 /**
  * Component emits.
- * 
+ *
  * @type {Object}
  */
 const emit = defineEmits(['update:modelValue', 'error'])

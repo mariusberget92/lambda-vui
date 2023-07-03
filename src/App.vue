@@ -97,7 +97,13 @@ const radio = ref('')
         <VHeading heading="h1" size="2xl">File input</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VFile v-model="file" placeholder="Placeholder" size="sm" required @error="(e) => $toast({ type: 'error', message: e})" />
+          <VFile
+            v-model="file"
+            placeholder="Placeholder"
+            size="sm"
+            required
+            @error="(e) => $toast({ type: 'error', message: e })"
+          />
 
           <VFile
             v-model="file"
@@ -284,7 +290,13 @@ const radio = ref('')
         <VHeading heading="h1" size="2xl">Tags</VHeading>
 
         <div class="flex flex-col space-y-4 pb-10">
-          <VTags v-model="tags" size="sm" placeholder="Add tags" :max="2" @error="(e) => $toast({ type: 'error', message: e})" />
+          <VTags
+            v-model="tags"
+            size="sm"
+            placeholder="Add tags"
+            :max="2"
+            @error="(e) => $toast({ type: 'error', message: e })"
+          />
         </div>
 
         <VHeading heading="h1" size="2xl">Buttons</VHeading>
@@ -347,10 +359,9 @@ const radio = ref('')
       </div>
 
       <div class="flex w-[300px] flex-col space-y-4">
-
         <VHeading heading="h1" size="2xl">Headings</VHeading>
 
-        <div class="flex space-x-4 pb-10 items-center">
+        <div class="flex items-center space-x-4 pb-10">
           <VHeading heading="h1" size="xl">H1</VHeading>
           <VHeading heading="h2" size="lg">H2</VHeading>
           <VHeading heading="h3" size="base">H3</VHeading>
@@ -374,11 +385,29 @@ const radio = ref('')
 
         <div class="flex flex-col space-y-4 pb-10">
           <VLink href="#" size="xs" color="mauve" text="Mauve link" />
-          <VLink href="#" size="sm" color="blue" text="Blue link (with icon)" icon="group" />
-          <VLink href="#" size="base" color="red" text="Next link is only icon" />
+          <VLink
+            href="#"
+            size="sm"
+            color="blue"
+            text="Blue link (with icon)"
+            icon="group"
+          />
+          <VLink
+            href="#"
+            size="base"
+            color="red"
+            text="Next link is only icon"
+          />
           <VLink href="#" size="lg" color="green" icon="dark_mode" />
           <VLink href="#" size="xl" color="yellow" icon="light_mode" button />
-          <VLink href="#" size="sm" color="yellow" icon="light_mode" button text="test" />
+          <VLink
+            href="#"
+            size="sm"
+            color="yellow"
+            icon="light_mode"
+            button
+            text="test"
+          />
         </div>
       </div>
     </div>

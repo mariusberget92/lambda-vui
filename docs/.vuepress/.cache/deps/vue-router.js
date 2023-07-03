@@ -15,8 +15,8 @@ import {
   unref,
   watch,
   watchEffect
-} from "./chunk-I7UM54T5.js";
-import "./chunk-KAR2RACQ.js";
+} from "./chunk-AQDTH7GJ.js";
+import "./chunk-DDKVHXSX.js";
 import {
   setupDevtoolsPlugin
 } from "./chunk-RFQTXRIF.js";
@@ -2657,7 +2657,7 @@ export {
 
 vue-router/dist/vue-router.mjs:
   (*!
-    * vue-router v4.2.0
+    * vue-router v4.2.2
     * (c) 2023 Eduardo San Martin Morote
     * @license MIT
     *)

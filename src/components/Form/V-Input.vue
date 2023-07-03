@@ -5,7 +5,7 @@ import VIcon from './Partials/V-Icon.vue'
 
 /**
  * Component emits.
- * 
+ *
  * @type {Object}
  */
 defineEmits(['update:modelValue'])

@@ -11,7 +11,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 /**
  * Click outside handler.
@@ -241,6 +241,7 @@ const toggleDropdown = () => {
 const handleSelect = (event) => {
   if (event == false) {
     emit('update:modelValue', '')
+    emit('change', '')
     return
   }
   const day = event.day.toString().padStart(2, '0')
@@ -255,10 +256,13 @@ const handleSelect = (event) => {
 
   if (props.datePicker && props.timePicker) {
     emit('update:modelValue', formattedDateTime)
+    emit('change', formattedDateTime)
   } else if (props.datePicker && !props.timePicker) {
     emit('update:modelValue', formattedDate)
+    emit('change', formattedDate)
   } else if (props.timePicker && !props.datePicker) {
     emit('update:modelValue', formattedTime)
+    emit('change', formattedTime)
   }
 }
 
