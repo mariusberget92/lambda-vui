@@ -1,6 +1,18 @@
 <script setup>
-import { defineProps, computed, ref, onMounted } from 'vue'
+import { defineProps, computed, ref, onMounted, defineEmits } from 'vue'
 
+/**
+ * Component emits.
+ *
+ * @type {Object}
+ */
+const emit = defineEmits(['change'])
+
+/**
+ * Component props.
+ * 
+ * @type {Object}
+ */
 const props = defineProps({
   /**
    * Position of the dark mode toggle.
@@ -53,6 +65,8 @@ function toggleDarkMode() {
   isDarkMode.value
     ? localStorage.setItem('darkMode', 'true')
     : localStorage.setItem('darkMode', 'false')
+
+  emit('change', isDarkMode.value)
 }
 
 /**
