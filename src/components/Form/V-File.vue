@@ -9,7 +9,7 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue', 'error'])
+const emit = defineEmits(['update:modelValue', 'error', 'change'])
 
 /**
  * Component props.
@@ -324,6 +324,7 @@ const handleFileSelect = (event) => {
 
   // Emit the selected file(s) to the parent component
   emit('update:modelValue', props.multiple ? validatedFiles : validatedFiles[0])
+  emit('change', props.multiple ? validatedFiles : validatedFiles[0])
 }
 
 /**

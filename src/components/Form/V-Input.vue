@@ -8,7 +8,7 @@ import VIcon from './Partials/V-Icon.vue'
  *
  * @type {Object}
  */
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
@@ -232,7 +232,7 @@ const props = defineProps({
         :value="props.modelValue"
         :aria-labelledby="props.label ? `${props.id}-label` : null"
         :aria-describedby="props.helper ? `${props.id}-helper` : null"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="$emit('update:modelValue', $event.target.value), $emit('change', $event.target.value)"
       />
     </div>
   </div>

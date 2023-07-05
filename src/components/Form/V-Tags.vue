@@ -8,7 +8,7 @@ import VButton from './V-Button.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue', 'error'])
+const emit = defineEmits(['update:modelValue', 'error', 'change'])
 
 /**
  * Component props.
@@ -221,6 +221,7 @@ const keyHandler = (event) => {
   if (event.key === 'Backspace' && tagInputRef.value.innerText === '') {
     tags.value.pop()
     emit('update:modelValue', tags.value)
+    emit('change', tags.value)
   }
 }
 
@@ -250,6 +251,7 @@ const addTag = (tag) => {
   tags.value.push(tag)
   resetTagInput()
   emit('update:modelValue', tags.value)
+  emit('change', tags.value)
 }
 
 /**
@@ -261,6 +263,7 @@ const addTag = (tag) => {
 const removeTag = (tag) => {
   tags.value = tags.value.filter((t) => t !== tag)
   emit('update:modelValue', tags.value)
+  emit('change', tags.value)
 }
 
 /**

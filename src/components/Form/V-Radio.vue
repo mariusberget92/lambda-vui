@@ -7,7 +7,7 @@ import VLabel from './Partials/V-Label.vue'
  *
  * @type {Object}
  */
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
@@ -162,7 +162,7 @@ const props = defineProps({
       :required="props.required"
       :aria-labelledby="props.label ? `${props.id}-label` : null"
       :aria-describedby="props.helper ? `${props.id}-helper` : null"
-      @change="$emit('update:modelValue', $event.target.value)"
+      @change="$emit('update:modelValue', $event.target.value), $emit('change', $event.target.value)"
     />
 
     <VLabel

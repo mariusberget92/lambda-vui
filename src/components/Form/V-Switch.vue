@@ -7,7 +7,7 @@ import VLabel from './Partials/V-Label.vue'
  *
  * @type {Object}
  */
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
@@ -188,6 +188,7 @@ const isOn = ref(props.modelValue)
 const toggleSwitch = () => {
   isOn.value = !isOn.value
   emit('update:modelValue', isOn.value)
+  emit('change', isOn.value)
 }
 
 /**
