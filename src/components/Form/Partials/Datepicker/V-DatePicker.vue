@@ -3,26 +3,27 @@ import { computed, defineEmits, defineProps, inject, ref } from 'vue'
 
 /**
  * Component emits.
- *
- * @type {Object}
+ * 
+ * @property {Number} selectDay - Emits when a day is selected. 
  */
 const emit = defineEmits(['selectDay'])
 
 /**
  * Component props.
- *
- * @type {Object}
+ * 
+ * @property {String} color - The color of the datepicker.
+ * @property {String} size - The datepicker size.
+ * @property {Boolean} rounded - Whether the datepicker is rounded.
  */
 const props = defineProps({
   /**
    * The color of the datepicker.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
+    required: true,
     default: 'blue',
     validator: (val) => {
       return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
@@ -30,14 +31,13 @@ const props = defineProps({
   },
 
   /**
-   * Datepicker size.
+   * The datepicker size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
+    required: true,
     default: 'sm',
     validator: (val) => {
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)
@@ -45,28 +45,26 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
+   * Whether the datepicker is rounded.
    */
   rounded: {
     type: Boolean,
+    required: true,
     default: true,
   },
 })
 
 /**
- * Days of the week.
- *
- * @type {Array}
+ * Days of the week, used for calendar header.
+ * 
+ * @type {Array<String>}
  */
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 /**
  * Selected day, month and year injections from the parent component.
- *
- * @type {import('vue').Inject}
+ * 
+ * @type {Number}
  */
 const selectedDay = inject('selectedDay')
 const selectedMonth = inject('selectedMonth')
@@ -75,7 +73,7 @@ const selectedYear = inject('selectedYear')
 /**
  * Selected day, month and year refs.
  *
- * @type {import('vue').Ref<number>}
+ * @type {Number}
  */
 const selectedDayRef = ref(selectedDay)
 const selectedMonthRef = ref(selectedMonth)
@@ -83,10 +81,9 @@ const selectedYearRef = ref(selectedYear)
 
 /**
  * Check if a day is today.
- *
- * @type {import('vue').ComputedRef<Function>}
- * @returns {Function}
+ * 
  * @param {Number} day - The day.
+ * @returns {Boolean}
  */
 const isToday = computed(() => {
   const today = new Date()
@@ -102,9 +99,8 @@ const isToday = computed(() => {
 /**
  * Check if a day is selected.
  *
- * @type {import('vue').ComputedRef<Function>}
- * @returns {Function}
  * @param {Number} day - The day.
+ * @returns {Boolean}
  */
 const isSelected = computed(() => {
   return (day) => {
@@ -113,7 +109,17 @@ const isSelected = computed(() => {
 })
 
 /**
- * The class name for the first day of the selected month and year.
+ * How many days are in the selected month.
+ *
+ * @returns {Number}
+ */
+ const daysInMonth = computed(() => {
+  return new Date(selectedYearRef.value, selectedMonthRef.value, 0).getDate()
+})
+
+/**
+ * Determine the class name for the first day of the month, so we know what column to start the month on.
+ * 
  * @returns {String} - The class name for the first day of the month.
  */
 const classRowStart = computed(() => {
@@ -132,10 +138,9 @@ const classRowStart = computed(() => {
 })
 
 /**
- * The color of the selected date.
+ * Color classes for the selected date.
  *
- * @type {import('vue').ComputedRef<string>}
- * @returns {string}
+ * @returns {String}
  */
 const classSelectedColor = computed(() => {
   const colorClasses = {
@@ -150,10 +155,9 @@ const classSelectedColor = computed(() => {
 })
 
 /**
- * The color of the normal date.
+ * Color classes for a normal unselected date.
  *
- * @type {import('vue').ComputedRef<string>}
- * @returns {string}
+ * @returns {String}
  */
 const classNormalColor = computed(() => {
   const colorClasses = {
@@ -166,16 +170,6 @@ const classNormalColor = computed(() => {
   }
 
   return colorClasses[props.color].join(' ')
-})
-
-/**
- * Days in the month based on selected year and month.
- *
- * @type {import('vue').ComputedRef<Number>}
- * @returns {Number}
- */
-const daysInMonth = computed(() => {
-  return new Date(selectedYearRef.value, selectedMonthRef.value, 0).getDate()
 })
 </script>
 

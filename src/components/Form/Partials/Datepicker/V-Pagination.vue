@@ -6,7 +6,11 @@ import VSelect from '../../V-Select.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Number} updateMonth - Emits when the month is updated.
+ * @property {Number} updateYear - Emits when the year is updated.
+ * @property {Undefined} previousMonth - Emits when the previous month button is clicked.
+ * @property {Undefined} nextMonth - Emits when the next month button is clicked.
+ * @property {Undefined} setToday - Emits when the today button is clicked.
  */
 const emit = defineEmits([
   'updateMonth',
@@ -19,15 +23,15 @@ const emit = defineEmits([
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} color - The color of the datepicker.
+ * @property {String} size - The datepicker size.
+ * @property {Boolean} rounded - Whether the datepicker is rounded.
  */
 const props = defineProps({
   /**
    * The color of the datepicker.
-   *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * 
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -40,9 +44,7 @@ const props = defineProps({
   /**
    * Datepicker size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -54,9 +56,6 @@ const props = defineProps({
 
   /**
    * Whether the datepicker is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -67,7 +66,7 @@ const props = defineProps({
 /**
  * Selected year and month injections from parent component.
  *
- * @type {import('vue').Ref}
+ * @type {Number}
  */
 const selectedYear = inject('selectedYear')
 const selectedMonth = inject('selectedMonth')
@@ -75,7 +74,7 @@ const selectedMonth = inject('selectedMonth')
 /**
  * Selected year and month refs.
  *
- * @type {import('vue').Ref}
+ * @type {Number}
  */
 const selectedYearRef = ref(selectedYear)
 const selectedMonthRef = ref(selectedMonth)
@@ -83,7 +82,7 @@ const selectedMonthRef = ref(selectedMonth)
 /**
  * Months of the year.
  *
- * @type {Array}
+ * @type {Array<Object>}
  */
 const months = [
   { value: 1, text: 'January' },
@@ -101,9 +100,8 @@ const months = [
 ]
 
 /**
- * Years.
+ * Years from 1900 to 10 years from now.
  *
- * @type {import('vue').ComputedRef<Array>}
  * @returns {Array}
  */
 const years = computed(() => {

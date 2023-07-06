@@ -46,7 +46,5 @@ There is currently no documentation for this library, but it will be added in th
 ## Bugs / Todo
 ❌ Fix DateTimePicker component to be initialized with a empty value (currently it's initialized with the current date and time but can be resat to empty with the clear button). Just using the reset method will not work (month and year will display as 00-00 in the input)<br>
 ❌ Make tags component also take a options prop (like the select component) so that it can be used as a select component with predefined options only or a mix between predefined and user defined tags.<br>
-✅ Fix colors for switch component.
 ❌ Toast system needs an upgrade. Need to modify it so that toasts can be paused when hovering over them. Also need to add perfect scrollbar to the toast container so that it can be scrolled when there are many toasts. We also need to consider adding a AI time-to-read implementation when regarding the duration of the toasts with a minimum duration.<br>
 ❌ Modify checkbox component to take in other values than booleans. For example, if you want to use a checkbox to select a value from a list of options, you would want to pass in the value of the option to the checkbox and then have the checkbox emit the value of the option when it's checked. This would make it easier to use the checkbox component in a v-for loop.<br>
-✅ Fix the link component when adding button prop. Currently, when adding button prop the link component will be rendered full-height and full-width. This is not intended.<br> We want to render it the same way as the button component.

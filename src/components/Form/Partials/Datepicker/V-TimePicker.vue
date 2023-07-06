@@ -6,22 +6,24 @@ import VSelect from '../../V-Select.vue'
 /**
  * Components emits.
  *
- * @reutrn {Object}
+ * @property {Number} updateHour - Emits when the hour is updated.
+ * @property {Number} updateMinute - Emits when the minute is updated.
+ * @property {Undefined} setNow - Emits when the now button is clicked.
  */
 const emit = defineEmits(['updateHour', 'updateMinute', 'setNow'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} color - The color of the datepicker.
+ * @property {String} size - The datepicker size.
+ * @property {Boolean} rounded - Whether the datepicker is rounded.
  */
 const props = defineProps({
   /**
    * The color of the datepicker.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -34,9 +36,7 @@ const props = defineProps({
   /**
    * Datepicker size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -48,9 +48,6 @@ const props = defineProps({
 
   /**
    * Whether the datepicker is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -61,7 +58,7 @@ const props = defineProps({
 /**
  * Selected hour and minute injected from parent component.
  *
- * @type {import('vue').Ref<number>}
+ * @type {Number}
  */
 const selectedHour = inject('selectedHour')
 const selectedMinute = inject('selectedMinute')
@@ -69,15 +66,14 @@ const selectedMinute = inject('selectedMinute')
 /**
  * Selected hour and minute refs.
  *
- * @type {import('vue').Ref<number>}
+ * @type {Number}
  */
 const selectedHourRef = ref(selectedHour)
 const selectedMinuteRef = ref(selectedMinute)
 
 /**
- * Hours.
+ * Array of hours.
  *
- * @type {import('vue').ComputedRef<Array>}
  * @returns {Array}
  */
 const hours = computed(() => {
@@ -89,9 +85,8 @@ const hours = computed(() => {
 })
 
 /**
- * Minutes.
+ * Array of minutes.
  *
- * @type {import('vue').ComputedRef<Array>}
  * @returns {Array}
  */
 const minutes = computed(() => {

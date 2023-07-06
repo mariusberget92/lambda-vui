@@ -17,21 +17,27 @@ import VTimePicker from './V-TimePicker.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Object} select - Emits when a date is selected.
+ * @property {Boolean} closeDropdown - Emits when the dropdown is closed.
+ * @property {Boolean} reset - Emits when the datepicker is reset.
  */
 const emit = defineEmits(['select', 'closeDropdown', 'reset'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String|Boolean} selectedDate - The selected date (YYYY-MM-DD H:i).
+ * @property {Boolean} show - Whether the dropdown is visible.
+ * @property {String} size - The datepicker size.
+ * @property {Boolean} rounded - Whether the datepicker is rounded.
+ * @property {Boolean} datePicker - Whether or not to show the datepicker.
+ * @property {Boolean} timePicker - Whether or not to show the timepicker.
+ * @property {String} color - The color of the datepicker.
+ * 
  */
 const props = defineProps({
   /**
    * The selected date (YYYY-MM-DD H:i).
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   selectedDate: {
     type: [String, Boolean],
@@ -40,9 +46,6 @@ const props = defineProps({
 
   /**
    * Whether the dropdown is visible.
-   *
-   * @type {Boolean}
-   * @default false
    */
   show: {
     type: Boolean,
@@ -50,11 +53,9 @@ const props = defineProps({
   },
 
   /**
-   * Datepicker size.
-   *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * The datepicker size.
+   * 
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -66,9 +67,6 @@ const props = defineProps({
 
   /**
    * Whether the datepicker is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -77,9 +75,6 @@ const props = defineProps({
 
   /**
    * Whether or not to show the datepicker.
-   *
-   * @type {Boolean}
-   * @default true
    */
   datePicker: {
     type: Boolean,
@@ -88,9 +83,6 @@ const props = defineProps({
 
   /**
    * Whether or not to show the timepicker.
-   *
-   * @type {Boolean}
-   * @default false
    */
   timePicker: {
     type: Boolean,
@@ -99,10 +91,8 @@ const props = defineProps({
 
   /**
    * The color of the datepicker.
-   *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * 
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -116,7 +106,7 @@ const props = defineProps({
 /**
  * Selected day, month, year, hour and minute refs.
  *
- * @type {import('vue').Ref<number>}
+ * @type {Number}
  */
 const selectedDay = ref(0)
 const selectedMonth = ref(0)
@@ -126,8 +116,6 @@ const selectedMinute = ref(0)
 
 /**
  * Provide selected date refs.
- *
- * @returns {void}
  */
 provide('selectedDay', selectedDay)
 provide('selectedMonth', selectedMonth)
@@ -137,11 +125,11 @@ provide('selectedMinute', selectedMinute)
 
 /**
  * When mounted set selected date before anything else.
- *
- * @returns {void}
  */
 onMounted(() => {
-  const date = props.selectedDate ? new Date(props.selectedDate) : new Date()
+  const date = props.selectedDate 
+    ? new Date(props.selectedDate) 
+    : new Date()
 
   selectedDay.value = date.getDate()
   selectedMonth.value = date.getMonth() + 1
@@ -155,9 +143,8 @@ onMounted(() => {
 })
 
 /**
- * Watch for date changes and emit the event.
- *
- * @returns {void}
+ * Watch for changes to selected date / time and emit the select event when
+ * changes are detected.
  */
 watch(
   [selectedDay, selectedMonth, selectedYear, selectedHour, selectedMinute],
@@ -167,9 +154,8 @@ watch(
 )
 
 /**
- * Days in the month based on selected year and month.
+ * How many days are in the selected month.
  *
- * @type {import('vue').ComputedRef<Number>}
  * @returns {Number}
  */
 const daysInMonth = computed(() => {
@@ -177,10 +163,9 @@ const daysInMonth = computed(() => {
 })
 
 /**
- * Dropdown width css classes.
+ * Dropdown classes to get the correct width based on size.
  *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
+ * @returns {String}
  */
 const classDropdownWidth = computed(() => {
   return {
@@ -194,19 +179,9 @@ const classDropdownWidth = computed(() => {
 })
 
 /**
- * Selects the given day.
- * Month and year change themselves when the user does so.
- * @param {Number} day - The day to select.
- * @returns {void}
- */
-const selectDate = (day) => {
-  selectedDay.value = day
-}
-
-/**
  * Set the selected date to today.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const setToday = () => {
   const today = new Date()
@@ -227,7 +202,7 @@ const setToday = () => {
 /**
  * Set the selected hour/minute to now.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const setNow = () => {
   const timeNow = new Date()
@@ -252,35 +227,44 @@ const shouldReset = inject('reset')
 const keyToSend = inject('sendKey')
 
 /**
- * Watchers.
- *
- * @returns {void}
+ * Watch for changes to the reset injection and reset the selected date if
+ * changes are detected.
  */
-watch([shouldReset, keyToSend], ([reset, key]) => {
-  const shouldResetRef = ref(reset)
-  const keyToSendRef = ref(key)
+watch(
+  shouldReset,
+  (reset) => {
+    const shouldResetRef = ref(reset)
 
-  if (shouldResetRef.value) {
-    const today = new Date()
-    selectedDay.value = today.getDate()
-    selectedMonth.value = today.getMonth() + 1
-    selectedYear.value = today.getFullYear()
-    if (props.timePicker) {
-      selectedHour.value = today.getHours().toString().padStart(2, '0')
-      selectedMinute.value = today.getMinutes().toString().padStart(2, '0')
+    if (shouldResetRef.value) {
+      const today = new Date()
+      selectedDay.value = today.getDate()
+      selectedMonth.value = today.getMonth() + 1
+      selectedYear.value = today.getFullYear()
+      if (props.timePicker) {
+        selectedHour.value = today.getHours().toString().padStart(2, '0')
+        selectedMinute.value = today.getMinutes().toString().padStart(2, '0')
+      }
     }
   }
-
-  if (keyToSendRef.value !== '') {
-    keyHandler(key)
-  }
-})
+)
 
 /**
- * Handles keyboard key strings.
- *
- * @param {String} key - The key string.
- * @returns {void}
+ * Watch for changes to the key injection and send the key if changes are
+ * detected.
+ */
+watch(
+  keyToSend,
+  (key) => {
+    const keyToSendRef = ref(key)
+
+    if (keyToSendRef.value !== '') {
+      keyHandler(key)
+    }
+  }
+)
+
+/**
+ * Key constants.
  */
 const KEY_LEFT_ARROW = 'ArrowLeft'
 const KEY_RIGHT_ARROW = 'ArrowRight'
@@ -294,6 +278,12 @@ const KEY_DELETE = 'Delete'
 const KEY_INSERT = 'Insert'
 const KEY_ESC = 'Escape'
 
+/**
+ * Key handler.
+ *
+ * @param {String} key - The key string.
+ * @returns {Void}
+ */
 const keyHandler = (key) => {
   switch (key) {
     case KEY_LEFT_ARROW:
@@ -334,9 +324,9 @@ const keyHandler = (key) => {
 }
 
 /**
- * Selects the previous day.
+ * Select the previous day.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const previousDay = () => {
   if (selectedDay.value == 1) {
@@ -348,9 +338,9 @@ const previousDay = () => {
 }
 
 /**
- * Selects the next day.
+ * Select the next day.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const nextDay = () => {
   if (selectedDay.value == daysInMonth.value) {
@@ -362,9 +352,9 @@ const nextDay = () => {
 }
 
 /**
- * Selects the previous week.
+ * Select the previous week.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const previousWeek = () => {
   if (selectedDay.value <= 7) {
@@ -376,9 +366,9 @@ const previousWeek = () => {
 }
 
 /**
- * Selects the next week.
+ * Select the next week.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const nextWeek = () => {
   if (selectedDay.value + 7 > daysInMonth.value) {
@@ -390,9 +380,9 @@ const nextWeek = () => {
 }
 
 /**
- * Selects the previous month.
+ * Select the previous month.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const previousMonth = () => {
   if (selectedMonth.value == 1) {
@@ -404,9 +394,9 @@ const previousMonth = () => {
 }
 
 /**
- * Selects the next month.
+ * Select the next month.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const nextMonth = () => {
   if (selectedMonth.value == 12) {
@@ -418,36 +408,36 @@ const nextMonth = () => {
 }
 
 /**
- * Selects the first day of the month.
+ * Select the first day of the month.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const firstDayOfTheMonth = () => {
   selectedDay.value = 1
 }
 
 /**
- * Selects the last day of the month.
+ * Select the last day of the month.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const lastDayOfTheMonth = () => {
   selectedDay.value = daysInMonth.value
 }
 
 /**
- * Selects the previous year.
+ * Select the previous year.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const previousYear = () => {
   selectedYear.value--
 }
 
 /**
- * Selects the next year.
+ * Select the next year.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const nextYear = () => {
   selectedYear.value++
@@ -456,7 +446,7 @@ const nextYear = () => {
 /**
  * Closes the dropdown.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const closeDropdown = () => {
   emit('closeDropdown', true)
@@ -504,7 +494,7 @@ const closeDropdown = () => {
         <VDatePicker
           :rounded="props.rounded"
           :selected-day="selectedDay"
-          @select-day="selectDate($event)"
+          @select-day="selectedDay = $event"
         />
       </div>
 

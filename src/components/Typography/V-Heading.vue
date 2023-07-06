@@ -12,7 +12,6 @@ const props = defineProps({
    *
    * @type {String}
    * @default base
-   * @options xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl, 8xl, 9xl
    */
   size: {
     type: String,
@@ -40,8 +39,7 @@ const props = defineProps({
    * The color of the heading.
    *
    * @type {String}
-   * @default default
-   * @options red, green, blue, orange, mauve, yellow, default
+   * @default 'default'
    */
   color: {
     type: String,
@@ -63,8 +61,7 @@ const props = defineProps({
    * The heading tag.
    *
    * @type {String}
-   * @default h1
-   * @options h1, h2, h3, h4, h5, h6
+   * @default 'h1'
    */
   heading: {
     type: String,
