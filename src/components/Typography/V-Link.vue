@@ -109,7 +109,7 @@ const tag = computed(() => {
 /**
  * CSS button classes.
  *
- * @type {String}
+ * @returns {String}
  */
 const classButton = computed(() => {
   let classes = []
@@ -182,7 +182,7 @@ const classButton = computed(() => {
 /**
  * CSS link classes.
  *
- * @type {String}
+ * @returns {String}
  */
 const classLink = computed(() => {
   let classes = []

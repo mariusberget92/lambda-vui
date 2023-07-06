@@ -226,7 +226,7 @@ const props = defineProps({
 /**
  * Whether the dropdown is open or not.
  *
- * @type {Booleam}
+ * @type {Boolean}
  */
 const isDropdownOpen = ref(false)
 

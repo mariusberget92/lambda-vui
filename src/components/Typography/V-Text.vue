@@ -46,7 +46,7 @@ const props = defineProps({
 /**
  * CSS color classes.
  *
- * @type {String}
+ * @returns {String}
  */
 const classColor = computed(() => {
   let classes = []

@@ -51,7 +51,7 @@ const props = defineProps({
 /**
  * Get the icon to display based on the type
  *
- * @type {String}
+ * @returns {String}
  */
 const icon = computed(() => {
   return {
@@ -65,7 +65,7 @@ const icon = computed(() => {
 /**
  * Get the title based on the type.
  *
- * @type {String}
+ * @returns {String}
  */
 const title = computed(() => {
   return props.type.charAt(0).toUpperCase() + props.type.slice(1)
@@ -74,7 +74,7 @@ const title = computed(() => {
 /**
  * The progress of the toast.
  *
- * @type {Number}
+ * @returns {Number}
  */
 const toastProgress = ref(100)
 

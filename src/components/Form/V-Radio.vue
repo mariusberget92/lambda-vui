@@ -25,10 +25,6 @@ defineEmits(['update:modelValue', 'change'])
 const props = defineProps({
   /**
    * The ID of the radio.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-radio-<random>
    */
   id: {
     type: String,

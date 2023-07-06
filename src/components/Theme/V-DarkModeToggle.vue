@@ -38,7 +38,7 @@ const isDarkMode = ref(false)
 /**
  * Classes for the wrapper.
  *
- * @type {String}
+ * @returns {String}
  */
 const classWrapper = computed(() => {
   return {

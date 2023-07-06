@@ -59,10 +59,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the label and helper should be compact (for checkboxes)
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the label and helper should be compact (for checkboxes).
    */
   compact: {
     type: Boolean,

@@ -122,7 +122,7 @@ const props = defineProps({
 /**
  * The calculated classes that are needed for the button.
  *
- * @type {String}
+ * @returns {String}
  */
 const classButton = computed(() => {
   let classes = []
