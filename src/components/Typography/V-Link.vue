@@ -5,14 +5,19 @@ import { Link } from '@inertiajs/vue3'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} href - Url for the href attribute.
+ * @property {String|Boolean} text - Link text.
+ * @property {String|Boolean} icon - Link icon.
+ * @property {String} size - Link size.
+ * @property {Boolean} external - External link.
+ * @property {Boolean} button - Show link as button (adds background color).
+ * @property {String} color - Button or link color.
+ * @property {Boolean} rounded - Whether the button should be rounded if it's a button.
+ * 
  */
 const props = defineProps({
   /**
    * Url for the href attribute
-   *
-   * @type {String}
-   * @default '#'
    */
   href: {
     type: String,
@@ -21,9 +26,6 @@ const props = defineProps({
 
   /**
    * Link text
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   text: {
     type: [String, Boolean],
@@ -32,9 +34,6 @@ const props = defineProps({
 
   /**
    * Link icon
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   icon: {
     type: [String, Boolean],
@@ -44,9 +43,7 @@ const props = defineProps({
   /**
    * Link size
    *
-   * @type {String}
-   * @default 'sm'
-   * @options ['xs', 'sm', 'base', 'lg', 'xl', '2xl']
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -57,9 +54,6 @@ const props = defineProps({
 
   /**
    * External link
-   *
-   * @type {Boolean}
-   * @default false
    */
   external: {
     type: Boolean,
@@ -68,9 +62,6 @@ const props = defineProps({
 
   /**
    * Show link as button (adds background color)
-   *
-   * @type {Boolean}
-   * @default false
    */
   button: {
     type: Boolean,
@@ -78,11 +69,9 @@ const props = defineProps({
   },
 
   /**
-   * Button color
+   * Button or link color.
    *
-   * @type {String}
-   * @default 'blue'
-   * @options ['blue', 'red', 'green', 'orange', 'yellow', 'mauve', 'default']
+   * @values blue, red, green, orange, yellow, mauve, default
    */
   color: {
     type: String,
@@ -94,10 +83,9 @@ const props = defineProps({
   },
 
   /**
-   * Whether the button is rounded.
-   *
-   * @type {String}
-   * @default 'base'
+   * Whether the button should be rounded if it's a button.
+   * 
+   * @values none, sm, base, lg, full
    */
   rounded: {
     type: String,
@@ -111,7 +99,7 @@ const props = defineProps({
 /**
  * Wheter the link is a Link component or an anchor tag.
  *
- * @type {import('vue').ComputedRef<import('interiajs/vue3').Link|'a'>}
+ * @returns {String|import ('@inertiajs/inertia-vue3').Link}
  */
 const tag = computed(() => {
   if (props.external) return 'a'
@@ -121,7 +109,7 @@ const tag = computed(() => {
 /**
  * CSS button classes.
  *
- * @type {import ('vue').ComputedRef<String>}
+ * @type {String}
  */
 const classButton = computed(() => {
   let classes = []
@@ -194,7 +182,7 @@ const classButton = computed(() => {
 /**
  * CSS link classes.
  *
- * @type {import ('vue').ComputedRef<String>}
+ * @type {String}
  */
 const classLink = computed(() => {
   let classes = []
@@ -268,7 +256,7 @@ const classLink = computed(() => {
  * We have to do this because using computed properties directly in the :class attribute,
  * is not supported by Vue 3.
  *
- * @type {import ('vue').ComputedRef<string>}
+ * @return {String}
  */
 const getLinkClasses = () => {
   return !props.button ? classLink.value : ''
@@ -279,7 +267,7 @@ const getLinkClasses = () => {
  * We have to do this because using computed properties directly in the :class attribute,
  * is not supported by Vue 3.
  *
- * @type {import ('vue').ComputedRef<string>}
+ * @return {String}
  */
 const getButtonClasses = () => {
   return props.button ? classButton.value : ''

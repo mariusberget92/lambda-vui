@@ -6,23 +6,32 @@ import VIcon from './Partials/V-Icon.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {String} update:modelValue - Emits when the model value is updated.
+ * @property {String} change - Emits when the input is changed.
  */
 defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the input.
+ * @property {String} modelValue - Model value of the input.
+ * @property {String|Boolean} label - The label of the input.
+ * @property {String|Boolean} helper - The helper text of the input.
+ * @property {String} size - Input size.
+ * @property {String} color - The color of the input.
+ * @property {Boolean} required - Whether the input is required.
+ * @property {String|Boolean} icon - The icon of the input.
+ * @property {String} placeholder - The placeholder of the input.
+ * @property {Boolean} disabled - Whether the input is disabled.
+ * @property {String} type - Input type.
+ * @property {String|Boolean} error - Wheter the input has an error.
+ * @property {Boolean} rounded - Whether the input is rounded.
+ * 
  */
 const props = defineProps({
   /**
    * The ID of the input.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-input-<random>
    */
   id: {
     type: String,
@@ -33,10 +42,6 @@ const props = defineProps({
 
   /**
    * Model value of the input.
-   *
-   * @type {String}
-   * @default ''
-   * @required
    */
   modelValue: {
     type: String,
@@ -47,9 +52,7 @@ const props = defineProps({
   /**
    * Input size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -61,10 +64,6 @@ const props = defineProps({
 
   /**
    * The label of the input.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -73,10 +72,6 @@ const props = defineProps({
 
   /**
    * The helper text of the input.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -85,9 +80,6 @@ const props = defineProps({
 
   /**
    * Whether the input is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -96,9 +88,6 @@ const props = defineProps({
 
   /**
    * The icon of the input.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   icon: {
     type: [String, Boolean],
@@ -107,9 +96,6 @@ const props = defineProps({
 
   /**
    * The placeholder of the input.
-   *
-   * @type {String}
-   * @default ''
    */
   placeholder: {
     type: String,
@@ -118,9 +104,6 @@ const props = defineProps({
 
   /**
    * Whether the input is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -130,9 +113,7 @@ const props = defineProps({
   /**
    * Input type.
    *
-   * @type {String}
-   * @default text
-   * @options text, password, email, number
+   * @values text, password, email, hidden
    */
   type: {
     type: String,
@@ -144,9 +125,6 @@ const props = defineProps({
 
   /**
    * Wheter the input has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   error: {
     type: [String, Boolean],
@@ -155,9 +133,6 @@ const props = defineProps({
 
   /**
    * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -165,11 +140,9 @@ const props = defineProps({
   },
 
   /**
-   * The color of the datepicker buttons.
+   * The color of the input.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,

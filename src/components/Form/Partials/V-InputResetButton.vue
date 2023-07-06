@@ -4,22 +4,21 @@ import { defineEmits, defineProps } from 'vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Undefined} reset - Emits when the reset button is clicked.
  */
 const emit = defineEmits(['reset'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} size - Reset button size.
+ * @property {String|Array|Number|Boolean} modelValue - The model value.
  */
 const props = defineProps({
   /**
-   * Input size.
+   * Reset button size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -31,9 +30,6 @@ const props = defineProps({
 
   /**
    * The model value.
-   *
-   * @type {String|Array|Number|Boolean}
-   * @default ''
    */
   modelValue: {
     type: [String, Array, Number, Boolean],

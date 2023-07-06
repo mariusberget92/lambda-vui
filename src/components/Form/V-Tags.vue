@@ -6,23 +6,31 @@ import VButton from './V-Button.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Array} update:modelValue - Emits when the model value is updated.
+ * @property {Array} change - Emits when the tags input is changed.
+ * @property {String} error - Emits when the tags input has an error.
  */
 const emit = defineEmits(['update:modelValue', 'error', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the tags input.
+ * @property {Array} modelValue - Model value of the tags input.
+ * @property {String} size - The size of the tags input.
+ * @property {String|Boolean} label - The label of the tags input.
+ * @property {String|Boolean} helper - The helper text of the tags input.
+ * @property {Boolean} required - Whether the tags input is required.
+ * @property {String} placeholder - The placeholder of the tags input.
+ * @property {Boolean} disabled - Whether the tags input is disabled.
+ * @property {String|Boolean} error - Wheter the tags input has an error.
+ * @property {Boolean} rounded - Whether the tags input is rounded.
+ * @property {String} color - The color of the tags input.
+ * @property {Number} max - The maximum amount of tags. 0 for unlimited.
  */
 const props = defineProps({
   /**
    * The ID of the tags input.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-input-<random>
    */
   id: {
     type: String,
@@ -33,10 +41,6 @@ const props = defineProps({
 
   /**
    * Model value of the tags input.
-   *
-   * @type {Array}
-   * @default []
-   * @required
    */
   modelValue: {
     type: Array,
@@ -47,9 +51,7 @@ const props = defineProps({
   /**
    * Input size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -61,10 +63,6 @@ const props = defineProps({
 
   /**
    * The label of the tags input.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -73,10 +71,6 @@ const props = defineProps({
 
   /**
    * The helper text of the tags input.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -85,9 +79,6 @@ const props = defineProps({
 
   /**
    * Whether the tags input is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -96,9 +87,6 @@ const props = defineProps({
 
   /**
    * The placeholder of the tags input.
-   *
-   * @type {String}
-   * @default ''
    */
   placeholder: {
     type: String,
@@ -107,9 +95,6 @@ const props = defineProps({
 
   /**
    * Whether the tags input is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -117,10 +102,7 @@ const props = defineProps({
   },
 
   /**
-   * Wheter the tags input has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
+     * Wheter the tags input has an error.
    */
   error: {
     type: [String, Boolean],
@@ -129,9 +111,6 @@ const props = defineProps({
 
   /**
    * Whether the tags input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -141,9 +120,7 @@ const props = defineProps({
   /**
    * The color of the tags input.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -154,11 +131,7 @@ const props = defineProps({
   },
 
   /**
-   * The maximum amount of tags.
-   * 0 means no limit.
-   *
-   * @type {Number}
-   * @default 5
+   * The maximum amount of tags. 0 for unlimited.
    */
   max: {
     type: Number,
@@ -166,6 +139,11 @@ const props = defineProps({
   },
 })
 
+/**
+ * Focus the tag input on mount.
+ * 
+ * @return {void}
+ */
 onMounted(() => {
   tagInputRef.value.focus()
 })
@@ -180,7 +158,7 @@ const tags = ref(props.modelValue)
 /**
  * The tag input ref.
  *
- * @type {Object}
+ * @type {Null|HTMLElement}
  */
 const tagInputRef = ref(null)
 
@@ -194,7 +172,7 @@ const showNewTagButton = ref(true)
 /**
  * Toggle the new tag button.
  *
- * @return {void}
+ * @return {Void}
  */
 const toggleTagButton = () => {
   showNewTagButton.value = !showNewTagButton.value
@@ -204,7 +182,7 @@ const toggleTagButton = () => {
  * Key handler.
  *
  * @param  {Event} event
- * @return {void}
+ * @return {Void}
  */
 const keyHandler = (event) => {
   if (event.key === 'Enter' || event.key === 'Tab') {
@@ -229,7 +207,7 @@ const keyHandler = (event) => {
  * Add a new tag.
  *
  * @param  {String} tag
- * @return {void}
+ * @return {Void}
  */
 const addTag = (tag) => {
   if (tag.length === 0) {
@@ -258,7 +236,7 @@ const addTag = (tag) => {
  * Remove a tag.
  *
  * @param  {String} tag
- * @return {void}
+ * @return {Void}
  */
 const removeTag = (tag) => {
   tags.value = tags.value.filter((t) => t !== tag)
@@ -279,7 +257,7 @@ const tagAlreadyExists = (tag) => {
 /**
  * Reset the tag input.
  *
- * @return {void}
+ * @return {Void}
  */
 const resetTagInput = () => {
   tagInputRef.value.innerHTML = ''

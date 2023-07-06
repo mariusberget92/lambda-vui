@@ -5,23 +5,31 @@ import VLabel from './Partials/V-Label.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {String} update:modelValue - Emits when the model value is updated.
+ * @property {String} change - Emits when the textarea is changed.
  */
 defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the textarea.
+ * @property {String} modelValue - Model value of the textarea.
+ * @property {String} size - The size of the textarea.
+ * @property {String|Boolean} label - The label of the textarea.
+ * @property {String|Boolean} helper - The helper text of the textarea.
+ * @property {Boolean} required - Whether the textarea is required.
+ * @property {String} placeholder - The placeholder of the textarea.
+ * @property {Boolean} disabled - Whether the textarea is disabled.
+ * @property {String|Boolean} error - Wheter the textarea has an error.
+ * @property {String} resize - What kind of resize the textarea has.
+ * @property {Boolean} rounded - Whether the textarea is rounded.
+ * @property {String} color - The color of the textarea.
+ * 
  */
 const props = defineProps({
   /**
    * The ID of the textarea.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-textarea-<random>
    */
   id: {
     type: String,
@@ -32,10 +40,6 @@ const props = defineProps({
 
   /**
    * Model value of the textarea.
-   *
-   * @type {String}
-   * @default ''
-   * @required
    */
   modelValue: {
     type: String,
@@ -44,11 +48,9 @@ const props = defineProps({
   },
 
   /**
-   * Textarea size.
+   * The size of the textarea.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -60,10 +62,6 @@ const props = defineProps({
 
   /**
    * The label of the textarea.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -72,10 +70,6 @@ const props = defineProps({
 
   /**
    * The helper text of the textarea.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -84,9 +78,6 @@ const props = defineProps({
 
   /**
    * Whether the textarea is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -95,9 +86,6 @@ const props = defineProps({
 
   /**
    * The placeholder of the textarea.
-   *
-   * @type {String}
-   * @default ''
    */
   placeholder: {
     type: String,
@@ -106,9 +94,6 @@ const props = defineProps({
 
   /**
    * Whether the textarea is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -117,9 +102,6 @@ const props = defineProps({
 
   /**
    * Wheter the textarea has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   error: {
     type: [String, Boolean],
@@ -127,11 +109,9 @@ const props = defineProps({
   },
 
   /**
-   * Wheter the textarea can be resized.
+   * What kind of resize the textarea has.
    *
-   * @type {String}
-   * @default vertical
-   * @options none, vertical, horizontal, both
+   * @values none, vertical, horizontal, both
    */
   resize: {
     type: String,
@@ -143,9 +123,6 @@ const props = defineProps({
 
   /**
    * Whether the textarea is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -155,9 +132,7 @@ const props = defineProps({
   /**
    * The color of the datepicker buttons.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,

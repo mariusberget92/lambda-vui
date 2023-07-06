@@ -5,23 +5,28 @@ import VLabel from './Partials/V-Label.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Boolean} update:modelValue - Emits when the model value is updated.
+ * @property {Boolean} change - Emits when the input is changed.
  */
 defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the checkbox.
+ * @property {Boolean} modelValue - Model value of the input. If you want to use a v-model, do not pass "checked" prop.
+ * @property {String|Boolean} label - The label of the input.
+ * @property {String|Boolean} helper - The helper text of the input.
+ * @property {Boolean} required - Whether the input is required.
+ * @property {String} size - The size of the checkbox.
+ * @property {String} color - The color of the checkbox.
+ * @property {Boolean} disabled - Whether the checkbox is disabled.
+ * @property {Boolean} rounded - Whether the checkbox is rounded.
+ * @property {Boolean} checked - Whether the checkbox is checked. If you do not bind a v-model, you can use this prop to set the initial state.
  */
 const props = defineProps({
   /**
    * The ID of the checkbox.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-checkbox-<random>
    */
   id: {
     type: String,
@@ -33,10 +38,6 @@ const props = defineProps({
   /**
    * Model value of the input.
    * If you want to use a v-model, do not pass "checked" prop.
-   *
-   * @type {Boolean}
-   * @default false
-   * @required
    */
   modelValue: {
     type: Boolean,
@@ -45,10 +46,6 @@ const props = defineProps({
 
   /**
    * The label of the input.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -57,10 +54,6 @@ const props = defineProps({
 
   /**
    * The helper text of the input.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -69,9 +62,6 @@ const props = defineProps({
 
   /**
    * Whether the input is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -80,10 +70,8 @@ const props = defineProps({
 
   /**
    * The size of the checkbox.
-   *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * 
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -96,9 +84,7 @@ const props = defineProps({
   /**
    * The color of the checkbox.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -110,9 +96,6 @@ const props = defineProps({
 
   /**
    * Whether the checkbox is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -121,9 +104,6 @@ const props = defineProps({
 
   /**
    * Whether the checkbox is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -133,9 +113,6 @@ const props = defineProps({
   /**
    * Whether the checkbox is checked.
    * If you do not bind a v-model, you can use this prop to set the initial state.
-   *
-   * @type {Boolean}
-   * @default false
    */
   checked: {
     type: Boolean,

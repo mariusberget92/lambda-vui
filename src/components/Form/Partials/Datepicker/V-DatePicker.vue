@@ -23,7 +23,6 @@ const props = defineProps({
    */
   color: {
     type: String,
-    required: true,
     default: 'blue',
     validator: (val) => {
       return ['red', 'green', 'blue', 'orange', 'yellow', 'mauve'].includes(val)
@@ -37,7 +36,6 @@ const props = defineProps({
    */
   size: {
     type: String,
-    required: true,
     default: 'sm',
     validator: (val) => {
       return ['xs', 'sm', 'base', 'lg', 'xl', '2xl'].includes(val)

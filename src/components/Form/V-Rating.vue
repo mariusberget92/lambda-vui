@@ -7,23 +7,32 @@ import VIcon from './Partials/V-Icon.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Number} update:modelValue - Emits when the model value is updated.
+ * @property {Number} change - Emits when the input is changed.
  */
 const emit = defineEmits(['update:modelValue', 'click'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the rating input.
+ * @property {Number} modelValue - Model value of the rating.
+ * @property {String|Boolean} label - The label of the rating.
+ * @property {String|Boolean} helper - The helper text of the rating.
+ * @property {String} size - The size of the rating.
+ * @property {Boolean} required - Whether the rating is required.
+ * @property {Boolean} disabled - Whether the rating is disabled.
+ * @property {String|Boolean} error - Wheter the rating has an error.
+ * @property {String} color - The color of the rating icons.
+ * @property {Number} max - The maximum rating.
+ * @property {String} ratingIcon - The rating icon.
+ * @property {Boolean} clearButton - Whether the rating has a clear button.
+ * @property {Boolean} rounded - Whether the rating is rounded.
+ * @property {String|Boolean} icon - The icon of the rating.
  */
 const props = defineProps({
   /**
    * The ID of the rating input.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-rating-<random>
    */
   id: {
     type: String,
@@ -34,10 +43,6 @@ const props = defineProps({
 
   /**
    * Model value of the rating.
-   *
-   * @type {String}
-   * @default 0
-   * @required
    */
   modelValue: {
     type: Number,
@@ -48,9 +53,7 @@ const props = defineProps({
   /**
    * Rating size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @value xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -62,10 +65,6 @@ const props = defineProps({
 
   /**
    * The label of the rating.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -74,10 +73,6 @@ const props = defineProps({
 
   /**
    * The helper text of the rating.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -86,9 +81,6 @@ const props = defineProps({
 
   /**
    * Whether the rating is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -97,9 +89,6 @@ const props = defineProps({
 
   /**
    * Whether the rating is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -108,9 +97,6 @@ const props = defineProps({
 
   /**
    * Wheter the rating has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   error: {
     type: [String, Boolean],
@@ -120,9 +106,7 @@ const props = defineProps({
   /**
    * The color of the rating icons.
    *
-   * @type {String}
-   * @default yellow
-   * @options red, green, blue, orange, yellow, mauve
+   * @value red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -134,9 +118,6 @@ const props = defineProps({
 
   /**
    * The maximum rating.
-   *
-   * @type {Number}
-   * @default 5
    */
   max: {
     type: Number,
@@ -145,9 +126,6 @@ const props = defineProps({
 
   /**
    * The rating icon.
-   *
-   * @type {String}
-   * @default star
    */
   ratingIcon: {
     type: String,
@@ -156,9 +134,6 @@ const props = defineProps({
 
   /**
    * Whether the rating has a clear button.
-   *
-   * @type {Boolean}
-   * @default true
    */
   clearButton: {
     type: Boolean,
@@ -167,9 +142,6 @@ const props = defineProps({
 
   /**
    * Whether the rating is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -178,9 +150,6 @@ const props = defineProps({
 
   /**
    * The icon of the rating input.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   icon: {
     type: [String, Boolean],
@@ -191,16 +160,15 @@ const props = defineProps({
 /**
  * Update the rating.
  *
+ * @param  {Event} event
  * @param  {Number} rating
- * @return {void}
+ * @return {Void}
  */
 const updateRating = (event, rating) => {
-  if (props.disabled) {
-    return
+  if (!props.disabled) {
+    emit('update:modelValue', rating)
+    emit('click', rating)
   }
-
-  emit('update:modelValue', rating)
-  emit('click', rating)
 }
 
 /**
@@ -211,9 +179,18 @@ const updateRating = (event, rating) => {
 const hoverRating = ref(props.modelValue)
 
 /**
- * Rating icon size.
+ * Reset the rating.
  *
- * @type {String}
+ * @return {Void}
+ */
+const reset = () => {
+  hoverRating.value = 0
+  emit('update:modelValue', 0)
+}
+
+/**
+ * Rating icon size class based on size prop.
+ *
  * @return {String}
  */
 const ratingIconSize = computed(() => {
@@ -226,16 +203,6 @@ const ratingIconSize = computed(() => {
     '2xl': '4xl',
   }[props.size]
 })
-
-/**
- * Reset the rating.
- *
- * @return {void}
- */
-const reset = () => {
-  hoverRating.value = 0
-  emit('update:modelValue', 0)
-}
 </script>
 
 <template>

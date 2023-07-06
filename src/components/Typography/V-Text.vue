@@ -4,15 +4,14 @@ import { computed, defineProps } from 'vue'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} size - The size of the text.
+ * @property {String} color - The color of the text.
  */
 const props = defineProps({
   /**
    * The size of the text.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -25,9 +24,7 @@ const props = defineProps({
   /**
    * The color of the text.
    *
-   * @type {String}
-   * @default default
-   * @options red, green, blue, orange, mauve, yellow, default
+   * @values red, green, blue, orange, mauve, yellow, default
    */
   color: {
     type: String,
@@ -49,7 +46,7 @@ const props = defineProps({
 /**
  * CSS color classes.
  *
- * @type {import ('vue').ComputedRef<String>}
+ * @type {String}
  */
 const classColor = computed(() => {
   let classes = []

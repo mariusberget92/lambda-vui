@@ -6,21 +6,32 @@ import VSearch from './V-Search.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {String|Array<String>|Number|Array<Number>} select - Emits when an option is selected.
+ * @property {String} onSearch - Emits when the search input is updated.
+ * @property {Undefined} toggleAll - Emits when the toggle all checkbox is clicked.
  */
 const emit = defineEmits(['select', 'onSearch', 'toggleAll'])
 
 /**
  * Component props.
- *
- * @type {Object}
+ * 
+ * @property {String|Array<String>|Number|Array<Number>} selectedOptions - Selected options.
+ * @property {Array<String>|Array<Object>|Array<Number>} options - The options of the input.
+ * @property {Array<String>|Array<Object>|Array<Number>} filteredOptions - The filteredOptions of the input.
+ * @property {Function} valueReducer - Reduce to get the value of an option.
+ * @property {Function} textReducer - Reduce to get the text of an option.
+ * @property {Boolean} show - Whether the dropdown is visible.
+ * @property {String} size - Select size.
+ * @property {Boolean} rounded - Whether the select is rounded.
+ * @property {Boolean} multiple - Whether the select is multiple.
+ * @property {Boolean} search - Whether the select is searchable.
+ * @property {String} color - The color of the select.
+ * @property {Number} max - The maximum number of options that can be selected.
+ * 
  */
 const props = defineProps({
   /**
    * Selected options.
-   *
-   * @type {String|Array<String>|Number|Array<Number>}
-   * @default ''
    */
   selectedOptions: {
     type: [String, Array, Number],
@@ -29,10 +40,6 @@ const props = defineProps({
 
   /**
    * The options of the input.
-   *
-   * @type {Array<String>|Array<Object>|Array<Number>}
-   * @required
-   * @default []
    */
   options: {
     type: Array,
@@ -42,10 +49,6 @@ const props = defineProps({
 
   /**
    * The filteredOptions of the input.
-   *
-   * @type {Array<String>|Array<Object>|Array<Number>}
-   * @required
-   * @default []
    */
   filteredOptions: {
     type: Array,
@@ -55,8 +58,6 @@ const props = defineProps({
 
   /**
    * Reduce to get the value of an option.
-   *
-   * @type {Function}
    */
   valueReducer: {
     type: Function,
@@ -65,8 +66,6 @@ const props = defineProps({
 
   /**
    * Reduce to get the text of an option.
-   *
-   * @type {Function}
    */
   textReducer: {
     type: Function,
@@ -75,9 +74,6 @@ const props = defineProps({
 
   /**
    * Whether the dropdown is visible.
-   *
-   * @type {Boolean}
-   * @default false
    */
   show: {
     type: Boolean,
@@ -85,11 +81,9 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * Select size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -100,10 +94,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
+   * Whether the select is rounded.
    */
   rounded: {
     type: Boolean,
@@ -111,10 +102,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is multiple.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is multiple.
    */
   multiple: {
     type: Boolean,
@@ -122,10 +110,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is searchable.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is searchable.
    */
   search: {
     type: Boolean,
@@ -135,9 +120,7 @@ const props = defineProps({
   /**
    * The color of the select.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -150,9 +133,6 @@ const props = defineProps({
   /**
    * The maximum number of options that can be selected.
    * If the value is 0, there is no limit.
-   *
-   * @type {Number}
-   * @default 0
    */
   max: {
     type: Number,
@@ -163,7 +143,6 @@ const props = defineProps({
 /**
  * Get the option text or value from an option.
  *
- * @type {import('vue').ComputedRef<Function>}
  * @param {String|Object} option
  * @param {String} type
  * @returns {String}
@@ -180,9 +159,8 @@ const getOptionInfo = computed(() => {
 })
 
 /**
- * Check if a option is selected.
+ * Check if a given option is selected.
  *
- * @type {import('vue').ComputedRef<Function>}
  * @param {String|Object} option
  * @returns {Boolean}
  */
@@ -198,7 +176,6 @@ const isSelected = computed(() => {
 /**
  * Check if all options are selected.
  *
- * @type {import('vue').ComputedRef<Boolean>}
  * @returns {Boolean}
  */
 const allOptionsSelected = computed(() => {
@@ -206,9 +183,8 @@ const allOptionsSelected = computed(() => {
 })
 
 /**
- * Check if a option is disabled.
+ * Check if a given option is disabled.
  *
- * @type {import('vue').ComputedRef<Function>}
  * @param {String|Object} option
  * @returns {Boolean}
  */
@@ -223,9 +199,8 @@ const isOptionDisabled = computed(() => {
 })
 
 /**
- * Get the checkbox size.
+ * Get the checkbox size to send to the checkbox component's prop `size`.
  *
- * @type {import('vue').ComputedRef<String>}
  * @returns {String}
  */
 const checkboxSize = computed(() => {

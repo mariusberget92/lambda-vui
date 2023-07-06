@@ -1,24 +1,32 @@
 <script setup>
-import { defineProps, computed, defineEmits } from 'vue'
+import { defineProps, computed, defineEmits, nextTick } from 'vue'
 
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Undefined} click - Emits when the button is clicked.
  */
 const emit = defineEmits(['click'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} type - The type of the button.
+ * @property {Boolean} processing - Button processing state.
+ * @property {String} size - The size of the button.
+ * @property {String} color - The color of the button.
+ * @property {String|Boolean|Number} text - The text of the button.
+ * @property {String|Boolean} icon - The icon of the button.
+ * @property {Boolean} disabled - Whether the button is disabled.
+ * @property {Boolean} rounded - Whether the button is rounded.
+ * @property {Boolean} outline - Whether the button is outlined.
+ * @property {Boolean} dashed - Whether the button border is dashed.
  */
 const props = defineProps({
   /**
    * The type of the button.
    *
-   * @type {String}
-   * @default submit
+   * @values submit, reset, button
    */
   type: {
     type: String,
@@ -30,8 +38,6 @@ const props = defineProps({
 
   /**
    * Button processing state.
-   *
-   * @type {Boolean}
    */
   processing: {
     type: [Boolean],
@@ -41,9 +47,7 @@ const props = defineProps({
   /**
    * The size of the button.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @tvalues xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -56,9 +60,7 @@ const props = defineProps({
   /**
    * The color of the button.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -70,9 +72,6 @@ const props = defineProps({
 
   /**
    * The text of the button.
-   *
-   * @type {String|Boolean|Number}
-   * @default false
    */
   text: {
     type: [String, Boolean, Number],
@@ -81,9 +80,6 @@ const props = defineProps({
 
   /**
    * The icon of the button.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   icon: {
     type: [String, Boolean],
@@ -92,9 +88,6 @@ const props = defineProps({
 
   /**
    * Whether the button is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -103,9 +96,6 @@ const props = defineProps({
 
   /**
    * Whether the button is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -114,9 +104,6 @@ const props = defineProps({
 
   /**
    * Whether the button is outlined.
-   *
-   * @type {Boolean}
-   * @default false
    */
   outline: {
     type: Boolean,
@@ -125,9 +112,6 @@ const props = defineProps({
 
   /**
    * Whether the button border is dashed.
-   *
-   * @type {Boolean}
-   * @default false
    */
   dashed: {
     type: Boolean,
@@ -136,9 +120,9 @@ const props = defineProps({
 })
 
 /**
- * The classes of the button.
+ * The calculated classes that are needed for the button.
  *
- * @type {import('vue').ComputedRef<String>}
+ * @type {String}
  */
 const classButton = computed(() => {
   let classes = []
@@ -272,13 +256,15 @@ const classButton = computed(() => {
 })
 
 /**
- * Blur the button on click.
+ * Blur the button after the nextTick when clicked.
  *
  * @param {Event} event
- * @returns {void}
+ * @returns {Void}
  */
 const blurOnClick = (event) => {
-  event.target.blur()
+  nextTick(() => {
+    event.target.blur()
+  })
 }
 </script>
 
@@ -294,12 +280,11 @@ const blurOnClick = (event) => {
         'pointer-events-none opacity-50': props.processing || props.disabled,
         'aspect-square': props.icon && !props.text,
         'bg-transparent': props.outline,
-        'text-white': !props.outline,
-        'border-transparent': !props.outline,
+        'text-white border-transparent': !props.outline,
       },
     ]"
     :disabled="props.processing || props.disabled"
-    @click=";[emit('click', $event), blurOnClick($event)]"
+    @click=";[emit('click'), blurOnClick($event)]"
   >
     <span
       v-if="props.icon && !props.processing"

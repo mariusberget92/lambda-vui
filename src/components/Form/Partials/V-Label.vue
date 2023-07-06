@@ -4,14 +4,16 @@ import { computed, defineProps } from 'vue'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the label (corresponds to the ID of the input field).
+ * @property {String} label - The label of the input.
+ * @property {String} size - The size of the label.
+ * @property {Boolean} required - Whether the input is required. Will show a red asterisk next to the label.
+ * @property {String|Boolean} helper - The helper text of the input.
+ * @property {Boolean} compact - Whether the label and helper should be compact (for checkboxes).
  */
 const props = defineProps({
   /**
-   * The ID of the label.
-   *
-   * @type {String}
-   * @required
+   * The ID of the label (corresponds to the ID of the input field).
    */
   id: {
     type: String,
@@ -20,9 +22,6 @@ const props = defineProps({
 
   /**
    * The label of the input.
-   *
-   * @type {String}
-   * @required
    */
   label: {
     type: String,
@@ -32,9 +31,7 @@ const props = defineProps({
   /**
    * The size of the label.
    *
-   * @type {String}
-   * @default base
-   * @opions xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -46,9 +43,7 @@ const props = defineProps({
 
   /**
    * Whether the input is required.
-   *
-   * @type {Boolean}
-   * @default false
+   * Will show a red asterisk next to the label.
    */
   required: {
     type: Boolean,
@@ -57,9 +52,6 @@ const props = defineProps({
 
   /**
    * The helper text of the input.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -79,25 +71,9 @@ const props = defineProps({
 })
 
 /**
- * Helper size class.
- *
- * @type {import('vue').ComputedRef<string>}
- */
-const classHelperSize = computed(() => {
-  return {
-    xs: ['text-xs'],
-    sm: ['text-xs'],
-    base: ['text-sm'],
-    lg: ['text-base'],
-    xl: ['text-base'],
-    '2xl': ['text-lg'],
-  }[props.size].join(' ')
-})
-
-/**
  * The ID of the label.
  *
- * @type {import('vue').ComputedRef<string>}
+ * @return {String}
  */
 const idLabel = computed(() => {
   return `${props.id}-label`
@@ -106,10 +82,26 @@ const idLabel = computed(() => {
 /**
  * The ID of the helper.
  *
- * @type {import('vue').ComputedRef<string>}
+ * @return {String}
  */
 const idHelper = computed(() => {
   return `${props.id}-helper`
+})
+
+/**
+ * Text size class for the helper text.
+ *
+ * @return {String}
+ */
+ const classHelperSize = computed(() => {
+  return {
+    xs: ['text-xs'],
+    sm: ['text-xs'],
+    base: ['text-sm'],
+    lg: ['text-base'],
+    xl: ['text-base'],
+    '2xl': ['text-lg'],
+  }[props.size].join(' ')
 })
 </script>
 

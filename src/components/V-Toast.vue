@@ -4,14 +4,14 @@ import { defineProps, computed, ref, onMounted } from 'vue'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {Number} duration - Toast duration in milliseconds.
+ * @property {String} type - Toast type.
+ * @property {String|Boolean} message - Toast message.
+ * @property {Boolean} rounded - Whether the toast is rounded or not.
  */
 const props = defineProps({
   /**
-   * Toast duration
-   *
-   * @type {Number}
-   * @default 5000
+   * Toast duration in milliseconds.
    */
   duration: {
     type: Number,
@@ -19,11 +19,9 @@ const props = defineProps({
   },
 
   /**
-   * Toast type
+   * Toast type.
    *
-   * @type {String}
-   * @default 'success'
-   * @options 'success', 'error', 'warning', 'info'
+   * @values success, error, warning, info
    */
   type: {
     type: String,
@@ -34,10 +32,7 @@ const props = defineProps({
   },
 
   /**
-   * Toast message
-   *
-   * @type {String|Boolean}
-   * @default false
+   * Toast message.
    */
   message: {
     type: [String, Boolean],
@@ -45,10 +40,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the toast is rounded or not
-   *
-   * @type {Boolean}
-   * @default true
+   * Whether the toast is rounded or not.
    */
   rounded: {
     type: Boolean,
@@ -57,7 +49,7 @@ const props = defineProps({
 })
 
 /**
- * Get the icon based on the type
+ * Get the icon to display based on the type
  *
  * @type {String}
  */
@@ -71,7 +63,7 @@ const icon = computed(() => {
 })
 
 /**
- * Get the title based on the type
+ * Get the title based on the type.
  *
  * @type {String}
  */
@@ -80,14 +72,14 @@ const title = computed(() => {
 })
 
 /**
- * The progress of the toast
+ * The progress of the toast.
  *
  * @type {Number}
  */
 const toastProgress = ref(100)
 
 /**
- * Method to start the progress
+ * Start the progress of the toast.
  *
  * @return {Void}
  */
@@ -104,7 +96,7 @@ const startProgress = () => {
 }
 
 /**
- * OnMounted hook
+ * Start the progress when the component is mounted.
  *
  * @return {Void}
  */

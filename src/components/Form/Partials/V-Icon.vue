@@ -4,14 +4,13 @@ import { defineProps } from 'vue'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} icon - The icon to display. Important: Google's Material Icons only!
+ * @property {String} size - The size of the icon.
+ * @property {String} side - The side of the input the icon should be displayed on.
  */
 const props = defineProps({
   /**
-   * The icon to display (using Google's Material Icons)
-   *
-   * @type {String}
-   * @required
+   * The icon to display. Important: Google's Material Icons only!
    */
   icon: {
     type: String,
@@ -21,9 +20,7 @@ const props = defineProps({
   /**
    * The size of the icon.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -36,9 +33,7 @@ const props = defineProps({
   /**
    * The side of the input the icon should be displayed on.
    *
-   * @type {String}
-   * @default left
-   * @options left, right
+   * @values left, right
    */
   side: {
     type: String,

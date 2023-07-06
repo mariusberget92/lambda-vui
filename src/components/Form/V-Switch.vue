@@ -5,23 +5,29 @@ import VLabel from './Partials/V-Label.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Boolean} update:modelValue - Emits when the model value is updated.
+ * @property {Boolean} change - Emits when the switch is toggled.
  */
 const emit = defineEmits(['update:modelValue', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the switch.
+ * @property {Boolean} modelValue - Model value of the switch.
+ * @property {String|Boolean} label - The label of the switch.
+ * @property {String|Boolean} helper - The helper text of the switch.
+ * @property {Boolean} required - Whether the switch is required.
+ * @property {String} size - The size of the switch.
+ * @property {Boolean} disabled - Whether the switch is disabled.
+ * @property {Boolean} icons - Whether the switch has icons (check/close).
+ * @property {String} onColor - The color of the switch when it's on.
+ * @property {String} offColor - The color of the switch when it's off.
+ * @property {String} shape - Shape of the switch.
  */
 const props = defineProps({
   /**
    * The ID of the switch.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-switch-<random>
    */
   id: {
     type: String,
@@ -32,10 +38,6 @@ const props = defineProps({
 
   /**
    * Model value of the switch.
-   *
-   * @type {Boolean}
-   * @default false
-   * @required
    */
   modelValue: {
     type: Boolean,
@@ -44,10 +46,6 @@ const props = defineProps({
 
   /**
    * The label of the switch.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -56,10 +54,6 @@ const props = defineProps({
 
   /**
    * The helper text of the switch.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -68,9 +62,6 @@ const props = defineProps({
 
   /**
    * Whether the switch is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -80,9 +71,7 @@ const props = defineProps({
   /**
    * The size of the switch.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -94,9 +83,6 @@ const props = defineProps({
 
   /**
    * Whether the switch is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -105,9 +91,6 @@ const props = defineProps({
 
   /**
    * Whether the switch has icons (check/close).
-   *
-   * @type {Boolean}
-   * @default false
    */
   icons: {
     type: Boolean,
@@ -116,9 +99,8 @@ const props = defineProps({
 
   /**
    * The color of the switch when it's on.
-   *
-   * @type {String}
-   * @default blue
+   * 
+   * @values green, red, blue, mauve, orange, yellow, default
    */
   onColor: {
     type: String,
@@ -139,8 +121,7 @@ const props = defineProps({
   /**
    * The color of the switch when it's off.
    *
-   * @type {String}
-   * @default default
+   * @values green, red, blue, mauve, orange, yellow, default
    */
   offColor: {
     type: String,
@@ -160,9 +141,8 @@ const props = defineProps({
 
   /**
    * Shape of the switch.
-   *
-   * @type {String}
-   * @default pill
+   * 
+   * @values pill, rounded, square
    */
   shape: {
     type: String,
@@ -183,7 +163,7 @@ const isOn = ref(props.modelValue)
 /**
  * Toggle the switch.
  *
- * @return {void}
+ * @return {Void}
  */
 const toggleSwitch = () => {
   isOn.value = !isOn.value
@@ -192,9 +172,9 @@ const toggleSwitch = () => {
 }
 
 /**
- * The switch size classes.
+ * All the css classes used for sizing and translations for the different
+ * parts of the switch.
  *
- * @type {Object}
  * @return {Object}
  */
 const classSwitchSize = computed(() => {
@@ -239,10 +219,9 @@ const classSwitchSize = computed(() => {
 })
 
 /**
- * Color classes for the switch.
+ * Color classes for the switch for both on and off states.
  *
- * @type {Object}
- * @return {String}
+ * @return {Object}
  */
 const classColor = computed(() => {
   return {

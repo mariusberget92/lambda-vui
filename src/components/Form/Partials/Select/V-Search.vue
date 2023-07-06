@@ -5,22 +5,22 @@ import VInput from '../../V-Input.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {String} onSearch - Emits when the search input is updated.
  */
-const emit = defineEmits(['search', 'onSearch'])
+const emit = defineEmits(['onSearch'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} size - Input size.
+ * @property {Boolean} rounded - Whether the input is rounded.
+ * @property {String} color - The color of the input.
  */
 const props = defineProps({
   /**
    * Input size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -32,9 +32,6 @@ const props = defineProps({
 
   /**
    * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -44,9 +41,7 @@ const props = defineProps({
   /**
    * The color of the select.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,

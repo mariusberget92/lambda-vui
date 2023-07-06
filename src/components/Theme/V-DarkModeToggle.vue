@@ -4,45 +4,41 @@ import { defineProps, computed, ref, onMounted, defineEmits } from 'vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {Boolean} change - Whether dark mode has changed.
  */
 const emit = defineEmits(['change'])
 
 /**
  * Component props.
  * 
- * @type {Object}
+ * @property {String} position - Position of the dark mode toggle.
  */
 const props = defineProps({
   /**
    * Position of the dark mode toggle.
    *
-   * @type {String}
-   * @default top-right
-   * @options top-right, top-left, bottom-right, bottom-left
+   * @values top-right, top-left, bottom-right, bottom-left
    */
   position: {
     type: String,
     default: 'top-right',
     validator: (val) => {
-      return ['top-right', 'top-left', 'bottom-right', 'bottom-left'].includes(
-        val
-      )
+      return ['top-right', 'top-left', 'bottom-right', 'bottom-left'].includes(val)
     },
   },
 })
 
 /**
- * Is dark mode enabled?
+ * Dark mode enabled.
  *
- * @type {import('vue').Ref<Boolean>}
+ * @type {Boolean}
  */
 const isDarkMode = ref(false)
 
 /**
  * Classes for the wrapper.
  *
- * @type {import('vue').ComputedRef<String>}
+ * @type {String}
  */
 const classWrapper = computed(() => {
   return {
@@ -56,7 +52,7 @@ const classWrapper = computed(() => {
 /**
  * Toggle dark mode.
  *
- * @returns {void}
+ * @returns {Void}
  */
 function toggleDarkMode() {
   isDarkMode.value = !isDarkMode.value
@@ -70,9 +66,9 @@ function toggleDarkMode() {
 }
 
 /**
- * Set dark mode on page load.
+ * Set dark mode on page load (onMounted).
  *
- * @returns {void}
+ * @returns {Void}
  */
 onMounted(() => {
   const darkMode = localStorage.getItem('darkMode') === 'true'

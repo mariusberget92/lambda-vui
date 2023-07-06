@@ -4,14 +4,15 @@ import { defineProps, computed } from 'vue'
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} size - The size of the heading.
+ * @property {String} color - The color of the heading.
+ * @property {String} heading - The heading of the heading.
  */
 const props = defineProps({
   /**
    * The size of the heading.
-   *
-   * @type {String}
-   * @default base
+   * 
+   * @values xs, sm, base, lg, xl, 2xl, 3xl, 4xl, 5xl, 6xl, 7xl, 8xl, 9xl
    */
   size: {
     type: String,
@@ -37,9 +38,8 @@ const props = defineProps({
 
   /**
    * The color of the heading.
-   *
-   * @type {String}
-   * @default 'default'
+   * 
+   * @values red, green, blue, orange, mauve, yellow, default
    */
   color: {
     type: String,
@@ -60,8 +60,7 @@ const props = defineProps({
   /**
    * The heading tag.
    *
-   * @type {String}
-   * @default 'h1'
+   * @values h1, h2, h3, h4, h5, h6
    */
   heading: {
     type: String,
@@ -75,7 +74,7 @@ const props = defineProps({
 /**
  * CSS color classes.
  *
- * @type {import ('vue').ComputedRef<String>}
+ * @returns {String}
  */
 const classColor = computed(() => {
   let classes = []

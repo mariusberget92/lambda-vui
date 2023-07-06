@@ -9,14 +9,15 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {String|Array|Number} update:modelValue - Emits when the model value is updated.
+ * @property {String|Array|Number} select - Emits when an option is selected.
  */
 const emit = defineEmits(['update:modelValue', 'select'])
 
 /**
  * Click outside handler.
  *
- * @type {Array}
+ * @type {Array<Function, Object>}
  */
 const onClickOutsideHandler = [
   () => {
@@ -30,16 +31,34 @@ const onClickOutsideHandler = [
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the select.
+ * @property {String|Array<String>|Number|Array<Number>} modelValue - Model value of the select.
+ * @property {String|Boolean} label - The label of the select.
+ * @property {String|Boolean} helper - The helper text of the select.
+ * @property {String} size - The size of the select.
+ * @property {Boolean} required - Whether the select is required.
+ * @property {String} color - The color of the select.
+ * @property {String|Boolean} icon - The icon of the select.
+ * @property {String} placeholder - The placeholder of the select.
+ * @property {Boolean} multiple - Whether the select is multiple.
+ * @property {Boolean} disabled - Whether the select is disabled.
+ * @property {String|Boolean} error - Whether the select has an error.
+ * @property {Array|Array<Object>} options - An array of options to be displayed in the select component.
+ *   - options[] - An object representing an option in the select component.
+ *   - options[].text - The text to be displayed for the option.
+ *   - options[].value - The value of the option.
+ *   - options[].emoji - The emoji associated with the option.
+ *   - The .text/.value properties can be replaced by using the reducer props.
+ * @property {Function} valueReducer - Reduce to get the value of an option.
+ * @property {Function} textReducer - Reduce to get the text of an option.
+ * @property {Boolean} rounded - Whether the select is rounded.
+ * @property {Boolean} search - Whether the select is searchable.
+ * @property {Boolean} clearButton - Whether the select is clearable.
+ * @property {Number} max - The maximum number of options that can be selected. 0 means no limit.
  */
 const props = defineProps({
   /**
-   * The ID of the input.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-select-<random>
+   * The ID of the select.
    */
   id: {
     type: String,
@@ -49,11 +68,7 @@ const props = defineProps({
   },
 
   /**
-   * Model value of the input.
-   *
-   * @type {String|Array<String>|Number|Array<Number>}
-   * @default ''
-   * @required
+   * Model value of the select.
    */
   modelValue: {
     required: true,
@@ -62,11 +77,9 @@ const props = defineProps({
   },
 
   /**
-   * Input size.
+   * select size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @value xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -77,11 +90,7 @@ const props = defineProps({
   },
 
   /**
-   * The label of the input.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
+   * The label of the select.
    */
   label: {
     type: [String, Boolean],
@@ -89,11 +98,7 @@ const props = defineProps({
   },
 
   /**
-   * The helper text of the input.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
+   * The helper text of the select.
    */
   helper: {
     type: [String, Boolean],
@@ -101,10 +106,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is required.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is required.
    */
   required: {
     type: Boolean,
@@ -114,9 +116,7 @@ const props = defineProps({
   /**
    * The color of the select.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @value red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -127,10 +127,7 @@ const props = defineProps({
   },
 
   /**
-   * The icon of the input.
-   *
-   * @type {String|Boolean}
-   * @default false
+   * The icon of the select.
    */
   icon: {
     type: [String, Boolean],
@@ -138,10 +135,7 @@ const props = defineProps({
   },
 
   /**
-   * The placeholder of the input.
-   *
-   * @type {String}
-   * @default 'Select...'
+   * The placeholder of the select.
    */
   placeholder: {
     type: String,
@@ -149,10 +143,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is multiple.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is multiple.
    */
   multiple: {
     type: Boolean,
@@ -160,10 +151,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is disabled.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is disabled.
    */
   disabled: {
     type: Boolean,
@@ -171,10 +159,7 @@ const props = defineProps({
   },
 
   /**
-   * Wheter the input has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
+   * Wheter the select has an error.
    */
   error: {
     type: [String, Boolean],
@@ -183,14 +168,6 @@ const props = defineProps({
 
   /**
    * An array of options to be displayed in the select component.
-   * @prop {Array} options - The options to be displayed.
-   * @prop {Object} options[] - An object representing an option in the select component.
-   * @prop {string} options[].text - The text to be displayed for the option.
-   * @prop {string} options[].value - The value of the option.
-   * @prop {string} [options[].emoji] - The emoji associated with the option.
-   *
-   * @type {Array<String>|Array<Object>}
-   * @required
    */
   options: {
     type: Array,
@@ -199,8 +176,6 @@ const props = defineProps({
 
   /**
    * Reduce to get the value of an option.
-   *
-   * @type {Function}
    */
   valueReducer: {
     type: Function,
@@ -209,8 +184,6 @@ const props = defineProps({
 
   /**
    * Reduce to get the text of an option.
-   *
-   * @type {Function}
    */
   textReducer: {
     type: Function,
@@ -218,10 +191,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
+   * Whether the select is rounded.
    */
   rounded: {
     type: Boolean,
@@ -229,10 +199,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is searchable.
-   *
-   * @type {Boolean}
-   * @default false
+   * Whether the select is searchable.
    */
   search: {
     type: Boolean,
@@ -240,10 +207,7 @@ const props = defineProps({
   },
 
   /**
-   * Whether the input is clearable.
-   *
-   * @type {Boolean}
-   * @default true
+   * Whether the select is clearable.
    */
   clearButton: {
     type: Boolean,
@@ -251,11 +215,7 @@ const props = defineProps({
   },
 
   /**
-   * The maximum number of options that can be selected.
-   * If the value is 0, there is no limit.
-   *
-   * @type {Number}
-   * @default 0
+   * The maximum number of options that can be selected. 0 means no limit.
    */
   max: {
     type: Number,
@@ -266,21 +226,20 @@ const props = defineProps({
 /**
  * Whether the dropdown is open or not.
  *
- * @type {import('vue').Ref<boolean>}
+ * @type {Booleam}
  */
 const isDropdownOpen = ref(false)
 
 /**
  * Filtered options after a search query.
  *
- * @type {import('vue').Ref<Array>}
+ * @type {Array}
  */
 const filteredOptions = ref(props.options)
 
 /**
  * Get the option text or value from an option.
  *
- * @type {import('vue').ComputedRef<Function>}
  * @param {String|Object|Number} option
  * @param {String} type
  * @returns {String}
@@ -297,10 +256,9 @@ const getOptionInfo = computed(() => {
 })
 
 /**
- * Computes the value to be displayed in the input field based on the current selected options.
+ * Value to be displayed in the input based on selected values.
  *
- * @type {import('vue').ComputedRef<string>}
- * @returns {string}
+ * @returns {String}
  */
 const inputValue = computed(() => {
   // If no options are selected return an empty string.
@@ -359,7 +317,7 @@ const handleSelect = (option) => {
       : [...props.modelValue, value]
 
     emit('update:modelValue', modelValue)
-    emit('select', value)
+    emit('select', modelValue)
     return
   }
 
@@ -372,7 +330,7 @@ const handleSelect = (option) => {
 /**
  * Handle the search query.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const handleSearchQuery = (event) => {
   filteredOptions.value = props.options.filter((option) => {
@@ -384,11 +342,12 @@ const handleSearchQuery = (event) => {
 /**
  * Handle the toggle all event.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const handleToggleAll = () => {
   if (props.modelValue.length === props.options.length) {
     emit('update:modelValue', [])
+    emit('select', [])
     return
   }
 
@@ -396,22 +355,28 @@ const handleToggleAll = () => {
     getOptionInfo.value(option, 'value')
   )
   emit('update:modelValue', values)
+  emit('select', values)
 }
 
 /**
- * Reset the input value when the "X" is clicked.
+ * Reset the input.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const reset = () => {
-  if (props.multiple) emit('update:modelValue', [])
-  else emit('update:modelValue', '')
+  if (props.multiple) {
+    emit('update:modelValue', [])
+    emit('select', [])
+  } else { 
+    emit('update:modelValue', '')
+    emit('select', '')
+  }
 }
 
 /**
  * Close the dropdown.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const closeDropdown = () => {
   isDropdownOpen.value = false
@@ -420,7 +385,7 @@ const closeDropdown = () => {
 /**
  * Toggle the dropdown.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value

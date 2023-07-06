@@ -7,23 +7,36 @@ import VInputResetButton from './Partials/V-InputResetButton.vue'
 /**
  * Component emits.
  *
- * @type {Object}
+ * @property {File|Boolean|Array} update:modelValue - Emits when the model value is updated.
+ * @property {File|Boolean|Array} change - Emits when the input is changed.
+ * @property {String} error - Emits when the input is invalid.
  */
 const emit = defineEmits(['update:modelValue', 'error', 'change'])
 
 /**
  * Component props.
  *
- * @type {Object}
+ * @property {String} id - The ID of the file input.
+ * @property {File|Boolean|Array} modelValue - Model value of the input.
+ * @property {String} size - Input size.
+ * @property {String|Boolean} label - The label of the input.
+ * @property {String|Boolean} helper - The helper text of the input.
+ * @property {Boolean} required - Whether the input is required.
+ * @property {String|Boolean} icon - The icon of the input.
+ * @property {String} placeholder - The placeholder of the input.
+ * @property {Boolean} disabled - Whether the input is disabled.
+ * @property {String|Boolean} error - Wheter the input has an error.
+ * @property {Boolean} rounded - Whether the input is rounded.
+ * @property {String} color - The color of the input.
+ * @property {Boolean} multiple - Whether the input accepts multiple files.
+ * @property {Array} extensions - The accepted file extensions.
+ * @property {Number} maxFiles - The maximum number of files.
+ * @property {Number} maxFileSize - The maximum file size in bytes.
+ * @property {Boolean} clearButton - Whether the input is clearable.
  */
 const props = defineProps({
   /**
    * The ID of the file input.
-   * If none is provided, a random one will be generated.
-   *
-   * @type {String}
-   * @required
-   * @default lambda-file-<random>
    */
   id: {
     type: String,
@@ -34,10 +47,6 @@ const props = defineProps({
 
   /**
    * Model value of the input.
-   *
-   * @type {File|Boolean|Array}
-   * @default false
-   * @required
    */
   modelValue: {
     type: [File, Boolean, Array],
@@ -48,9 +57,7 @@ const props = defineProps({
   /**
    * Input size.
    *
-   * @type {String}
-   * @default base
-   * @options xs, sm, base, lg, xl, 2xl
+   * @values xs, sm, base, lg, xl, 2xl
    */
   size: {
     type: String,
@@ -62,10 +69,6 @@ const props = defineProps({
 
   /**
    * The label of the input.
-   *
-   * @type {String|Boolean}
-   * @required
-   * @default false
    */
   label: {
     type: [String, Boolean],
@@ -74,10 +77,6 @@ const props = defineProps({
 
   /**
    * The helper text of the input.
-   * Will be displayed under the label.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   helper: {
     type: [String, Boolean],
@@ -86,9 +85,6 @@ const props = defineProps({
 
   /**
    * Whether the input is required.
-   *
-   * @type {Boolean}
-   * @default false
    */
   required: {
     type: Boolean,
@@ -97,9 +93,6 @@ const props = defineProps({
 
   /**
    * The icon of the input.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   icon: {
     type: [String, Boolean],
@@ -108,9 +101,6 @@ const props = defineProps({
 
   /**
    * The placeholder of the input.
-   *
-   * @type {String}
-   * @default ''
    */
   placeholder: {
     type: String,
@@ -119,9 +109,6 @@ const props = defineProps({
 
   /**
    * Whether the input is disabled.
-   *
-   * @type {Boolean}
-   * @default false
    */
   disabled: {
     type: Boolean,
@@ -130,9 +117,6 @@ const props = defineProps({
 
   /**
    * Wheter the input has an error.
-   *
-   * @type {String|Boolean}
-   * @default false
    */
   error: {
     type: [String, Boolean],
@@ -141,9 +125,6 @@ const props = defineProps({
 
   /**
    * Whether the input is rounded.
-   *
-   * @type {Boolean}
-   * @default true
    */
   rounded: {
     type: Boolean,
@@ -153,9 +134,7 @@ const props = defineProps({
   /**
    * The color of the datepicker buttons.
    *
-   * @type {String}
-   * @default blue
-   * @options red, green, blue, orange, yellow, mauve
+   * @values red, green, blue, orange, yellow, mauve
    */
   color: {
     type: String,
@@ -167,9 +146,6 @@ const props = defineProps({
 
   /**
    * Whether the input is multiple.
-   *
-   * @type {Boolean}
-   * @default false
    */
   multiple: {
     type: Boolean,
@@ -177,10 +153,7 @@ const props = defineProps({
   },
 
   /**
-   * The extensions of the file input.
-   *
-   * @type {Array}
-   * @default ['jpeg', 'png']
+   * The accepted file extensions.
    */
   extensions: {
     type: Array,
@@ -192,9 +165,6 @@ const props = defineProps({
 
   /**
    * The maximum number of files.
-   *
-   * @type {Number}
-   * @default 1
    */
   maxFiles: {
     type: Number,
@@ -203,9 +173,6 @@ const props = defineProps({
 
   /**
    * The maximum file size in bytes.
-   *
-   * @type {Number}
-   * @default 5 * 1024 * 1024 = 5MB
    */
   maxFileSize: {
     type: Number,
@@ -214,9 +181,6 @@ const props = defineProps({
 
   /**
    * Whether the input is clearable.
-   *
-   * @type {Boolean}
-   * @default true
    */
   clearButton: {
     type: Boolean,
@@ -225,10 +189,10 @@ const props = defineProps({
 })
 
 /**
- * Keydown handler.
+ * Key handler.
  *
  * @param {KeyboardEvent} event
- * @returns {void}
+ * @returns {Void}
  */
 const keyHandler = (event) => {
   if (event.key === 'Enter') {
@@ -243,10 +207,9 @@ const keyHandler = (event) => {
 }
 
 /**
- * The input value to be shown as we cannot show files.
+ * The input value to be shown as we cannot show files as plain string values.
  *
- * @type {import ('vue').ComputedRef<string>}
- * @returns {string}
+ * @returns {String}
  */
 const inputValue = computed(() => {
   if (!props.multiple) {
@@ -267,7 +230,7 @@ const inputValue = computed(() => {
 /**
  * Open the legacy file select.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const openLegacyFileSelect = () => {
   const input = document.getElementById(`${props.id}-file`)
@@ -277,7 +240,7 @@ const openLegacyFileSelect = () => {
 /**
  * Reset the input.
  *
- * @returns {void}
+ * @returns {Void}
  */
 const reset = () => {
   emit('update:modelValue', false)
@@ -342,8 +305,8 @@ const validateFiles = (files) => {
 /**
  * Get the file extension.
  *
- * @param {string} fileName
- * @returns {string}
+ * @param {String} fileName
+ * @returns {String}
  */
 const getFileExtension = (fileName) => {
   return fileName.split('.').pop()
