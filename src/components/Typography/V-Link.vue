@@ -1,6 +1,13 @@
 <script setup>
-import { defineProps, computed } from 'vue'
+import { defineProps, computed, defineEmits } from 'vue'
 import { Link } from '@inertiajs/vue3'
+
+/**
+ * Component emits.
+ * 
+ * @property {Undefined} click - Emits when the link is clicked.
+ */
+const emit = defineEmits(['click'])
 
 /**
  * Component props.
@@ -290,6 +297,7 @@ const getButtonClasses = () => {
         'cursor-pointer transition-[color] max-w-max': !props.button,
       },
     ]"
+    @click="emit('click')"
   >
     <div
       class="flex items-center"
