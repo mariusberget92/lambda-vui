@@ -283,11 +283,11 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(props.size),
       {
-        'flex aspect-square max-w-max items-center justify-center p-2 px-4 transition-all duration-100 ease-in-out':
+        'flex aspect-square max-w-max items-center justify-center p-2 px-4 transition-[background-color] duration-100 ease-in-out':
           props.button && props.icon && !props.text,
-        'flex max-w-max cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-colors disabled:opacity-50':
-          props.button,
-        'cursor-pointer transition-colors': !props.button,
+        'flex max-w-max cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-[background-color] disabled:opacity-50':
+          props.button && (props.icon || props.text),
+        'cursor-pointer transition-[color] max-w-max': !props.button,
       },
     ]"
   >
@@ -297,7 +297,7 @@ const getButtonClasses = () => {
     >
       <span
         v-if="props.icon"
-        class="material-symbols-rounded flex cursor-pointer items-center justify-center leading-none transition-colors"
+        class="material-symbols-rounded flex cursor-pointer items-center justify-center leading-none"
         :class="$sizeToClass(props.size)"
         >{{ props.icon }}</span
       >
