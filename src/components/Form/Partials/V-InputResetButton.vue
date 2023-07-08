@@ -13,6 +13,7 @@ const emit = defineEmits(['reset'])
  *
  * @property {String} size - Reset button size.
  * @property {String|Array|Number|Boolean} modelValue - The model value.
+ * @property {Boolean} absolute - Absolute positioning.
  */
 const props = defineProps({
   /**

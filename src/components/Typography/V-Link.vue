@@ -20,6 +20,8 @@ const emit = defineEmits(['click'])
  * @property {Boolean} button - Show link as button (adds background color).
  * @property {String} color - Button or link color.
  * @property {Boolean} rounded - Whether the button should be rounded if it's a button.
+ * @property {Boolean} outline - Whether the button should be outlined.
+ * @property {Boolean} dashed - Whether the button border is dashed.
  * 
  */
 const props = defineProps({
@@ -367,11 +369,8 @@ const getButtonClasses = () => {
       {
         'transition-all duration-100 ease-in-out': props.button,
         'border-2 border-dashed': props.outline && props.dashed,
-        rounded: props.rounded && props.button,
-        'flex aspect-square max-w-max items-center justify-center p-2 px-4 ':
-          props.button && props.icon && !props.text,
-        'flex max-w-max cursor-pointer items-center p-2 px-4 font-medium disabled:opacity-50':
-          props.button && (props.icon || props.text),
+        'rounded flex aspect-square max-w-max items-center justify-center p-2 px-4': props.button && props.icon && !props.text,
+        'flex max-w-max cursor-pointer items-center p-2 px-4 font-medium disabled:opacity-50': props.button && (props.icon || props.text),
         'cursor-pointer transition-[color] max-w-max': !props.button,
         'border': props.outline,
         'border-transparent text-white': !props.outline && props.button,
