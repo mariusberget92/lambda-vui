@@ -76,6 +76,22 @@ const props = defineProps({
   },
 
   /**
+   * Whether the button should be outlined.
+   */
+  outline: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * Whether the button border is dashed.
+   */
+  dashed: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
    * Button or link color.
    *
    * @values blue, red, green, orange, yellow, mauve, default
@@ -91,16 +107,11 @@ const props = defineProps({
 
   /**
    * Whether the button should be rounded if it's a button.
-   * 
-   * @values none, sm, base, lg, full
    */
   rounded: {
-    type: String,
-    default: 'base',
-    validator: (val) => {
-      return ['none', 'sm', 'base', 'lg', 'full'].includes(val)
-    },
-  },
+    type: Boolean,
+    default: true,
+  }
 })
 
 /**
@@ -120,14 +131,6 @@ const tag = computed(() => {
  */
 const classButton = computed(() => {
   let classes = []
-
-  const roundedClasses = {
-    none: 'rounded-none',
-    sm: 'rounded-sm',
-    base: 'rounded',
-    lg: 'rounded-lg',
-    full: 'rounded-full',
-  }
 
   const sizeClasses = {
     xs: {
@@ -172,16 +175,88 @@ const classButton = computed(() => {
   }
 
   const colorClasses = {
-    red: ['bg-nord-red-300', 'hover:bg-nord-red-100'],
-    green: ['bg-nord-green-300', 'hover:bg-nord-green-100'],
-    blue: ['bg-nord-blue-300', 'hover:bg-nord-blue-100'],
-    orange: ['bg-nord-orange-300', 'hover:bg-nord-orange-100'],
-    mauve: ['bg-nord-mauve-300', 'hover:bg-nord-mauve-100'],
-    yellow: ['bg-nord-yellow-300', 'hover:bg-nord-yellow-100'],
+    red: ['bg-nord-red-300', 'hover:bg-nord-red-100', 'focus:bg-nord-red-100'],
+    green: [
+      'bg-nord-green-300',
+      'hover:bg-nord-green-100',
+      'focus:bg-nord-green-100',
+    ],
+    blue: [
+      'bg-nord-blue-300',
+      'hover:bg-nord-blue-100',
+      'focus:bg-nord-blue-100',
+    ],
+    orange: [
+      'bg-nord-orange-300',
+      'hover:bg-nord-orange-100',
+      'focus:bg-nord-orange-100',
+    ],
+    mauve: [
+      'bg-nord-mauve-300',
+      'hover:bg-nord-mauve-100',
+      'focus:bg-nord-mauve-100',
+    ],
+    yellow: [
+      'bg-nord-yellow-300',
+      'hover:bg-nord-yellow-100',
+      'focus:bg-nord-yellow-100',
+    ],
+  }
+  
+  const outlinedColorClasses = {
+    red: [
+      'text-nord-red-300',
+      'border-nord-red-300',
+      'hover:border-nord-red-100',
+      'hover:text-nord-red-100',
+      'focus:border-nord-red-100',
+      'focus:text-nord-red-100',
+    ],
+    green: [
+      'text-nord-green-300',
+      'border-nord-green-300',
+      'hover:border-nord-green-100',
+      'hover:text-nord-green-100',
+      'focus:border-nord-green-100',
+      'focus:text-nord-green-100',
+    ],
+    blue: [
+      'text-nord-blue-300',
+      'border-nord-blue-300',
+      'hover:border-nord-blue-100',
+      'hover:text-nord-blue-100',
+      'focus:border-nord-blue-100',
+      'focus:text-nord-blue-100',
+    ],
+    orange: [
+      'text-nord-orange-300',
+      'border-nord-orange-300',
+      'hover:border-nord-orange-100',
+      'hover:text-nord-orange-100',
+      'focus:border-nord-orange-100',
+      'focus:text-nord-orange-100',
+    ],
+    mauve: [
+      'text-nord-mauve-300',
+      'border-nord-mauve-300',
+      'hover:border-nord-mauve-100',
+      'hover:text-nord-mauve-100',
+      'focus:border-nord-mauve-100',
+      'focus:text-nord-mauve-100',
+    ],
+    yellow: [
+      'text-nord-yellow-300',
+      'border-nord-yellow-300',
+      'hover:border-nord-yellow-100',
+      'hover:text-nord-yellow-100',
+      'focus:border-nord-yellow-100',
+      'focus:text-nord-yellow-100',
+    ],
   }
 
-  classes.push(...colorClasses[props.color])
-  classes.push(roundedClasses[props.rounded])
+  props.outline
+    ? classes.push(...outlinedColorClasses[props.color])
+    : classes.push(...colorClasses[props.color])
 
   return classes.join(' ')
 })
@@ -290,11 +365,16 @@ const getButtonClasses = () => {
       getLinkClasses(),
       $sizeToClass(props.size),
       {
-        'flex aspect-square max-w-max items-center justify-center p-2 px-4 transition-[background-color] duration-100 ease-in-out':
+        'transition-all duration-100 ease-in-out': props.button,
+        'border-2 border-dashed': props.outline && props.dashed,
+        rounded: props.rounded && props.button,
+        'flex aspect-square max-w-max items-center justify-center p-2 px-4 ':
           props.button && props.icon && !props.text,
-        'flex max-w-max cursor-pointer items-center rounded p-2 px-4 font-medium text-white transition-[background-color] disabled:opacity-50':
+        'flex max-w-max cursor-pointer items-center p-2 px-4 font-medium disabled:opacity-50':
           props.button && (props.icon || props.text),
         'cursor-pointer transition-[color] max-w-max': !props.button,
+        'border': props.outline,
+        'border-transparent text-white': !props.outline && props.button,
       },
     ]"
     @click="emit('click')"

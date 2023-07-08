@@ -403,10 +403,10 @@ const radio = ref('')
           <VLink
             href="#"
             size="sm"
-            color="yellow"
+            color="blue"
             icon="light_mode"
             button
-            text="test"
+            outline
           />
         </div>
       </div>
