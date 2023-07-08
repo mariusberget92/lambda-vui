@@ -284,7 +284,7 @@ const blurOnClick = (event) => {
       },
     ]"
     :disabled="props.processing || props.disabled"
-    @click=";[emit('click'), blurOnClick($event)]"
+    @click="emit('click'); blurOnClick($event)"
   >
     <span
       v-if="props.icon && !props.processing"

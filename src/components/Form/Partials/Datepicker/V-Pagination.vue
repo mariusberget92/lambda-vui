@@ -144,7 +144,7 @@ const years = computed(() => {
         outline
         :rounded="props.rounded"
         :color="props.color"
-        @click.prevent="emit('previousMonth')"
+        @click="emit('previousMonth')"
       />
 
       <VButton
@@ -154,7 +154,7 @@ const years = computed(() => {
         outline
         :rounded="props.rounded"
         :color="props.color"
-        @click.prevent="emit('setToday')"
+        @click="emit('setToday')"
       />
 
       <VButton
@@ -163,7 +163,7 @@ const years = computed(() => {
         outline
         :rounded="props.rounded"
         :color="props.color"
-        @click.prevent="emit('nextMonth')"
+        @click="emit('nextMonth')"
       />
     </div>
   </div>

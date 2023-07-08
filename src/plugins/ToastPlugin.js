@@ -3,15 +3,13 @@ import VToast from '../components/V-Toast.vue'
 
 export default {
   install: (app, options) => {
-    // Options may contain a position and a duration.
-    // If no position is provided, the default is 'top-right'.
-    // If no duration is provided, the default is 5000ms.
     const defaultOptions = {
       position: 'top-right',
       duration: 5000,
+      removeOnClick: true,
     }
 
-    // Define the available positions.
+    // Positions map.
     const position = {
       'top-right': 'top-4 right-4',
       'top-left': 'top-4 left-4',
@@ -19,21 +17,22 @@ export default {
       'bottom-left': 'bottom-4 left-4',
     }
 
-    // Merge the provided options with the default options.
+    // Merge options.
     const mergedOptions = { ...defaultOptions, ...options }
 
-    // Create a new div element that will serve as the toast container and append it to the body.
+    // Create toast container.
     const toastContainer = document.createElement('div')
     toastContainer.className =
       'fixed flex flex-col space-y-2 ' + position[mergedOptions.position]
     document.body.appendChild(toastContainer)
 
-    // Now we need a $toast method
-    // The method takes inn a message and a type and a optional duration.
+    // New $toast method.
     app.config.globalProperties.$toast = (data) => {
+
+      // Create a new toast element.
       const toastElement = document.createElement('div')
 
-      // Need some animation here.
+      // Add some animation classes.
       toastElement.className =
         'transition-all duration-300 ease-in-out opacity-0 transform scale-75'
       setTimeout(() => {
@@ -47,18 +46,20 @@ export default {
           'transition-all duration-300 ease-in-out opacity-0 transform scale-75'
       }, (data.duration || mergedOptions.duration) - 300)
 
+      // Append the toast element to the toast container.
       toastContainer.appendChild(toastElement)
 
+      // Set the toast duration.
       const duration = data.duration || mergedOptions.duration
 
-      // Everytime the $toast method is called, we create a new VToast component that will be removed after the duration has ended.
+      // Create the toast.
       const toast = createApp(VToast, {
         message: data.message,
         type: data.type,
         duration: duration,
       })
 
-      // Mount the toast to the newly created element
+      // Render the toast.
       toast.mount(toastElement)
 
       // Check for click events on the toast.
