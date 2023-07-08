@@ -222,7 +222,7 @@ const ratingIconSize = computed(() => {
     />
 
     <div
-      class="flex w-max border-l-0 bg-nord-light-400 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      class="flex w-max border-l-0 bg-nord-light-400 transition-[border-width] duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,
@@ -238,7 +238,7 @@ const ratingIconSize = computed(() => {
       ]"
     >
       <div
-        class="flex transform py-1 transition-all duration-100 ease-in-out"
+        class="flex transform py-1 transition-[padding] duration-100 ease-in-out"
         :class="{
           '!pr-9': props.clearButton && props.modelValue > 0,
           'px-2.5': !props.icon,
@@ -255,7 +255,7 @@ const ratingIconSize = computed(() => {
         <span
           v-for="i in props.max"
           :key="i"
-          class="material-symbols-rounded relative cursor-pointer transition-all duration-100 ease-in-out"
+          class="material-symbols-rounded relative cursor-pointer"
           :class="[
             $sizeToClass(ratingIconSize),
             {

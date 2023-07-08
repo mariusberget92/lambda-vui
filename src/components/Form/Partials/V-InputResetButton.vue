@@ -36,6 +36,14 @@ const props = defineProps({
     Boolean,
     default: '',
   },
+
+  /**
+   * Absolute positioning.
+   */
+  absolute: {
+    type: Boolean,
+    default: true,
+  },
 })
 </script>
 
@@ -47,7 +55,7 @@ const props = defineProps({
         props.modelValue === true ||
         props.modelValue > 0
       "
-      class="material-symbols-rounded absolute right-1 flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-100 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
+      class="material-symbols-rounded flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 hover:bg-nord-light-100 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
       :class="[
         $sizeToClass(props.size),
         {
@@ -57,6 +65,7 @@ const props = defineProps({
           'w-7': props.size === 'lg',
           'w-8': props.size === 'xl',
           'w-9': props.size === '2xl',
+          'absolute right-1': props.absolute,
         },
       ]"
       @click.stop.prevent="emit('reset')"

@@ -267,7 +267,7 @@ const classColor = computed(() => {
 
     <div
       :id="props.id"
-      class="relative flex cursor-pointer items-center transition-colors duration-300 ease-in-out"
+      class="relative flex cursor-pointer items-center transition-[background-color] duration-300 ease-in-out"
       :class="[
         classSwitchSize['switch'],
         isOn ? classColor['on'] : classColor['off'],
@@ -280,7 +280,7 @@ const classColor = computed(() => {
       @click="toggleSwitch()"
     >
       <p
-        class="absolute aspect-square transform bg-white transition-all duration-300 ease-in-out"
+        class="absolute aspect-square transform bg-white transition-[transform] duration-300 ease-in-out"
         :class="[
           classSwitchSize['bullet'],
           isOn && classSwitchSize['translate'],
@@ -293,7 +293,7 @@ const classColor = computed(() => {
       ></p>
       <span
         v-if="props.icons"
-        class="material-symbols-rounded absolute transform font-bold transition-all duration-300 ease-in-out"
+        class="material-symbols-rounded absolute transform font-bold transition-[transform] duration-300 ease-in-out"
         :class="[
           $sizeToClass(props.size),
           !isOn && classSwitchSize['translateText'],

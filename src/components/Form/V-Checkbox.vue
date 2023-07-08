@@ -129,7 +129,7 @@ const props = defineProps({
     <input
       :id="props.id"
       type="checkbox"
-      class="flex cursor-pointer bg-nord-light-400 transition-all duration-100 ease-in-out dark:bg-nord-dark-100"
+      class="flex cursor-pointer bg-nord-light-400 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,

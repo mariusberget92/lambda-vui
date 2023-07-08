@@ -2,6 +2,7 @@
 import { defineProps, defineEmits, ref, onMounted } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VButton from './V-Button.vue'
+import VInputResetButton from './Partials/V-InputResetButton.vue'
 
 /**
  * Component emits.
@@ -301,23 +302,12 @@ const resetTagInput = () => {
       >
         {{ value }}
 
-        <span
-          class="material-symbols-rounded flex aspect-square cursor-pointer items-center justify-center rounded-full text-nord-dark-300 duration-300 hover:bg-nord-light-100 dark:text-nord-light-300 dark:hover:bg-nord-dark-300"
-          :class="[
-            $sizeToClass(props.size),
-            {
-              'w-4': props.size === 'xs',
-              'w-5': props.size === 'sm',
-              'w-6': props.size === 'base',
-              'w-7': props.size === 'lg',
-              'w-8': props.size === 'xl',
-              'w-9': props.size === '2xl',
-            },
-          ]"
-          @click="removeTag(value)"
-        >
-          close
-        </span>
+        <VInputResetButton
+          :size="props.size"
+          :model-value="1"
+          :absolute="false"
+          @reset="removeTag(value)"
+        />
       </div>
 
       <span

@@ -325,7 +325,7 @@ const getFileExtension = (fileName) => {
     />
 
     <div
-      class="flex border-l-0 bg-nord-light-400 transition-all duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      class="flex border-l-0 bg-nord-light-400 transition-[border-width] duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,

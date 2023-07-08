@@ -117,7 +117,7 @@ const props = defineProps({
     <input
       :id="props.id"
       type="radio"
-      class="flex cursor-pointer rounded-full bg-nord-light-400 transition-all duration-100 ease-in-out dark:bg-nord-dark-100"
+      class="flex cursor-pointer rounded-full bg-nord-light-400 dark:bg-nord-dark-100"
       :class="[
         {
           'text-nord-red-300': props.color === 'red',

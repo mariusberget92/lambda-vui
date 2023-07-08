@@ -317,7 +317,7 @@ const keyHandler = (event) => {
     />
 
     <div
-      class="flex bg-nord-light-400 transition-all duration-100 ease-in-out dark:bg-nord-dark-100"
+      class="flex bg-nord-light-400 transition-[border-width] duration-100 ease-in-out dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,
