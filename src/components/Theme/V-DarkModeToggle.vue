@@ -4,7 +4,7 @@ import { defineProps, computed, ref, onMounted, defineEmits } from 'vue'
 /**
  * Component emits.
  *
- * @property {Boolean} change - Whether dark mode has changed.
+ * @property {Boolean} change - Returns the dark mode state.
  */
 const emit = defineEmits(['change'])
 
