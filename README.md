@@ -48,3 +48,11 @@ There is currently no documentation for this library, but it will be added in th
 ❌ Make tags component also take a options prop (like the select component) so that it can be used as a select component with predefined options only or a mix between predefined and user defined tags.<br>
 ❌ Toast system needs an upgrade. Need to modify it so that toasts can be paused when hovering over them. Also need to add perfect scrollbar to the toast container so that it can be scrolled when there are many toasts. We also need to consider adding a AI time-to-read implementation when regarding the duration of the toasts with a minimum duration.<br>
 ❌ Modify checkbox component to take in other values than booleans. For example, if you want to use a checkbox to select a value from a list of options, you would want to pass in the value of the option to the checkbox and then have the checkbox emit the value of the option when it's checked. This would make it easier to use the checkbox component in a v-for loop.<br>
+❌ Add prop: `clean` to VSelect to remove paddings, borders and background colors so it can be used inside other components that are supposed to be inputs but require multiple select components in a row.<br>
+
+
+# Contributing
+If you want to contribute to this project, please read the [CONTRIBUTING.md](https://github.com/mariusberget92/lambda-vui/blob/main/CONTRIBUTING.md) file for more information.
+
+# License
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

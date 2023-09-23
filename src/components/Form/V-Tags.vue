@@ -280,7 +280,7 @@ const resetTagInput = () => {
       <div
         v-for="(value, index) in props.modelValue"
         :key="index"
-        class="flex items-center gap-x-2 border-l-4 bg-nord-light-400 px-2 py-2 text-nord-dark-300 dark:bg-nord-dark-100 dark:text-nord-light-300"
+        class="flex items-center gap-x-2 border-l-4 bg-nord-light-400 p-2 text-nord-dark-300 dark:bg-nord-dark-100 dark:text-nord-light-300"
         :class="[
           $sizeToClass(props.size),
           {
@@ -312,7 +312,7 @@ const resetTagInput = () => {
 
       <span
         ref="tagInputRef"
-        class="flex h-auto w-8 grow overflow-hidden border-l-4 bg-nord-light-400 px-2 py-2 text-nord-dark-300 outline-none dark:bg-nord-dark-100 dark:text-nord-light-300"
+        class="flex h-auto w-8 grow overflow-hidden border-l-4 bg-nord-light-400 p-2 text-nord-dark-300 outline-none dark:bg-nord-dark-100 dark:text-nord-light-300"
         :class="[
           $sizeToClass(props.size),
           {

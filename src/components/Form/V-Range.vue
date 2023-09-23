@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed, ref } from 'vue'
+import { defineProps, defineEmits, ref } from 'vue'
 import VLabel from './Partials/V-Label.vue'
 import VInputResetButton from './Partials/V-InputResetButton.vue'
 import VIcon from './Partials/V-Icon.vue'
@@ -179,8 +179,55 @@ const defaultValue = ref(props.modelValue)
  */
 const updateRange = (event, range) => {
   if (!props.disabled) {
-    emit('update:modelValue', range)
+
+    let newValue = parseFloat(range);
+
+    // Allow the input to be empty or a single negative sign
+    if (isNaN(newValue) && range !== '-') {
+      event.target.value = props.modelValue;
+      return;
+    }
+
+    // Allow entering a negative value by typing just a '-'
+    if (range === '-') {
+      event.target.value = '-';
+      return;
+    }
+
+    // Ensure the newValue is within the valid range [min, max]
+    newValue = Math.min(Math.max(newValue, props.min), props.max);
+
+    // Calculate the nearest value that aligns with the step
+    const remainder = (newValue - props.min) % props.step;
+    if (remainder !== 0) {
+      // Round the value to the nearest step
+      newValue = newValue - remainder + (remainder < props.step / 2 ? 0 : props.step);
+    }
+
+    // Make sure the newValue is still within the valid range [min, max]
+    newValue = Math.min(Math.max(newValue, props.min), props.max);
+
+    // Update the input value to the calculated and clamped value
+    event.target.value = newValue;
+
+    // Do not allow modelValue to be higher than max or lower than min
+    if (newValue > props.max || newValue < props.min) {
+      return;
+    }
+
+    // Update the model value
+    emit('update:modelValue', newValue);
   }
+}
+
+/**
+ * Convert a string to a number.
+ *
+ * @param  {String} value
+ * @return {Number}
+ */
+const stringToNumber = (value) => {
+  return Number(value)
 }
 
 /**
@@ -190,6 +237,27 @@ const updateRange = (event, range) => {
  */
 const reset = () => {
   emit('update:modelValue', defaultValue.value)
+}
+
+/**
+ * Update based on key press (up, down, left, right).
+ * 
+ * @param {Event} event
+ */
+const keyHandler = (event) => {
+  if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+    if (props.modelValue + props.step <= props.max) {
+      emit('update:modelValue', props.modelValue + props.step)
+    } else {
+      emit('update:modelValue', props.max)
+    }
+  } else if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+    if (props.modelValue - props.step >= props.min) {
+      emit('update:modelValue', props.modelValue - props.step)
+    } else {
+      emit('update:modelValue', props.min)
+    }
+  }
 }
 </script>
 
@@ -210,7 +278,7 @@ const reset = () => {
     />
 
     <div
-      class="flex w-max border-l-0 bg-nord-light-400 transition-[border-width] duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
+      class="flex w-max max-w-full border-l-0 bg-nord-light-400 transition-[border-width] duration-100 ease-in-out focus-within:border-l-4 dark:bg-nord-dark-100"
       :class="[
         {
           rounded: props.rounded,
@@ -225,50 +293,41 @@ const reset = () => {
         },
       ]"
     >
-      <div
-        class="flex transform py-1 transition-[padding] duration-100 ease-in-out"
-        :class="{
-          '!pr-9': props.clearButton && props.modelValue > 0,
-          'px-2.5': !props.icon,
-          'pr-2': props.icon,
-        }"
-      >
-        <VIcon
-          v-if="props.icon"
-          :icon="props.icon"
-          :size="props.size"
-          class="pr-2"
-        />
+      <VIcon
+        v-if="props.icon"
+        :icon="props.icon"
+        :size="props.size"
+        class="pr-2"
+      />
 
-        <span
-          v-for="i in props.max"
-          :key="i"
-          class="material-symbols-rounded relative cursor-pointer"
+      <div class="flex w-full">
+        <input
+          type="text"
+          class="w-1/5 bg-transparent cursor-pointer appearance-none focus:outline-none"
           :class="[
-            $sizeToClass(ratingIconSize),
+            $sizeToClass(props.size),
             {
-              'text-nord-yellow-300 dark:text-nord-yellow-300':
-                hoverRating >= i && props.color === 'yellow',
-              'text-nord-red-300 dark:text-nord-red-300':
-                hoverRating >= i && props.color === 'red',
-              'text-nord-green-300 dark:text-nord-green-300':
-                hoverRating >= i && props.color === 'green',
-              'text-nord-blue-300 dark:text-nord-blue-300':
-                hoverRating >= i && props.color === 'blue',
-              'text-nord-orange-300 dark:text-nord-orange-300':
-                hoverRating >= i && props.color === 'orange',
-              'text-nord-mauve-300 dark:text-nord-mauve-300':
-                hoverRating >= i && props.color === 'mauve',
-              'text-nord-dark-300/60 dark:text-nord-light-300/60':
-                hoverRating < i,
+              'px-2 py-2': props.icon,
+              'px-3 py-2': !props.icon,
             },
           ]"
-          @mouseenter="hoverRating = i"
-          @mouseleave="hoverRating = props.modelValue"
-          @click="updateRating($event, i)"
-        >
-          {{ props.ratingIcon }}
-        </span>
+          :value="props.modelValue"
+          :disabled="props.disabled"
+          @input="updateRange($event, stringToNumber($event.target.value))"
+          @keydown="keyHandler($event)"
+        />
+
+        <input
+          :id="props.id"
+          class="bg-nord-light-200 dark:bg-nord-dark-300 rounded h-2 m-2 mt-3.5 cursor-pointer appearance-none focus:outline-none flex-1"
+          type="range"
+          :min="props.min"
+          :max="props.max"
+          :step="props.step"
+          :value="props.modelValue"
+          :disabled="props.disabled"
+          @input="updateRange($event, stringToNumber($event.target.value))" 
+        />
       </div>
 
       <template v-if="props.clearButton">

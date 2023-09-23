@@ -15,6 +15,7 @@ import VSwitch from './components/Form/V-Switch.vue'
 import VRadio from './components/Form/V-Radio.vue'
 import VLink from './components/Typography/V-Link.vue'
 import VText from './components/Typography/V-Text.vue'
+import VRange from './components/Form/V-Range.vue'
 
 // eslint-disable-next-line no-unused-vars
 const string = ref('')
@@ -48,6 +49,12 @@ const switch3 = ref(false)
 const switch4 = ref(false)
 // eslint-disable-next-line no-unused-vars
 const radio = ref('')
+// eslint-disable-next-line no-unused-vars
+const range1 = ref(0)
+// eslint-disable-next-line no-unused-vars
+const range2 = ref(0)
+// eslint-disable-next-line no-unused-vars
+const range3 = ref(0)
 </script>
 
 <template>
@@ -272,6 +279,37 @@ const radio = ref('')
             required
           />
         </div>
+
+        <VHeading heading="h1" size="2xl">Range</VHeading>
+
+        <div class="flex flex-col space-y-4 pb-10">
+          <VRange
+            v-model="range1"
+            placeholder="Placeholder"
+            size="sm"
+            icon="numbers"
+            required
+          />
+
+          <VRange
+            v-model="range2"
+            placeholder="Placeholder"
+            size="sm"
+            required
+            :min="-10"
+            :max="10"
+          />
+
+          <VRange
+            v-model="range3"
+            placeholder="Placeholder"
+            size="sm"
+            required
+            :min="-10"
+            :max="10"
+            :step="2"
+          />
+        </div>
       </div>
 
       <div class="flex w-[300px] flex-col space-y-4">
@@ -293,7 +331,6 @@ const radio = ref('')
           <VTags
             v-model="tags"
             size="sm"
-            placeholder="Add tags"
             :max="2"
             @error="(e) => $toast({ type: 'error', message: e })"
           />
